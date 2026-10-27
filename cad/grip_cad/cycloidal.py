@@ -14,6 +14,7 @@ from build123d import (
 from .params import Cyclo
 
 SCREW_D = 3.4        # M3 clearance
+CBORE_R = 3.1        # M3 socket head counterbore in the cap
 N_SCREWS = 6
 
 
@@ -48,6 +49,10 @@ class CycloLayout:
 
 def check_pins(c: Cyclo):
     L = layout(c)
+    r = screw_circle_r(c)
+    d = sqrt(r * r + c.pin_circle_r ** 2 - 2 * r * c.pin_circle_r * cos(pi / c.n_pins))
+    assert d - c.pin_r - SCREW_D / 2 >= 1.0, f"{c.name}: screw holes too close to the ring pins"
+    assert c.housing_r - r - CBORE_R >= 0.9, f"{c.name}: cap counterbores break out of the rim"
     floor = L.cap_bot - c.ring_pin_len
     assert L.housing_bot + 1.5 <= floor <= L.bore_bot, f"{c.name}: ring pins {c.ring_pin_len} mm don't fit"
     depth = L.disc2[0] + c.out_pin_len - L.plate_bot
@@ -68,7 +73,8 @@ def layout(c: Cyclo) -> CycloLayout:
 
 
 def screw_circle_r(c: Cyclo) -> float:
-    return c.pin_circle_r + c.pin_r + c.wall / 2 + 0.5
+    # just outside the disc bore; the screws sit between ring pins, so they clear them
+    return c.pin_circle_r + SCREW_D / 2 + 1.2
 
 
 def screw_angles(c: Cyclo):
@@ -155,7 +161,7 @@ def cap(c: Cyclo) -> Part:
     for a in screw_angles(c):
         r = screw_circle_r(c)
         body -= _cyl(SCREW_D / 2, L.cap_bot, L.cap_top, r * cos(a * pi / 180), r * sin(a * pi / 180))
-        body -= _cyl(3.1, L.cap_top - 3.0, L.cap_top, r * cos(a * pi / 180), r * sin(a * pi / 180))
+        body -= _cyl(CBORE_R, L.cap_top - 3.0, L.cap_top, r * cos(a * pi / 180), r * sin(a * pi / 180))
     return body
 
 

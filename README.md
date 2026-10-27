@@ -96,7 +96,7 @@ Each joint is the same parametric module in three sizes. A stepper turns a two-l
 | --- | --- | --- | --- | --- |
 | J2 | 31 x Ø4 mm | 30:1 | 102 mm | 6812 |
 | J1, J3 | 26 x Ø4 mm | 25:1 | 86 mm | 6808 |
-| J4–J6 | 16 x Ø3 mm | 15:1 | 59 mm | 6805 |
+| J4–J6 | 16 x Ø3 mm | 15:1 | 62 mm | 6805 |
 
 ## Roadmap
 

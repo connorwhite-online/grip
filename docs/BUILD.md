@@ -72,7 +72,7 @@ There are three sizes of one design. Build all six before starting on the arm, a
 | J1 base | 25:1, Ø86 | NEMA 17, 60 mm | [drive_j1_j3.svg](drawings/drive_j1_j3.svg) |
 | J2 shoulder | 30:1, Ø102 | NEMA 23, 56 mm | [drive_j2.svg](drawings/drive_j2.svg) |
 | J3 elbow | 25:1, Ø86 | NEMA 17, 60 mm | [drive_j1_j3.svg](drawings/drive_j1_j3.svg) |
-| J4, J5, J6 wrist | 15:1, Ø59 | NEMA 17, 34 mm | [drive_wrist.svg](drawings/drive_wrist.svg) |
+| J4, J5, J6 wrist | 15:1, Ø62 | NEMA 17, 34 mm | [drive_wrist.svg](drawings/drive_wrist.svg) |
 
 ![J1/J3 gearbox in half section](drawings/drive_j1_j3.svg)
 
