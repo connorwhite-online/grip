@@ -21,9 +21,9 @@ All drawings are generated from the same CAD as the exports (`python cad/drawing
 
 ## 1. What you need
 
-**Printed parts.** Order them as listed in the [README](../README.md#printing): seven link and palm shells, plus five stacked kits for a bureau, or print the individual files in `exports/stl/` yourself.
+**Printed parts.** Order them as listed in the [README](../README.md#printing): eight link, palm and gripper-frame shells, plus five stacked kits for a bureau, or print the individual files in `exports/stl/` yourself. Printing at home on a filament printer? See [FDM.md](FDM.md).
 
-**Bought parts.** These are in [bom/BOM.md](../bom/BOM.md). They come to about $600, and most of that is the six steppers and their closed-loop drivers.
+**Bought parts.** These are in [bom/BOM.md](../bom/BOM.md). They come to about $490, and most of that is the six steppers and their closed-loop drivers.
 
 **Tools:**
 
@@ -81,7 +81,7 @@ There are three sizes of one design. Build all six before starting on the arm, a
 
 The numbers in the steps below refer to the balloons in the section drawings. The exploded view shows the same order from the bottom up.
 
-<img src="img/exploded_j1_j3.png" alt="J1/J3 gearbox exploded" width="420">
+![J1/J3 gearbox exploded](img/exploded_j1_j3.png)
 
 1. **Ring pins (7) into the housing (1).** Press each dowel down until it bottoms out. Its top should sit flush with the housing's top face. A flat bar across the housing helps you press several at once.
 2. **Motor (10) onto the housing.** Seat the motor's centring boss in the hole in the housing floor, with the motor leads pointing where the cable will exit the link (see section 4). Fasten it from inside the housing with the low-head screws, which drop into counterbores so their heads sit below the discs. Use threadlocker.

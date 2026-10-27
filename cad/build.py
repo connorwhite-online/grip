@@ -136,7 +136,7 @@ BEDS = [("Ender-3 class 220x220x250", 220, 220, 250), ("Prusa MK4S 250x210x220",
 
 
 def fdm_orient(name, shape):
-    from build123d import Box, Pos, Rot
+    from build123d import Align, Box, Pos, Rot
     down = FDM_DOWN.get(name, (0, 0, -1))
     rot = {(0, 0, -1): Rot(0, 0, 0), (0, 1, 0): Rot(-90, 0, 0), (0, -1, 0): Rot(90, 0, 0),
            (1, 0, 0): Rot(0, 90, 0), (-1, 0, 0): Rot(0, -90, 0)}[down]
@@ -144,7 +144,7 @@ def fdm_orient(name, shape):
     bb = s.bounding_box()
     s = Pos(-bb.center().X, -bb.center().Y, -bb.min.Z) * s
     if name in arm.LINKS and name != "base":
-        s = s - Pos(0, 0, -50) * Box(1000, 1000, 50 + FLAT, align=None)
+        s = s - Pos(0, 0, -50) * Box(1000, 1000, 50 + FLAT, align=(Align.CENTER, Align.CENTER, Align.MIN))
         s = Pos(0, 0, -FLAT) * s
     return s
 

@@ -1,11 +1,11 @@
 part,qty,material,grams_each,solid_cm3,bbox_x_mm,bbox_y_mm,bbox_z_mm,fits,stl
 fit_coupon,1,FDM PETG,13,9.9,75.3,72.6,5.0,Ender-3 class 220x220x250,stl/fit_coupon.stl
 base,1,FDM PETG,352,948.3,160.0,160.0,119.0,Ender-3 class 220x220x250,stl/base.stl
-turret,1,FDM PETG,300,635.2,117.0,152.6,137.2,Ender-3 class 220x220x250,stl/turret.stl
-upper_arm,1,FDM PETG,271,520.5,98.1,283.9,134.9,Bambu A1/P1S/X1 256x256x256,stl/upper_arm.stl
-forearm,1,FDM PETG,140,217.0,80.0,72.0,184.0,Ender-3 class 220x220x250,stl/forearm.stl
-wrist_yoke,1,FDM PETG,109,166.7,72.1,83.9,100.0,Ender-3 class 220x220x250,stl/wrist_yoke.stl
-wrist_link,1,FDM PETG,122,181.6,72.0,72.8,155.5,Ender-3 class 220x220x250,stl/wrist_link.stl
+turret,1,FDM PETG,300,634.4,117.0,152.6,136.6,Ender-3 class 220x220x250,stl/turret.stl
+upper_arm,1,FDM PETG,271,521.4,98.1,284.1,134.3,Bambu A1/P1S/X1 256x256x256,stl/upper_arm.stl
+forearm,1,FDM PETG,140,216.9,80.0,72.0,183.4,Ender-3 class 220x220x250,stl/forearm.stl
+wrist_yoke,1,FDM PETG,109,166.3,72.1,83.9,99.4,Ender-3 class 220x220x250,stl/wrist_yoke.stl
+wrist_link,1,FDM PETG,122,181.6,72.0,72.8,154.9,Ender-3 class 220x220x250,stl/wrist_link.stl
 j2_drive_housing,1,FDM PETG,71,80.5,102.0,102.0,26.5,Ender-3 class 220x220x250,stl/j2_drive_housing.stl
 j2_drive_cap,1,FDM PETG,28,22.3,102.0,102.0,11.5,Ender-3 class 220x220x250,stl/j2_drive_cap.stl
 j2_drive_disc_a,1,FDM PETG-CF (or PA-CF),30,33.1,85.0,85.4,7.0,Ender-3 class 220x220x250,stl/j2_drive_disc_a.stl
