@@ -75,7 +75,7 @@ Change a number in `params.py` and rebuild. Socket sizes, bolt patterns and pod 
 
 ## Printing
 
-**At home (FDM):** see [docs/FDM.md](docs/FDM.md). About 2.1 kg of PETG, PETG-CF and TPU. Every part fits a 220 mm printer except the upper arm, which needs a 256 mm bed. Print the fit coupon first.
+**At home (FDM):** see [docs/FDM.md](docs/FDM.md). About 2.1 kg of PETG, PETG-CF and TPU. Every part fits a 180 mm printer (Bambu A1 mini) except the forearm and upper arm; on a 220 mm printer only the upper arm, which needs a 256 mm bed. Have those printed by a service. Print the fit coupon first.
 
 **SLS:** all shells are hollow with 2 mm walls. Every link has at least two cable ports, which also serve as powder escape holes. `build.py` refuses to export any part that isn't a single closed, manifold body.
 

@@ -29,7 +29,7 @@ Every STL in `exports/fdm/stl/` is already turned to its print orientation and s
 - **Weight.** Solid links with infill are about 40% heavier than SLS shells. The shoulder gearbox has a lot of headroom (about 30 N·m), and the printed links only add 0.49 N·m to its load at full reach. That costs about 0.1 kg of payload and nothing else.
 - **Wear.** PETG-CF discs on steel pins will wear faster than glass-filled nylon. They are cheap to reprint (about 20 g each). If you'd rather not think about it, order just the six pairs of discs and the eccentrics from a bureau in SLS PA12-GF (about $90) and print everything else. The FDM and SLS discs are the same part, apart from the 0.05 mm of extra clearance.
 - **Finish.** The soft, organic shapes show layer lines on their shallow domes, and the tree supports leave marks underneath. A light sanding and a coat of primer hides most of it.
-- **Printer.** Every part fits a 220 mm printer (Ender-3 class) **except the upper arm**, which needs a 256 mm bed (Bambu A1, P1S or X1, or similar). It fits when turned at an angle on the bed. If your printer is smaller, have that one part printed by a local makerspace or an online FDM service (about $15–25 in PETG).
+- **Printer.** On a 180 mm printer (Bambu A1 mini) everything prints **except two links**: the forearm (183 mm tall) and the upper arm (284 mm long). On a 220 mm printer (Ender-3 class) only the upper arm is too big; it needs a 256 mm bed (Bambu A1, P1S or X1), turned at an angle. Have the parts that don't fit printed by a local makerspace or an online FDM or SLS service (about $15–25 each in PETG). `exports/fdm/printed_parts.csv` lists the smallest printer each part fits.
 
 ## Before you start: the fit coupon
 

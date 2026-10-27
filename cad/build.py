@@ -131,7 +131,8 @@ FDM_DOWN = {"base": (0, 0, -1), "turret": (0, 1, 0), "upper_arm": (0, -1, 0), "f
             "gripper_jaw": (1, 0, 0), "gripper_finger": (0, -1, 0)}
 FLAT = 0.6           # shaved off a domed underside so it has a footprint on the bed
 WALLS, INFILL = 1.6, 0.15    # 4 perimeters / top-bottom shell, 15% gyroid
-BEDS = [("Ender-3 class 220x220x250", 220, 220, 250), ("Prusa MK4S 250x210x220", 250, 210, 220),
+BEDS = [("Bambu A1 mini 180x180x180", 180, 180, 180), ("Ender-3 class 220x220x250", 220, 220, 250),
+        ("Prusa MK4S 250x210x220", 250, 210, 220),
         ("Bambu A1/P1S/X1 256x256x256", 256, 256, 256)]
 
 
