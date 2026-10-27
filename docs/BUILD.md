@@ -89,7 +89,7 @@ The numbers in the steps below refer to the balloons in the section drawings. Th
 5. **Disc B (4) first, then disc A (3).** Grease the ring pins and disc edges lightly. Slide disc B over the lower eccentric lobe, turning it until its lobes drop between the pins. Then slide disc A over the upper lobe. The two discs end up offset in opposite directions.
 6. **Output pins (8) into the output flange (6).** Press them into the blind sockets in the flange's underside.
 7. **Flange onto the discs.** Lower the flange so its pins pass through the round holes in both discs. Turn the motor shaft by hand (or the rear shaft) until they drop in.
-8. **Output bearing (9) into the cap (2),** then lower the cap over the flange hub onto the housing. Line up the six screw holes. The cap is held only by the through-bolts, so leave it loose for now. A strip of tape round the joint keeps it together until the gearbox goes into its link.
+8. **Output bearing (9) into the cap (2),** then lower the cap over the flange hub onto the housing. Line up the six screw holes. The through-bolt heads will sit on the cap's outer step, below the output face. The cap is held only by those bolts, so leave it loose for now. A strip of tape round the joint keeps it together until the gearbox goes into its link.
 9. **Bench test.** Turn the motor's rear shaft by hand: the output should turn smoothly at 1/25 (or 1/30, 1/15) of the speed, with no tight spots over a full output turn. Tight spots usually mean a pillar nub or a tight pin hole. After wiring (section 6), run each gearbox for 20 minutes at moderate speed and check that the housing stays below about 60 °C.
 
 Gearbox stack heights, motor excluded: J2 38 mm, J1/J3 31.5 mm, wrist 29.5 mm.

@@ -2,23 +2,23 @@ part,qty,material,volume_cm3,bbox_x_mm,bbox_y_mm,bbox_z_mm,stl
 base,1,SLS PA12,189.0,160.0,160.0,119.0,stl/base.stl
 turret,1,SLS PA12-GF (glass filled),205.2,117.1,137.2,152.6,stl/turret.stl
 upper_arm,1,SLS PA12-GF (glass filled),176.6,98.1,134.9,284.1,stl/upper_arm.stl
-forearm,1,SLS PA12,87.8,80.0,72.2,184.0,stl/forearm.stl
-wrist_yoke,1,SLS PA12,76.4,72.2,100.5,83.9,stl/wrist_yoke.stl
-wrist_link,1,SLS PA12,78.1,72.2,72.8,156.0,stl/wrist_link.stl
+forearm,1,SLS PA12,90.0,80.0,72.2,184.0,stl/forearm.stl
+wrist_yoke,1,SLS PA12,77.8,72.2,100.0,83.9,stl/wrist_yoke.stl
+wrist_link,1,SLS PA12,80.0,72.2,72.8,155.5,stl/wrist_link.stl
 j2_drive_housing,1,SLS PA12-GF (glass filled),80.8,102.0,102.0,26.5,stl/j2_drive_housing.stl
-j2_drive_cap,1,SLS PA12,38.9,102.0,102.0,11.5,stl/j2_drive_cap.stl
+j2_drive_cap,1,SLS PA12,22.4,102.0,102.0,11.5,stl/j2_drive_cap.stl
 j2_drive_disc_a,1,SLS PA12-GF (glass filled),32.7,85.1,85.5,7.0,stl/j2_drive_disc_a.stl
 j2_drive_disc_b,1,SLS PA12-GF (glass filled),32.7,85.5,85.1,7.0,stl/j2_drive_disc_b.stl
 j2_drive_eccentric,1,SLS PA12-GF (glass filled),1.8,16.8,15.0,15.5,stl/j2_drive_eccentric.stl
 j2_drive_output_flange,1,SLS PA12-GF (glass filled),45.0,63.0,63.0,16.5,stl/j2_drive_output_flange.stl
-j1_j3_drive_housing,2,SLS PA12-GF (glass filled),53.1,86.0,86.0,23.0,stl/j1_j3_drive_housing.stl
-j1_j3_drive_cap,2,SLS PA12,31.0,86.0,86.0,8.5,stl/j1_j3_drive_cap.stl
+j1_j3_drive_housing,2,SLS PA12-GF (glass filled),49.7,86.0,86.0,23.0,stl/j1_j3_drive_housing.stl
+j1_j3_drive_cap,2,SLS PA12,18.9,86.0,86.0,8.5,stl/j1_j3_drive_cap.stl
 j1_j3_drive_disc_a,2,SLS PA12-GF (glass filled),19.4,69.3,69.4,6.0,stl/j1_j3_drive_disc_a.stl
 j1_j3_drive_disc_b,2,SLS PA12-GF (glass filled),19.4,69.3,69.4,6.0,stl/j1_j3_drive_disc_b.stl
 j1_j3_drive_eccentric,2,SLS PA12-GF (glass filled),1.2,13.8,12.0,13.5,stl/j1_j3_drive_eccentric.stl
 j1_j3_drive_output_flange,2,SLS PA12-GF (glass filled),18.9,52.0,52.0,13.5,stl/j1_j3_drive_output_flange.stl
-wrist_drive_housing,3,SLS PA12-GF (glass filled),30.1,62.0,62.0,21.0,stl/wrist_drive_housing.stl
-wrist_drive_cap,3,SLS PA12,16.1,62.0,62.0,8.5,stl/wrist_drive_cap.stl
+wrist_drive_housing,3,SLS PA12-GF (glass filled),28.0,61.0,61.0,21.0,stl/wrist_drive_housing.stl
+wrist_drive_cap,3,SLS PA12,9.9,61.0,61.0,8.5,stl/wrist_drive_cap.stl
 wrist_drive_disc_a,3,SLS PA12-GF (glass filled),5.7,45.7,45.9,5.0,stl/wrist_drive_disc_a.stl
 wrist_drive_disc_b,3,SLS PA12-GF (glass filled),5.7,45.7,45.9,5.0,stl/wrist_drive_disc_b.stl
 wrist_drive_eccentric,3,SLS PA12-GF (glass filled),1.0,13.4,12.0,11.5,stl/wrist_drive_eccentric.stl

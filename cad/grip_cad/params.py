@@ -90,7 +90,7 @@ J2_DRIVE = Cyclo("J2 shoulder 30:1", NEMA23_56, 31, 44.0, 2.0, 0.9, 7.0, 8, 26.0
 J13_DRIVE = Cyclo("J1/J3 25:1", NEMA17_60, 26, 36.0, 2.0, 0.9, 6.0, 6, 21.0, 4.0, B6808, B6801,
                   ring_pin_len=20.0, out_pin_len=16.0)
 WRIST_DRIVE = Cyclo("J4-J6 wrist 15:1", NEMA17_34, 16, 24.0, 1.5, 0.7, 5.0, 6, 14.0, 3.0, B6805, B6801,
-                    ring_pin_len=16.0, out_pin_len=14.0, wall=5.5)
+                    ring_pin_len=16.0, out_pin_len=14.0, wall=5.0)
 
 
 @dataclass(frozen=True)

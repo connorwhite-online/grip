@@ -65,7 +65,7 @@ def socket(c: Cyclo, loc: Location):
     cut += motor_pocket
     r = cy.screw_circle_r(c)
     for a in cy.screw_angles(c):
-        cut += _local_cyl(INSERT_D / 2, L.housing_bot - 7.0, L.housing_bot, r * cos(a * pi / 180), r * sin(a * pi / 180))
+        cut += _local_cyl(INSERT_D / 2, L.housing_bot - 9.0, L.housing_bot, r * cos(a * pi / 180), r * sin(a * pi / 180))
     return loc * add, loc * cut
 
 

@@ -8,13 +8,13 @@ from dataclasses import dataclass
 from math import cos, sin, pi, atan2, sqrt
 
 from build123d import (
-    Align, Axis, Box, Cylinder, Location, Part, Pos, Rot, Spline, Wire, make_face, extrude,
+    Align, Axis, Box, Cylinder, GeomType, Location, Part, Pos, Rot, Spline, Wire, make_face, extrude,
 )
 
 from .params import Cyclo
 
 SCREW_D = 3.4        # M3 clearance
-CBORE_R = 3.1        # M3 socket head counterbore in the cap
+HEAD_R = 2.75        # M3 socket head (Ø5.5); the heads sit on the cap's outer step
 N_SCREWS = 6
 
 
@@ -52,7 +52,8 @@ def check_pins(c: Cyclo):
     r = screw_circle_r(c)
     d = sqrt(r * r + c.pin_circle_r ** 2 - 2 * r * c.pin_circle_r * cos(pi / c.n_pins))
     assert d - c.pin_r - SCREW_D / 2 >= 1.0, f"{c.name}: screw holes too close to the ring pins"
-    assert c.housing_r - r - CBORE_R >= 0.9, f"{c.name}: cap counterbores break out of the rim"
+    assert c.housing_r - r - SCREW_D / 2 >= 1.2, f"{c.name}: screw holes too close to the housing rim"
+    assert r - HEAD_R >= c.out_bearing.od / 2 + CAP_BOSS + 1.0, f"{c.name}: screw heads hit the cap's bearing boss"
     floor = L.cap_bot - c.ring_pin_len
     assert L.housing_bot + 1.5 <= floor <= L.bore_bot, f"{c.name}: ring pins {c.ring_pin_len} mm don't fit"
     depth = L.disc2[0] + c.out_pin_len - L.plate_bot
@@ -149,19 +150,41 @@ def housing(c: Cyclo) -> Part:
     for a in screw_angles(c):
         r = screw_circle_r(c)
         body -= _cyl(SCREW_D / 2, L.housing_bot, L.cap_bot, r * cos(a * pi / 180), r * sin(a * pi / 180))
+    # lighten the floor from below, outside the motor flange and inside the ring pins
+    r_in = c.pin_circle_r - c.pin_r - 1.5
+    depth = (L.bore_bot - L.housing_bot) - 2.5
+    if r_in > m.frame / 2 * sqrt(2) + 1.0:
+        body -= _cyl(r_in, L.housing_bot, L.housing_bot + depth) - Pos(0, 0, L.housing_bot) * Box(
+            m.frame + 2.0, m.frame + 2.0, depth, align=(Align.CENTER, Align.CENTER, Align.MIN))
     return body
 
 
+CAP_BOSS = 3.0       # wall round the output bearing seat
+
+
+def cap_step(c: Cyclo) -> float:
+    """Thickness of the cap's outer ring, where the screw heads sit (3 mm head + 1 mm under the top)."""
+    L = layout(c)
+    return min(L.cap_top - L.cap_bot - 4.0, 5.0)
+
+
 def cap(c: Cyclo) -> Part:
+    """Bearing boss in the middle, a thinner clamping ring outside it. The step saves
+    material and lets the through-bolt heads sit below the output face uncounterbored."""
     L = layout(c)
     ob = c.out_bearing
-    body = _cyl(c.housing_r, L.cap_bot, L.cap_top)
+    t = cap_step(c)
+    body = _cyl(ob.od / 2 + CAP_BOSS, L.cap_bot, L.cap_top) + _cyl(c.housing_r, L.cap_bot, L.cap_bot + t)
+    try:
+        body = body.fillet(1.2, body.edges().filter_by(GeomType.CIRCLE).filter_by(
+            lambda e: abs(e.center().Z - (L.cap_bot + t)) < 1e-3 and e.radius > ob.od / 2 + CAP_BOSS + 0.5))
+    except Exception:
+        pass
     body -= _cyl(ob.od / 2 - 0.05, L.cap_bot, L.cap_top - 1.5)       # press-fit seat
     body -= _cyl(ob.od / 2 - 2.0, L.cap_bot, L.cap_top)              # retaining lip
     for a in screw_angles(c):
         r = screw_circle_r(c)
         body -= _cyl(SCREW_D / 2, L.cap_bot, L.cap_top, r * cos(a * pi / 180), r * sin(a * pi / 180))
-        body -= _cyl(CBORE_R, L.cap_top - 3.0, L.cap_top, r * cos(a * pi / 180), r * sin(a * pi / 180))
     return body
 
 
