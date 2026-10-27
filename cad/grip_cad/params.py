@@ -97,7 +97,7 @@ class ArmGeometry:
     y_upper: float = -48.0      # upper arm mid-plane
     y_forearm: float = -25.0    # forearm / wrist centre line
     base_r: float = 85.0
-    shell_wall: float = 2.6     # SLS PA12 wall
+    shell_wall: float = 2.0     # SLS PA12 wall; peak bending stress stays under ~6 MPa
 
     @property
     def z_j3(self):

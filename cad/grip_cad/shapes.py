@@ -82,6 +82,10 @@ def revolve_profile(points, axis, base, grow=0.0, end_tangent=None, start_tangen
     uniform even where the surface is nearly flat.
     """
     from build123d import Axis as A, Kind, Polyline, Rectangle, Spline, offset, revolve
+    # a profile that closes on the axis leaves a pole in the surface, which meshes as a
+    # non-manifold fan; end on a tiny flat disc instead (tangent-continuous, invisible)
+    if points[-1][0] < 2.0:
+        points = [*points[:-1], (2.0, points[-1][1])]
     tangents = None
     if start_tangent or end_tangent:
         tangents = [(*(start_tangent or (points[1][0] - points[0][0], points[1][1] - points[0][1])), 0),

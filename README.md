@@ -39,7 +39,9 @@ cad/
 exports/
   step/                   one STEP per printed part + grip_assembly.step
   stl/                    one STL per printed part
+  stl/kits/               the small parts joined on snap-off sprues, for print bureaus
   printed_parts.csv       part, quantity, material, volume, bounding box
+  service_kits.csv        the same for the sprue kits
 docs/img/                 renders
 ```
 
@@ -57,6 +59,28 @@ python preview.py /tmp/grip --pose 30,50,55,0,60,0
 
 Change a number in `params.py` and rebuild. Socket sizes, bolt patterns and pod shapes all follow from it.
 
+## Printing
+
+All shells are hollow with 2 mm walls. Every link has at least two cable ports, which also serve as powder escape holes. `build.py` refuses to export any part that isn't a single closed, manifold body.
+
+There are two ways to print:
+
+- **Your own SLS machine:** print the individual files in `exports/stl/`.
+- **A print bureau:** bureaus charge a minimum of about $11 per part, however small. So the 36 small gearbox and gripper parts are joined into sprue kits in `exports/stl/kits/`. That makes the order 15 pieces instead of 50. Snip the 1.8 mm tabs and file the nubs flush. The tabs sit on top faces, away from bores, lobes and bearing seats.
+
+| Order for a bureau | Qty | Material |
+| --- | --- | --- |
+| base, turret, upper_arm, forearm, wrist_yoke, wrist_link, gripper_palm | 1 each | SLS PA12 |
+| kit_j2_drive | 1 | SLS PA12 |
+| kit_j1_j3_drive | 2 | SLS PA12 |
+| kit_wrist_drive | 3 | SLS PA12 |
+| kit_gripper | 1 | SLS PA12 |
+| kit_fingers | 1 | SLS TPU 90A–95A |
+
+Total printed volume is about 1,600 cm³.
+
+![Sprue kit for the J1/J3 gearbox](docs/img/kit_j1_j3_drive.png)
+
 ## How a joint works
 
 Each joint is the same parametric module in three sizes. A stepper turns a two-lobe eccentric, which drives two cycloidal discs, 180° out of phase, around a ring of steel dowel pins. Output pins carry the slow rotation to a flange that runs in a thin-section bearing. The housing drops into a socket in the parent link and is held by six M3 screws into heat-set inserts. The child link's hub bolts to the output flange.
@@ -70,7 +94,9 @@ Each joint is the same parametric module in three sizes. A stepper turns a two-l
 ## Roadmap
 
 - [x] Concept CAD, all parts exporting
-- [ ] Cost optimization pass
+- [x] Printability fixes (single manifold bodies, powder escape)
+- [x] Cost pass 1: thinner walls, lighter sockets, sprue kits (50 pieces down to 15)
+- [ ] Cost pass 2: bureau re-quote, cheaper bought parts
 - [ ] Build guide with technical drawings
 - [ ] BOM with purchase links
 - [ ] First print and gearbox bench test

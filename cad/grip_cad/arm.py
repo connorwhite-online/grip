@@ -48,9 +48,16 @@ def socket(c: Cyclo, loc: Location):
     """
     L = cy.layout(c)
     m = c.motor
-    # generous: only the part inside the skin survives, and it must reach the skin
-    sleeve_r = c.housing_r + FIT + 12.0
-    add = _local_cyl(sleeve_r, L.housing_bot - 6.0, L.cap_bot)
+    # an 8 mm sleeve round the housing plus a ledge web out to the skin; only the part
+    # inside the skin survives (it is carved out of the hollow core, see _shell)
+    sleeve = _local_cyl(c.housing_r + FIT + 8.0, L.housing_bot - 6.0, L.cap_bot)
+    web = _local_cyl(c.housing_r + 40.0, L.housing_bot - 6.0, L.housing_bot)
+    # drain holes so the chamber above the web isn't a sealed powder trap
+    rd = c.housing_r + FIT + 8.0 + 4.0
+    for k in range(6):
+        a = 2 * pi * (k + 0.5) / 6
+        web -= _local_cyl(3.0, L.housing_bot - 7.0, L.housing_bot + 1.0, rd * cos(a), rd * sin(a))
+    add = sleeve + web
     cut = _local_cyl(c.housing_r + FIT, L.housing_bot, L.cap_top + 2.0)
     half = m.frame / 2 + 0.6
     motor_pocket = Pos(0, 0, L.motor_bot - 1.0) * Box(2 * half, 2 * half, L.housing_bot - L.motor_bot + 1.0,
@@ -82,6 +89,13 @@ POD_J3 = [(47, 0), (49, 18), (45, 42), (37, 64), (35.5, 88), (31, 97), (0, 101)]
 POD_WRIST = [(34, 0), (36, 15), (35.5, 40), (33.5, 58), (28, 68), (0, 71)]
 
 
+def cable_port(start, direction=(-1, 0, 0), r=5.0, length=70.0):
+    """Hole from inside a link out through its back wall. Doubles as an SLS powder escape."""
+    from build123d import Axis as A, Plane
+    plane = Plane(origin=start, z_dir=direction)
+    return plane.location * Cylinder(r, length, align=(Align.CENTER, Align.CENTER, Align.MIN))
+
+
 def pod(base, axis, profile):
     return lambda g: revolve_profile(profile, axis, base, g, start_tangent=(0.35, 1.0), end_tangent=(-1.0, 0.0))
 
@@ -110,15 +124,15 @@ def base() -> Part:
     c, loc = JOINTS["j1"]
     add, cut = socket(c, loc)
     top = G.z_j1_out - 1.0                      # flush with the J1 cap
-    bell = lambda g: revolve_profile([(88, 0), (92, 5), (82, 20), (62, 55), (52, 92), (c.housing_r + 5, top)],
-                                     "Z", (0, 0, 0), g, start_tangent=(0.4, 1.0), end_tangent=(-0.05, 1.0))
+    bell = lambda g: revolve_profile([(80, 0), (74, 12), (64, 30), (55, 62), (50, 95), (c.housing_r + 5, top)],
+                                     "Z", (0, 0, 0), g, start_tangent=(-0.25, 1.0), end_tangent=(-0.05, 1.0))
     bosses = []
     cuts = [cut,
             _local_cyl(40.0, -1.0, 3.0),                                          # service opening
-            Pos(0, 70, 22) * Rot(90, 0, 0) * Cylinder(CABLE_R, 40)]               # cable exit, back
+            Pos(0, 60, 22) * Rot(90, 0, 0) * Cylinder(CABLE_R, 40)]               # cable exit, back
     for k in range(3):
         a = pi / 2 + k * 2 * pi / 3
-        x, y = 76 * cos(a), 76 * sin(a)
+        x, y = 66 * cos(a), 66 * sin(a)
         bosses.append(_local_cyl(8.0, 0.0, 16.0, x, y))
         cuts.append(_local_cyl(3.2, -1.0, 10.0, x, y))                           # M5 heat-set insert, from below
     return _shell([bell], extra_add=[add, *bosses], cuts=cuts)
@@ -136,7 +150,8 @@ def turret() -> Part:
                           ((0, 20, G.z_j2 - 25), (40, 36))], g)
     shell = pod((0, G.y_j2_out + 1.0, G.z_j2), "Y", POD_J2)
     cuts = [cut, hub_bolts(c1, l1, hub_t),
-            Pos(0, 36, z_hub + 28) * Rot(-60, 0, 0) * Cylinder(CABLE_R, 40)]   # cable port, back
+            Pos(0, 36, z_hub + 28) * Rot(-60, 0, 0) * Cylinder(CABLE_R, 40),   # cable port, back
+            cable_port((0, 45, G.z_j2))]
     return _shell([shell, hub, neck], extra_add=[add], cuts=cuts)
 
 
@@ -152,7 +167,8 @@ def upper_arm() -> Part:
                          ((0, -60, G.z_j2 + 130), (26, 17)),
                          ((0, -67, G.z_j3 - 40), (32, 19))], g)
     shell = pod((0, y_j3_out - 1.0, G.z_j3), "-Y", POD_J3)
-    cuts = [cut, hub_bolts(c2, l2, hub_t)]
+    cuts = [cut, hub_bolts(c2, l2, hub_t),
+            cable_port((0, -52, G.z_j2 + 45)), cable_port((0, -110, G.z_j3))]
     return _shell([hub, arm, shell], extra_add=[add], cuts=cuts)
 
 
@@ -168,7 +184,8 @@ def forearm() -> Part:
                          ((0, G.y_forearm - 2, G.z_j3 + 55), (23, 15)),
                          ((0, G.y_forearm, z_out4 - 75), (27, 24))], g)
     shell = pod((0, G.y_forearm, z_out4 - 1.0), "-Z", POD_WRIST)
-    cuts = [cut, hub_bolts(c3, l3, hub_t)]
+    cuts = [cut, hub_bolts(c3, l3, hub_t),
+            cable_port((0, G.y_forearm - 3, G.z_j3 + 30)), cable_port((0, G.y_forearm, G.z_j5 - 95))]
     return _shell([hub, arm, shell], extra_add=[add], cuts=cuts)
 
 
@@ -183,7 +200,8 @@ def wrist_yoke() -> Part:
     neck = lambda g: bone([((0, G.y_forearm, z_hub + 3), (24, 24)),
                           ((0, G.y_forearm + 12, G.z_j5 - 14), (25, 25))], g)
     shell = pod((0, y_j5_out + 1.0, G.z_j5), "Y", POD_WRIST)
-    cuts = [cut, hub_bolts(c4, l4, hub_t)]
+    cuts = [cut, hub_bolts(c4, l4, hub_t),
+            cable_port((0, 12, G.z_j5), r=4.0), cable_port((0, G.y_forearm + 6, G.z_j5 - 22), r=4.0)]
     return _shell([hub, neck, shell], extra_add=[add], cuts=cuts, seam=5.0)
 
 
@@ -199,7 +217,8 @@ def wrist_link() -> Part:
                          ((0, y_hub - 1, G.z_j5 + 30), (23, 10)),
                          ((0, G.y_forearm - 14, G.z_flange - 58), (26, 15))], g)
     shell = pod((0, G.y_forearm, G.z_flange - 1.0), "-Z", POD_WRIST)
-    cuts = [cut, hub_bolts(c5, l5, hub_t)]
+    cuts = [cut, hub_bolts(c5, l5, hub_t),
+            cable_port((0, y_hub - 1, G.z_j5 + 25), r=4.0), cable_port((0, G.y_forearm, G.z_flange - 50), r=4.0)]
     return _shell([hub, arm, shell], extra_add=[add], cuts=cuts, seam=5.0)
 
 

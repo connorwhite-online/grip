@@ -84,7 +84,7 @@ def rack(length, module, width, base_h, pressure=20.0):
     return extrude(make_face(Polygon(*pts, align=None)), width)
 
 
-def fin_ray(height=FINGER_H, base=FINGER_BASE, width=FINGER_W, skin=1.6, ribs=6):
+def fin_ray(height=FINGER_H, base=FINGER_BASE, width=FINGER_W, skin=1.8, ribs=6):
     """Fin-ray finger in the XZ plane (contact face along x=0, back flank slanting),
     extruded along Y. Print in TPU 90A-95A."""
     tri = [(0, 0), (base, 0), (3.0, height), (0, height)]
@@ -95,7 +95,7 @@ def fin_ray(height=FINGER_H, base=FINGER_BASE, width=FINGER_W, skin=1.6, ribs=6)
     for i in range(1, ribs + 1):
         z = 2.5 + i * (height - 10) / (ribs + 1)
         # ribs tilt down toward the contact face, which is what makes fin-ray wrap
-        rib = Pos(base / 2, z, 0) * Rot(0, 0, -12) * make_face(Polygon((-base, -0.6), (base, -0.6), (base, 0.6), (-base, 0.6), align=None))
+        rib = Pos(base / 2, z, 0) * Rot(0, 0, -12) * make_face(Polygon((-base, -0.8), (base, -0.8), (base, 0.8), (-base, 0.8), align=None))
         profile = profile + (rib & outer)
     solid = extrude(profile, width)               # in XY, extruded +Z
     # map local (x, y=height, z=width) -> gripper (x, z, y)
@@ -156,7 +156,8 @@ def gripper_local():
     for side, name in ((1, "a"), (-1, "b")):
         x_c = side * (OPEN + 8)
         parts[f"carriage_{name}"] = (_box(x_c - 15.4, x_c + 15.4, RAIL_Y - 8.5, RAIL_Y + 8.5, Z_DECK + 3.0, Z_DECK + 13.0), "vendor")
-        parts[f"jaw_{name}"] = (jaw(side), "drive")
+        rk_part = parts.pop(f"rack_{name}")[0]
+        parts[f"jaw_{name}"] = (jaw(side) + rk_part, "drive")      # rack printed as part of the jaw
         f = fin_ray()          # contact face on x = 0, toward the centre
         f = Pos(OPEN, 0, Z_DECK + 18) * f if side > 0 else Pos(-OPEN, 0, Z_DECK + 18) * Rot(0, 0, 180) * f
         parts[f"finger_{name}"] = (f, "tpu")
