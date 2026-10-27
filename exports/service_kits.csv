@@ -1,6 +1,6 @@
 kit,qty,material,volume_cm3,bbox_x_mm,bbox_y_mm,bbox_z_mm,stl
-kit_j2_drive,1,SLS PA12,225.8,209.0,260.5,30.5,stl/kits/kit_j2_drive.stl
-kit_j1_j3_drive,2,SLS PA12,150.3,251.3,160.4,28.5,stl/kits/kit_j1_j3_drive.stl
-kit_wrist_drive,3,SLS PA12,63.2,242.8,101.0,26.5,stl/kits/kit_wrist_drive.stl
-kit_gripper,1,SLS PA12,21.2,159.8,54.0,21.5,stl/kits/kit_gripper.stl
-kit_fingers,1,SLS TPU 90A-95A,22.2,65.0,22.0,77.5,stl/kits/kit_fingers.stl
+kit_j2_drive,1,SLS PA12,221.9,102.0,102.0,92.5,stl/kits/kit_j2_drive.stl
+kit_j1_j3_drive,2,SLS PA12,143.6,86.0,86.0,80.5,stl/kits/kit_j1_j3_drive.stl
+kit_wrist_drive,3,SLS PA12,58.1,59.0,59.0,74.5,stl/kits/kit_wrist_drive.stl
+kit_gripper,1,SLS PA12,20.2,64.0,54.0,44.0,stl/kits/kit_gripper.stl
+kit_fingers,1,SLS TPU 90A-95A,21.6,30.0,22.0,146.0,stl/kits/kit_fingers.stl

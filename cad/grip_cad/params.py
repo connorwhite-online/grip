@@ -27,9 +27,9 @@ class Stepper:
     shaft_len: float
 
 
-NEMA17_60 = Stepper("NEMA17 60mm 0.65Nm", 42.3, 60.0, 31.0, 3.4, 22.0, 2.0, 5.0, 24.0)
-NEMA17_34 = Stepper("NEMA17 34mm pancake 0.28Nm", 42.3, 34.0, 31.0, 3.4, 22.0, 2.0, 5.0, 20.0)
-NEMA23_56 = Stepper("NEMA23 56mm 1.2Nm", 56.4, 56.0, 47.14, 5.2, 38.1, 1.6, 8.0, 21.0)
+NEMA17_60 = Stepper("NEMA17 60mm 0.65Nm (17HS24-2104D)", 42.3, 60.0, 31.0, 3.4, 22.0, 2.0, 5.0, 24.0)
+NEMA17_34 = Stepper("NEMA17 34mm 0.26Nm (17HS13-0404D)", 42.3, 34.0, 31.0, 3.4, 22.0, 2.0, 5.0, 20.0)
+NEMA23_56 = Stepper("NEMA23 56mm 1.26Nm (23HS22-2804D)", 56.4, 56.0, 47.14, 5.2, 38.1, 1.6, 8.0, 21.0)
 
 B6801 = Bearing("6801-2RS", 12, 21, 5)
 B6802 = Bearing("6802-2RS", 15, 24, 5)
@@ -53,6 +53,8 @@ class Cyclo:
     out_pin_d: float
     out_bearing: Bearing
     ecc_bearing: Bearing
+    ring_pin_len: float = 20.0   # stock dowel length; holes run into the housing floor as needed
+    out_pin_len: float = 16.0
     wall: float = 5.0
     clearance: float = 0.15   # SLS fit clearance on sliding surfaces
 
@@ -80,9 +82,12 @@ class Cyclo:
 
 
 # Joint drives (version B)
-J2_DRIVE = Cyclo("J2 shoulder 30:1", NEMA23_56, 31, 44.0, 2.0, 0.9, 7.0, 8, 26.0, 5.0, B6812, B6802)
-J13_DRIVE = Cyclo("J1/J3 25:1", NEMA17_60, 26, 36.0, 2.0, 0.9, 6.0, 6, 21.0, 4.0, B6808, B6801)
-WRIST_DRIVE = Cyclo("J4-J6 wrist 15:1", NEMA17_34, 16, 24.0, 1.5, 0.7, 5.0, 6, 14.0, 3.0, B6805, B6801, wall=4.0)
+J2_DRIVE = Cyclo("J2 shoulder 30:1", NEMA23_56, 31, 44.0, 2.0, 0.9, 7.0, 8, 26.0, 5.0, B6812, B6802,
+                 ring_pin_len=20.0, out_pin_len=18.0)
+J13_DRIVE = Cyclo("J1/J3 25:1", NEMA17_60, 26, 36.0, 2.0, 0.9, 6.0, 6, 21.0, 4.0, B6808, B6801,
+                  ring_pin_len=20.0, out_pin_len=16.0)
+WRIST_DRIVE = Cyclo("J4-J6 wrist 15:1", NEMA17_34, 16, 24.0, 1.5, 0.7, 5.0, 6, 14.0, 3.0, B6805, B6801,
+                    ring_pin_len=16.0, out_pin_len=14.0, wall=4.0)
 
 
 @dataclass(frozen=True)

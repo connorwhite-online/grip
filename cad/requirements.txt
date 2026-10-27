@@ -2,3 +2,4 @@ build123d==0.13.0
 numpy
 matplotlib
 trimesh
+rtree

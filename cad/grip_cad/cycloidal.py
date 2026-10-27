@@ -46,6 +46,14 @@ class CycloLayout:
     motor_bot: float
 
 
+def check_pins(c: Cyclo):
+    L = layout(c)
+    floor = L.cap_bot - c.ring_pin_len
+    assert L.housing_bot + 1.5 <= floor <= L.bore_bot, f"{c.name}: ring pins {c.ring_pin_len} mm don't fit"
+    depth = L.disc2[0] + c.out_pin_len - L.plate_bot
+    assert 2.0 <= depth <= 3.6, f"{c.name}: output pin socket depth {depth:.1f} mm out of range"
+
+
 def layout(c: Cyclo) -> CycloLayout:
     ob = c.out_bearing
     cap_top = -1.0
@@ -108,7 +116,7 @@ def output_flange(c: Cyclo) -> Part:
     body -= _cyl(c.motor.shaft_d / 2 + 2.0, L.plate_bot, 0.0)       # clearance for shaft tip
     for i in range(c.n_out):                                          # blind pin sockets
         a = 2 * pi * i / c.n_out
-        body -= _cyl(c.out_pin_d / 2 - 0.05, L.plate_bot, L.plate_bot + 3.5,
+        body -= _cyl(c.out_pin_d / 2 - 0.05, L.plate_bot, L.disc2[0] + c.out_pin_len + 0.3,
                      c.out_circle_r * cos(a), c.out_circle_r * sin(a))
     # child-link bolt pattern: M3 heat-set inserts in the hub face
     br = (ob.id / 2 + c.motor.shaft_d / 2 + 2.0) / 2
@@ -125,7 +133,7 @@ def housing(c: Cyclo) -> Part:
     body -= _cyl(c.pin_circle_r, L.bore_bot, L.cap_bot)
     for i in range(c.n_pins):
         a = 2 * pi * i / c.n_pins
-        body -= _cyl(c.pin_r - 0.03, L.bore_bot, L.cap_bot, c.pin_circle_r * cos(a), c.pin_circle_r * sin(a))
+        body -= _cyl(c.pin_r - 0.03, L.cap_bot - c.ring_pin_len - 0.3, L.cap_bot, c.pin_circle_r * cos(a), c.pin_circle_r * sin(a))
     body -= _cyl(m.pilot_d / 2 + 0.2, L.housing_bot, L.bore_bot)
     s = m.bolt_spacing / 2
     for x, y in [(s, s), (-s, s), (s, -s), (-s, -s)]:
@@ -156,7 +164,7 @@ def ring_pins(c: Cyclo) -> Part:
     pins = None
     for i in range(c.n_pins):
         a = 2 * pi * i / c.n_pins
-        p = _cyl(c.pin_r, L.bore_bot, L.cap_bot, c.pin_circle_r * cos(a), c.pin_circle_r * sin(a))
+        p = _cyl(c.pin_r, L.cap_bot - c.ring_pin_len, L.cap_bot, c.pin_circle_r * cos(a), c.pin_circle_r * sin(a))
         pins = p if pins is None else pins + p
     return pins
 
@@ -166,7 +174,7 @@ def output_pins(c: Cyclo) -> Part:
     pins = None
     for i in range(c.n_out):
         a = 2 * pi * i / c.n_out
-        p = _cyl(c.out_pin_d / 2, L.disc2[0], L.plate_bot + 3.5, c.out_circle_r * cos(a), c.out_circle_r * sin(a))
+        p = _cyl(c.out_pin_d / 2, L.disc2[0], L.disc2[0] + c.out_pin_len, c.out_circle_r * cos(a), c.out_circle_r * sin(a))
         pins = p if pins is None else pins + p
     return pins
 
@@ -195,6 +203,7 @@ def motor(c: Cyclo) -> Part:
 
 
 def printed_parts(c: Cyclo) -> dict:
+    check_pins(c)
     return {
         "housing": housing(c),
         "cap": cap(c),

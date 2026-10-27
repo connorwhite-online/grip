@@ -17,7 +17,7 @@ from build123d import Compound, export_step, export_stl
 from grip_cad import arm, cycloidal as cy
 from grip_cad.assembly import assembly_parts
 from grip_cad.gripper import gripper_local
-from grip_cad.kits import make_kit
+from grip_cad.kits import make_stack
 from grip_cad.params import J13_DRIVE, J2_DRIVE, WRIST_DRIVE
 
 PA12 = "SLS PA12"
@@ -57,13 +57,13 @@ def check_mesh(name, path):
 
 
 def kits():
-    """[(name, shape, qty, material)] — bureau-friendly sprue kits of the small parts."""
+    """[(name, shape, qty, material)] — bureau-friendly stacked kits of the small parts."""
     out = []
     for set_name, c, qty in DRIVE_SETS:
-        out.append((f"kit_{set_name}", make_kit(list(cy.printed_parts(c).values())), qty, PA12))
+        out.append((f"kit_{set_name}", make_stack(list(cy.printed_parts(c).values())), qty, PA12))
     g = gripper_local()
-    out.append(("kit_gripper", make_kit([g["pinion"][0], g["jaw_a"][0], g["jaw_b"][0]]), 1, PA12))
-    out.append(("kit_fingers", make_kit([g["finger_a"][0], g["finger_b"][0]]), 1, TPU))
+    out.append(("kit_gripper", make_stack([g["pinion"][0], g["jaw_a"][0], g["jaw_b"][0]]), 1, PA12))
+    out.append(("kit_fingers", make_stack([g["finger_a"][0], g["finger_b"][0]]), 1, TPU))
     return out
 
 

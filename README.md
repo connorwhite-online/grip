@@ -39,9 +39,12 @@ cad/
 exports/
   step/                   one STEP per printed part + grip_assembly.step
   stl/                    one STL per printed part
-  stl/kits/               the small parts joined on snap-off sprues, for print bureaus
+  stl/kits/               the small parts stacked into compact snap-off towers, for print bureaus
   printed_parts.csv       part, quantity, material, volume, bounding box
-  service_kits.csv        the same for the sprue kits
+  service_kits.csv        the same for the stacked kits
+bom/
+  bom.csv                 bought parts: spec, quantity, price, where to buy
+  BOM.md                  the same as a readable table (python bom/make_bom.py)
 docs/img/                 renders
 ```
 
@@ -66,7 +69,7 @@ All shells are hollow with 2 mm walls. Every link has at least two cable ports, 
 There are two ways to print:
 
 - **Your own SLS machine:** print the individual files in `exports/stl/`.
-- **A print bureau:** bureaus charge a minimum of about $11 per part, however small. So the 36 small gearbox and gripper parts are joined into sprue kits in `exports/stl/kits/`. That makes the order 15 pieces instead of 50. Snip the 1.8 mm tabs and file the nubs flush. The tabs sit on top faces, away from bores, lobes and bearing seats.
+- **A print bureau:** bureaus charge a minimum of about $11 per part, however small. Bureaus also price a part by its bounding box. So the 36 small gearbox and gripper parts are stacked into compact towers in `exports/stl/kits/`, with 2 mm air gaps and 1.6 mm pillars between neighbours. That makes the order 15 pieces instead of 50, and the stacked boxes are 40–60% smaller than flat sprue trees. Snip the pillars and file the nubs flush. They sit on flat faces near the outer edge, away from bores, lobes and bearing seats.
 
 | Order for a bureau | Qty | Material |
 | --- | --- | --- |
@@ -79,7 +82,7 @@ There are two ways to print:
 
 Total printed volume is about 1,600 cm³.
 
-![Sprue kit for the J1/J3 gearbox](docs/img/kit_j1_j3_drive.png)
+![Stacked kit for the J1/J3 gearbox: housing, cap, two discs, output flange and eccentric](docs/img/kit_j1_j3_drive.png)
 
 ## How a joint works
 
@@ -95,10 +98,10 @@ Each joint is the same parametric module in three sizes. A stepper turns a two-l
 
 - [x] Concept CAD, all parts exporting
 - [x] Printability fixes (single manifold bodies, powder escape)
-- [x] Cost pass 1: thinner walls, lighter sockets, sprue kits (50 pieces down to 15)
+- [x] Cost pass 1: thinner walls, lighter sockets, stacked kits (50 pieces down to 15, kit boxes 40–60% smaller)
 - [ ] Cost pass 2: bureau re-quote, cheaper bought parts
 - [ ] Build guide with technical drawings
-- [ ] BOM with purchase links
+- [ ] BOM with purchase links (draft in [bom/BOM.md](bom/BOM.md), bought parts about $590, some prices still estimates)
 - [ ] First print and gearbox bench test
 - [ ] URDF, ROS 2 / MoveIt 2 and LeRobot drivers
 
