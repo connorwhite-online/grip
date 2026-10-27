@@ -39,6 +39,7 @@ cad/
   preview.py              render PNG previews in any pose
   drawings.py             technical drawings (SVG) for the build guide
   exploded.py             exploded gearbox renders
+  urdf.py                 URDF with masses and inertias from the CAD -> urdf/
   render3d/               headless three.js renderer used by preview.py
 exports/
   step/                   one STEP per printed part + grip_assembly.step
@@ -54,6 +55,7 @@ docs/BUILD.md             build guide
 docs/FDM.md               printing at home: fits, materials, settings, cost
 docs/drawings/            technical drawings (python drawings.py)
 docs/img/                 renders (python preview.py, python exploded.py)
+urdf/                     grip.urdf + meshes, for ROS, MoveIt, MuJoCo, Isaac Sim (python urdf.py)
 ```
 
 ## Building the CAD
@@ -95,6 +97,17 @@ Total printed volume is about 1,600 cm³.
 
 ![Stacked kit for the J1/J3 gearbox: housing, cap, two discs, output flange and eccentric](docs/img/kit_j1_j3_drive.png)
 
+## Simulation
+
+`urdf/grip.urdf` is generated from the same CAD as the printed parts (`python cad/urdf.py`). It has six revolute joints with the real limits, two prismatic gripper jaws (jaw_b mimics jaw_a), and per-link masses and inertias summed from every part: printed parts at SLS PA12 density, steel at steel density, motors at catalogue weight. Effort and velocity limits are estimates (holding torque × ratio × 0.8; 600 rpm at the motor). It loads in MuJoCo as is:
+
+```python
+import mujoco
+m = mujoco.MjModel.from_xml_path("urdf/grip.urdf")
+```
+
+Holding the arm straight out takes about 7.9 N·m at the shoulder, against about 30 N·m available.
+
 ## How a joint works
 
 Each joint is the same parametric module in three sizes. A stepper turns a two-lobe eccentric, which drives two cycloidal discs, 180° out of phase, around a ring of steel dowel pins. Output pins carry the slow rotation to a flange that runs in a thin-section bearing. The housing drops into a socket in the parent link and is held by six M3 screws into heat-set inserts. The child link's hub bolts to the output flange.
@@ -115,7 +128,8 @@ Each joint is the same parametric module in three sizes. A stepper turns a two-l
 - [x] Build guide with technical drawings: [docs/BUILD.md](docs/BUILD.md) (first draft; nobody has built one yet)
 - [ ] BOM with purchase links (draft in [bom/BOM.md](bom/BOM.md), bought parts about $490, some prices still estimates)
 - [ ] First print and gearbox bench test
-- [ ] URDF, ROS 2 / MoveIt 2 and LeRobot drivers
+- [x] URDF generated from the CAD ([urdf/](urdf/))
+- [ ] ROS 2 / MoveIt 2 and LeRobot drivers
 
 ## License
 

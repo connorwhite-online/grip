@@ -3,3 +3,4 @@ numpy
 matplotlib
 trimesh
 rtree
+fast_simplification
