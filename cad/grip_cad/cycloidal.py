@@ -11,7 +11,7 @@ from build123d import (
     Align, Axis, Box, Cylinder, GeomType, Location, Part, Pos, Rot, Spline, Wire, make_face, extrude,
 )
 
-from .params import Cyclo
+from .params import PROCESS, Cyclo
 
 SCREW_D = 3.4        # M3 clearance
 HEAD_R = 2.75        # M3 socket head (Ø5.5); the heads sit on the cap's outer step
@@ -123,7 +123,7 @@ def output_flange(c: Cyclo) -> Part:
     body -= _cyl(c.motor.shaft_d / 2 + 2.0, L.plate_bot, 0.0)       # clearance for shaft tip
     for i in range(c.n_out):                                          # blind pin sockets
         a = 2 * pi * i / c.n_out
-        body -= _cyl(c.out_pin_d / 2 - 0.05, L.plate_bot, L.disc2[0] + c.out_pin_len + 0.3,
+        body -= _cyl(c.out_pin_d / 2 + PROCESS.pin_hole - 0.02, L.plate_bot, L.disc2[0] + c.out_pin_len + 0.3,
                      c.out_circle_r * cos(a), c.out_circle_r * sin(a))
     # child-link bolt pattern: M3 heat-set inserts in the hub face
     br = (ob.id / 2 + c.motor.shaft_d / 2 + 2.0) / 2
@@ -140,7 +140,7 @@ def housing(c: Cyclo) -> Part:
     body -= _cyl(c.pin_circle_r, L.bore_bot, L.cap_bot)
     for i in range(c.n_pins):
         a = 2 * pi * i / c.n_pins
-        body -= _cyl(c.pin_r - 0.03, L.cap_bot - c.ring_pin_len - 0.3, L.cap_bot, c.pin_circle_r * cos(a), c.pin_circle_r * sin(a))
+        body -= _cyl(c.pin_r + PROCESS.pin_hole, L.cap_bot - c.ring_pin_len - 0.3, L.cap_bot, c.pin_circle_r * cos(a), c.pin_circle_r * sin(a))
     body -= _cyl(m.pilot_d / 2 + 0.2, L.housing_bot, L.bore_bot)
     s = m.bolt_spacing / 2
     for x, y in [(s, s), (-s, s), (s, -s), (-s, -s)]:
@@ -180,7 +180,7 @@ def cap(c: Cyclo) -> Part:
             lambda e: abs(e.center().Z - (L.cap_bot + t)) < 1e-3 and e.radius > ob.od / 2 + CAP_BOSS + 0.5))
     except Exception:
         pass
-    body -= _cyl(ob.od / 2 - 0.05, L.cap_bot, L.cap_top - 1.5)       # press-fit seat
+    body -= _cyl(ob.od / 2 + PROCESS.bearing_seat, L.cap_bot, L.cap_top - 1.5)       # press-fit seat
     body -= _cyl(ob.od / 2 - 2.0, L.cap_bot, L.cap_top)              # retaining lip
     for a in screw_angles(c):
         r = screw_circle_r(c)

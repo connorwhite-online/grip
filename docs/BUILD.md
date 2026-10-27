@@ -47,12 +47,15 @@ All drawings are generated from the same CAD as the exports (`python cad/drawing
 | Gearbox into its socket, J1 and J3 | M3x35 socket head | 12 |
 | Gearbox into its socket, J4 to J6 | M3x30 socket head | 18 |
 | Child hub to output flange (all six joints, including the palm on J6) | M3x8 socket head | 24 |
-| Heat-set inserts, sockets and output flanges | M3 x 5.7 brass | 60 |
+| Heat-set inserts, sockets, output flanges, palm deck | M3 x 5.7 brass | 64 |
 | Base to table | M5 heat-set insert + M5x20 | 3 |
-| MGN7 rail to palm, carriages to jaws | M2x8 | 12 |
-| Fingers to jaws | M3x16 + M3 nyloc nut | 4 |
+| Gripper rod frame to palm | M3x12 socket head | 4 |
+| Guide rods in the frame | M3x6 set screw | 4 |
+| Fingers to jaws | M3x10 + M3 nyloc nut | 4 |
 
 ## 2. Prepare the printed parts
+
+*Printed them yourself on a filament printer? Follow [Prepare the parts in docs/FDM.md](FDM.md#prepare-the-parts) instead, then carry on from section 3.*
 
 1. **Depowder** everything, ideally by bead blasting. The links have at least two cable ports each, so blow air through them until nothing more comes out.
 2. **Break out the kits.** Clip each pillar close to the part with flush cutters, then file the nub flush. The nubs are on flat faces near the outer edge, so they never sit on a bearing seat or a lobe. Keep each gearbox's six parts together. Disc A and disc B look alike but are **not interchangeable**: B's holes are clocked half a lobe from A's.
@@ -118,11 +121,13 @@ Before each gearbox goes in, pass the CAN and power cable through the link's cab
 
 ![Gripper front view](drawings/gripper.svg)
 
-1. **Servo into the palm.** Drop the STS3215 into its pocket with the output shaft up through the deck, and fix it by its ears.
-2. **Rail.** Cut the MGN7 rail to 80 mm and screw it to the palm deck (2x M2x8). Slide both carriages on, and don't let the balls fall out.
-3. **Jaws.** Each jaw is printed with its rack. Screw each jaw to a carriage (4x M2x8 from the top), with the rack teeth facing the servo shaft.
-4. **Pinion.** Centre the jaws so they are mirror images, then fit the pinion so it meshes with both racks. Screw it to the servo horn. *VERIFY: the pinion in v0.1 has only a centre bore. Drill it to match your horn's screw holes.*
-5. **Fingers.** Put each TPU finger on its jaw. Fit two M3x16 up through the jaw plate and the finger's bottom skin, with a nyloc nut inside the finger's first cell.
+![Gripper: two jaws on Ø6 rods, rack and pinion underneath](img/gripper.png)
+
+1. **Servo into the palm.** Set four M3 heat-set inserts in the pads on the palm deck. Drop the STS3215 into its pocket with the output shaft up through the deck, and fix it by its ears.
+2. **Fingers onto the jaws.** Each jaw is printed with its rack. Put each TPU finger on its jaw and fit two M3x10 up from the pocket under the jaw, through the jaw top and the finger's bottom skin, with a nyloc nut inside the finger's first cell. Do this now: the screw heads are hard to reach once the jaws are on the rods.
+3. **Bearings into the jaws.** Press two LM6UU bearings into each jaw with the vise, flush with both faces.
+4. **Rods.** Set the jaws in the rod frame, racks facing each other, and push the two Ø6 x 150 rods in from one end post, through both jaws' bearings, into the other post. The rod ends sit flush with the posts. Lock each rod with an M3x6 set screw in the hole on top of each post (it cuts its own thread). The jaws should slide end to end under their own weight when you tilt the frame.
+5. **Frame onto the palm.** Bolt the frame to the deck (4x M3x12). Centre the jaws so they are mirror images, then fit the pinion so it meshes with both racks and screw it to the servo horn. *VERIFY: the pinion has only a centre bore. Drill it to match your horn's screw holes.*
 6. **Onto the arm.** Bolt the palm to the J6 output flange (4x M3x8).
 
 ## 6. Wiring

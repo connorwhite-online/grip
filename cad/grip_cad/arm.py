@@ -10,14 +10,15 @@ from math import cos, sin, pi, sqrt
 from build123d import Align, Box, Cylinder, Location, Part, Pos, Rot
 
 from . import cycloidal as cy
-from .params import GEOM, J13_DRIVE, J2_DRIVE, WRIST_DRIVE, Cyclo
+from .params import GEOM, J13_DRIVE, J2_DRIVE, PROCESS, WRIST_DRIVE, Cyclo
 from .shapes import bone, pill, puck, revolve_profile, soft_fuse, solids_only, union
 
 G = GEOM
 W = G.shell_wall
-FIT = 0.3            # radial clearance between a housing and its socket
+FIT = PROCESS.socket_fit   # radial clearance between a housing and its socket
 INSERT_D = 4.0       # M3 heat-set insert hole
 CABLE_R = 6.0
+W_FDM = 2.4          # FDM: skin kept round every internal cavity of a solid link
 
 UP = Rot(0, 0, 0)
 TO_NEG_Y = Rot(90, 0, 0)     # drive output faces -Y
@@ -135,28 +136,63 @@ def cable_port(start, direction=(-1, 0, 0), r=5.0, length=70.0):
     return plane.location * Cylinder(r, length, align=(Align.CENTER, Align.CENTER, Align.MIN))
 
 
+def driver_bay(c: Cyclo, loc: Location):
+    """FDM: room for the driver board on the motor's back (the SLS shells are hollow there)."""
+    L = cy.layout(c)
+    half = c.motor.frame / 2 + 0.6
+    t = DRIVER_T[c.motor.frame]
+    return loc * (Pos(0, 0, L.motor_bot - t - 2.0) * Box(2 * half, 2 * half, t + 3.0,
+                                                          align=(Align.CENTER, Align.CENTER, Align.MIN)))
+
+
+def cable_run(points, r=5.0):
+    """FDM: round cable tunnel along a polyline, from a cable port into the motor bay."""
+    from build123d import Plane, Sphere, Vector
+    pts = [Vector(*p) for p in points]
+    out = None
+    for a, b in zip(pts, pts[1:]):
+        d = b - a
+        seg = Plane(origin=a, z_dir=d.normalized()).location * Cylinder(r, d.length, align=(Align.CENTER, Align.CENTER, Align.MIN))
+        out = seg if out is None else out + seg
+    for p in pts[1:-1]:
+        out = out + Pos(p) * Sphere(r)
+    return out
+
+
 def pod(base, axis, profile):
     return lambda g: revolve_profile(profile, axis, base, g, start_tangent=(0.35, 1.0), end_tangent=(-1.0, 0.0))
 
 
-def _shell(outer_fns, extra_add=(), cuts=(), seam=8.0, channels=()):
+def _shell(outer_fns, extra_add=(), cuts=(), seam=8.0, channels=(), fdm=()):
     """outer_fns: callables grow -> Part. Hollow with wall W, keep socket material, then cut.
 
     channels are cut only inside the hollow core, so they open up internal walls and
     sleeves without ever piercing the outer skin.
+
+    For FDM (PROCESS.solid_links) the link stays solid, to be printed with infill, and
+    `fdm` (driver bays, cable runs) is cut out of it the same way as channels, so every
+    cavity stays open to a socket or a cable port and nothing is sealed in.
     """
     outer = soft_fuse([f(0.0) for f in outer_fns], seam)
-    core = union(*[f(-W) for f in outer_fns])
-    core0 = core
-    # keep socket material by carving it out of the core rather than fusing it back on;
-    # fusing near-coincident skins is where OCC booleans go wrong
-    for a in extra_add:
-        core = solids_only(core - a)
-    body = solids_only(outer - core)
-    for c in cuts:
-        body = solids_only(body - c)
-    for ch in channels:
-        body = solids_only(body - (ch & core0))
+    if PROCESS.solid_links:
+        core0 = union(*[f(-W_FDM) for f in outer_fns])
+        body = outer
+        for c in cuts:
+            body = solids_only(body - c)
+        for ch in (*channels, *fdm):
+            body = solids_only(body - (ch & core0))
+    else:
+        core = union(*[f(-W) for f in outer_fns])
+        core0 = core
+        # keep socket material by carving it out of the core rather than fusing it back on;
+        # fusing near-coincident skins is where OCC booleans go wrong
+        for a in extra_add:
+            core = solids_only(core - a)
+        body = solids_only(outer - core)
+        for c in cuts:
+            body = solids_only(body - c)
+        for ch in channels:
+            body = solids_only(body - (ch & core0))
     # booleans can leave slivers; anything under 1% of the main body is debris
     solids = sorted(body.solids(), key=lambda x: -x.volume)
     keep = [x for x in solids if x.volume > 0.01 * solids[0].volume]
@@ -181,7 +217,8 @@ def base() -> Part:
         x, y = 66 * cos(a), 66 * sin(a)
         bosses.append(_local_cyl(8.0, 0.0, 16.0, x, y))
         cuts.append(_local_cyl(3.2, -1.0, 10.0, x, y))                           # M5 heat-set insert, from below
-    return _shell([bell], extra_add=[add, *bosses], cuts=cuts)
+    fdm = [driver_bay(c, loc), cable_run([(0, 42, 22), (0, 15, 22)], r=CABLE_R)]
+    return _shell([bell], extra_add=[add, *bosses], cuts=cuts, fdm=fdm)
 
 
 def turret() -> Part:
@@ -198,7 +235,8 @@ def turret() -> Part:
     cuts = [cut, hub_bolts(c1, l1, hub_t),
             Pos(0, 36, z_hub + 28) * Rot(-60, 0, 0) * Cylinder(CABLE_R, 40),   # cable port, back
             cable_port((0, 45, G.z_j2))]
-    return _shell([shell, hub, neck], extra_add=[add], cuts=cuts, channels=[hub_access(c1, l1, c2, l2)])
+    fdm = [driver_bay(c2, l2), cable_run([(0, 19.5, z_hub + 18.5), (0, 16, z_hub + 39), (0, 22, G.z_j2 - 20)])]
+    return _shell([shell, hub, neck], extra_add=[add], cuts=cuts, channels=[hub_access(c1, l1, c2, l2)], fdm=fdm)
 
 
 def upper_arm() -> Part:
@@ -215,7 +253,9 @@ def upper_arm() -> Part:
     shell = pod((0, y_j3_out - 1.0, G.z_j3), "-Y", POD_J3)
     cuts = [cut, hub_bolts(c2, l2, hub_t, reach=45.0),
             cable_port((0, -52, G.z_j2 + 45)), cable_port((0, -110, G.z_j3))]
-    return _shell([hub, arm, shell], extra_add=[add], cuts=cuts)
+    fdm = [driver_bay(c3, l3),
+           cable_run([(0, -52, G.z_j2 + 45), (0, -57, G.z_j2 + 100), (0, -64, G.z_j3 - 42), (0, -90, G.z_j3 - 12)])]
+    return _shell([hub, arm, shell], extra_add=[add], cuts=cuts, fdm=fdm)
 
 
 def forearm() -> Part:
@@ -232,7 +272,9 @@ def forearm() -> Part:
     shell = pod((0, G.y_forearm, z_out4 - 1.0), "-Z", POD_WRIST)
     cuts = [cut, hub_bolts(c3, l3, hub_t, reach=45.0),
             cable_port((0, G.y_forearm - 3, G.z_j3 + 30)), cable_port((0, G.y_forearm, G.z_j5 - 95))]
-    return _shell([hub, arm, shell], extra_add=[add], cuts=cuts)
+    fdm = [driver_bay(c4, l4),
+           cable_run([(0, G.y_forearm - 3, G.z_j3 + 30), (0, G.y_forearm - 2, z_out4 - 87), (0, G.y_forearm, z_out4 - 77)])]
+    return _shell([hub, arm, shell], extra_add=[add], cuts=cuts, fdm=fdm)
 
 
 def wrist_yoke() -> Part:
@@ -248,8 +290,9 @@ def wrist_yoke() -> Part:
     shell = pod((0, y_j5_out + 1.0, G.z_j5), "Y", POD_WRIST)
     cuts = [cut, hub_bolts(c4, l4, hub_t),
             cable_port((0, 12, G.z_j5), r=4.0), cable_port((0, G.y_forearm + 6, G.z_j5 - 22), r=4.0)]
+    fdm = [driver_bay(c5, l5), cable_run([(0, G.y_forearm + 6, G.z_j5 - 22), (0, -5, G.z_j5 - 16)], r=4.0)]
     return _shell([hub, neck, shell], extra_add=[add], cuts=cuts, seam=5.0,
-                  channels=[hub_access(c4, l4, c5, l5)])
+                  channels=[hub_access(c4, l4, c5, l5)], fdm=fdm)
 
 
 def wrist_link() -> Part:
@@ -268,7 +311,10 @@ def wrist_link() -> Part:
     shell = pod((0, G.y_forearm, G.z_flange - 1.0), "-Z", POD_WRIST)
     cuts = [cut, hub_bolts(c5, l5, hub_t),
             cable_port((0, y_hub - 5, G.z_j5 + 25), r=4.0), cable_port((0, G.y_forearm, G.z_flange - 50), r=4.0)]
-    return _shell([hub, arm, shell], extra_add=[add], cuts=cuts, seam=5.0)
+    fdm = [driver_bay(c6, l6),
+           cable_run([(0, y_hub - 5, G.z_j5 + 25), (0, y_hub - 5, G.z_j5 + 44), (0, -40, G.z_flange - 72),
+                      (0, -30, G.z_flange - 70)], r=4.0)]
+    return _shell([hub, arm, shell], extra_add=[add], cuts=cuts, seam=5.0, fdm=fdm)
 
 
 LINKS = {

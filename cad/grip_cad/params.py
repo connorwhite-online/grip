@@ -3,7 +3,29 @@
 Vendor dimensions marked VERIFY are nominal catalogue values; check them against the
 part you actually buy before printing.
 """
+import os
 from dataclasses import dataclass, field
+
+
+@dataclass(frozen=True)
+class Process:
+    """Fits that depend on how the parts are made. Hole offsets are radial, in mm.
+
+    FDM holes come out a little under size, so FDM press fits are drawn at nominal;
+    print the fit coupon first and tune the slicer's hole compensation to it.
+    """
+    name: str
+    slide: float          # running clearance: cycloid lobes on ring pins, output pin holes
+    pin_hole: float       # steel dowel press fit
+    bearing_seat: float   # ball bearing press fit
+    socket_fit: float     # drive housing in its link socket
+    solid_links: bool     # FDM: solid links with cable channels; SLS: hollow shells
+
+
+SLS = Process("sls", 0.15, -0.03, -0.05, 0.30, False)
+FDM = Process("fdm", 0.20, 0.0, 0.0, 0.35, True)
+# choose with GRIP_PROCESS=fdm (build.py --fdm sets it)
+PROCESS = {"sls": SLS, "fdm": FDM}[os.environ.get("GRIP_PROCESS", "sls").lower()]
 
 
 @dataclass(frozen=True)
@@ -59,7 +81,7 @@ class Cyclo:
     ring_pin_len: float = 20.0   # stock dowel length; holes run into the housing floor as needed
     out_pin_len: float = 16.0
     wall: float = 5.0
-    clearance: float = 0.15   # SLS fit clearance on sliding surfaces
+    clearance: float = PROCESS.slide   # running clearance on sliding surfaces
 
     def __post_init__(self):
         # lobe tips swing out to R - rp + 2e; keep them inside the pin circle so the

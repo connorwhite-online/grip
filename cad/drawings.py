@@ -211,12 +211,12 @@ def gripper_sheet(path):
     sh = Sheet()
     sh.add("visible", *vis)
     bb = Compound(children=vis).bounding_box()
-    zf0 = gr.Z_DECK + 18
+    zf0 = gr.Z_DECK + gr.JAW_TOP
     sh.dim((-gr.OPEN, bb.max.Y), (gr.OPEN, bb.max.Y), 8, f"{2 * gr.OPEN:g} shown, 0 to {2 * gr.STROKE:g}")
     sh.dim((bb.max.X, zf0), (bb.max.X, zf0 + gr.FINGER_H), 8, f"{gr.FINGER_H:g}")
     sh.dim((bb.min.X, 0), (bb.min.X, bb.max.Y), -8, f"{bb.max.Y:.0f}")
     sh.text("Gripper: front view, scale 1:1, mm", bb.min.X - 10, bb.min.Y - 14, 4.0)
-    sh.text("STS3215 servo turns a 20-tooth module 1 pinion between two racks; jaws ride an MGN7 rail.",
+    sh.text("STS3215 servo turns a 20-tooth module 1 pinion between two racks; jaws ride two Ø6 rods on LM6UU bearings.",
             bb.min.X - 10, bb.min.Y - 20, 2.6)
     sh.text("TPU fin-ray fingers wrap around the object instead of pinching it.", bb.min.X - 10, bb.min.Y - 25, 2.6)
     sh.write(path, 1.0)

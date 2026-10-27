@@ -1,0 +1,31 @@
+part,qty,material,grams_each,solid_cm3,bbox_x_mm,bbox_y_mm,bbox_z_mm,fits,stl
+fit_coupon,1,FDM PETG,13,9.9,75.3,72.6,5.0,Ender-3 class 220x220x250,stl/fit_coupon.stl
+base,1,FDM PETG,352,948.3,160.0,160.0,119.0,Ender-3 class 220x220x250,stl/base.stl
+turret,1,FDM PETG,300,635.2,117.0,152.6,137.2,Ender-3 class 220x220x250,stl/turret.stl
+upper_arm,1,FDM PETG,271,520.5,98.1,283.9,134.9,Bambu A1/P1S/X1 256x256x256,stl/upper_arm.stl
+forearm,1,FDM PETG,140,217.0,80.0,72.0,184.0,Ender-3 class 220x220x250,stl/forearm.stl
+wrist_yoke,1,FDM PETG,109,166.7,72.1,83.9,100.0,Ender-3 class 220x220x250,stl/wrist_yoke.stl
+wrist_link,1,FDM PETG,122,181.6,72.0,72.8,155.5,Ender-3 class 220x220x250,stl/wrist_link.stl
+j2_drive_housing,1,FDM PETG,71,80.5,102.0,102.0,26.5,Ender-3 class 220x220x250,stl/j2_drive_housing.stl
+j2_drive_cap,1,FDM PETG,28,22.3,102.0,102.0,11.5,Ender-3 class 220x220x250,stl/j2_drive_cap.stl
+j2_drive_disc_a,1,FDM PETG-CF (or PA-CF),30,33.1,85.0,85.4,7.0,Ender-3 class 220x220x250,stl/j2_drive_disc_a.stl
+j2_drive_disc_b,1,FDM PETG-CF (or PA-CF),30,33.1,85.4,85.0,7.0,Ender-3 class 220x220x250,stl/j2_drive_disc_b.stl
+j2_drive_eccentric,1,FDM PETG-CF (or PA-CF),2,1.8,16.8,15.0,15.5,Ender-3 class 220x220x250,stl/j2_drive_eccentric.stl
+j2_drive_output_flange,1,FDM PETG-CF (or PA-CF),27,45.0,63.0,63.0,16.5,Ender-3 class 220x220x250,stl/j2_drive_output_flange.stl
+j1_j3_drive_housing,2,FDM PETG,54,49.5,86.0,86.0,23.0,Ender-3 class 220x220x250,stl/j1_j3_drive_housing.stl
+j1_j3_drive_cap,2,FDM PETG,23,18.8,86.0,86.0,8.5,Ender-3 class 220x220x250,stl/j1_j3_drive_cap.stl
+j1_j3_drive_disc_a,2,FDM PETG-CF (or PA-CF),19,18.5,69.2,69.3,6.0,Ender-3 class 220x220x250,stl/j1_j3_drive_disc_a.stl
+j1_j3_drive_disc_b,2,FDM PETG-CF (or PA-CF),19,18.5,69.2,69.3,6.0,Ender-3 class 220x220x250,stl/j1_j3_drive_disc_b.stl
+j1_j3_drive_eccentric,2,FDM PETG-CF (or PA-CF),2,1.2,13.8,12.0,13.5,Ender-3 class 220x220x250,stl/j1_j3_drive_eccentric.stl
+j1_j3_drive_output_flange,2,FDM PETG-CF (or PA-CF),16,18.9,52.0,52.0,13.5,Ender-3 class 220x220x250,stl/j1_j3_drive_output_flange.stl
+wrist_drive_housing,3,FDM PETG,29,28.0,61.0,61.0,21.0,Ender-3 class 220x220x250,stl/wrist_drive_housing.stl
+wrist_drive_cap,3,FDM PETG,12,9.8,61.0,61.0,8.5,Ender-3 class 220x220x250,stl/wrist_drive_cap.stl
+wrist_drive_disc_a,3,FDM PETG-CF (or PA-CF),7,5.6,45.6,45.8,5.0,Ender-3 class 220x220x250,stl/wrist_drive_disc_a.stl
+wrist_drive_disc_b,3,FDM PETG-CF (or PA-CF),7,5.6,45.6,45.8,5.0,Ender-3 class 220x220x250,stl/wrist_drive_disc_b.stl
+wrist_drive_eccentric,3,FDM PETG-CF (or PA-CF),1,1.0,13.4,12.0,11.5,Ender-3 class 220x220x250,stl/wrist_drive_eccentric.stl
+wrist_drive_output_flange,3,FDM PETG-CF (or PA-CF),9,7.6,37.0,37.0,13.5,Ender-3 class 220x220x250,stl/wrist_drive_output_flange.stl
+gripper_palm,1,FDM PETG,49,38.8,74.9,74.9,46.0,Ender-3 class 220x220x250,stl/gripper_palm.stl
+gripper_frame,1,FDM PETG,51,58.3,150.0,65.0,27.5,Ender-3 class 220x220x250,stl/gripper_frame.stl
+gripper_pinion,1,FDM PETG-CF (or PA-CF),3,2.2,21.8,21.8,8.0,Ender-3 class 220x220x250,stl/gripper_pinion.stl
+gripper_jaw,2,FDM PETG-CF (or PA-CF),19,15.2,26.0,65.0,68.5,Ender-3 class 220x220x250,stl/gripper_jaw.stl
+gripper_finger,2,FDM TPU 95A,13,10.7,30.0,72.0,22.0,Ender-3 class 220x220x250,stl/gripper_finger.stl

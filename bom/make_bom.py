@@ -8,9 +8,10 @@ HERE = Path(__file__).parent
 def main():
     rows = list(csv.DictReader(open(HERE / "bom.csv")))
     out = ["# GRIP bill of materials", "",
-           "Bought parts for version B. Prices marked *estimate* could not be read from the store page "
+           "Bought parts for version B; the same list serves both the SLS and the FDM edition. "
+           "Prices marked *estimate* could not be read from the store page "
            "(Amazon and AliExpress block automated reads); check them when ordering. "
-           "Printed parts are listed after, with the bureau quote noted separately.", ""]
+           "Printed parts are listed after.", ""]
     groups = {}
     for r in rows:
         groups.setdefault(r["group"], []).append(r)
@@ -35,6 +36,19 @@ def main():
                 f"{len(prows)} unique parts, {sum(int(r['qty']) for r in prows)} pieces, {vol:,.0f} cm³ in total. "
                 "Full list with materials in [exports/printed_parts.csv](../exports/printed_parts.csv); "
                 "bureau stacked kits in [exports/service_kits.csv](../exports/service_kits.csv).", ""]
+    fp = HERE.parent / "exports" / "fdm" / "printed_parts.csv"
+    if fp.exists():
+        frows = list(csv.DictReader(open(fp)))
+        by_mat = {}
+        for r in frows:
+            by_mat[r["material"]] = by_mat.get(r["material"], 0.0) + float(r["grams_each"]) * int(r["qty"])
+        out += ["## Printed parts, FDM edition", "",
+                "Filament for one arm, before supports and failed prints (allow about 15% more). "
+                "Per-part list in [exports/fdm/printed_parts.csv](../exports/fdm/printed_parts.csv); "
+                "settings in [docs/FDM.md](../docs/FDM.md).", "",
+                "| Material | Filament |", "| --- | ---: |"]
+        out += [f"| {m} | {g / 1000:.2f} kg |" for m, g in by_mat.items()]
+        out += [""]
     (HERE / "BOM.md").write_text("\n".join(out) + "\n")
     print(f"bought parts ${grand:,.2f}")
 

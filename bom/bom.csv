@@ -6,23 +6,24 @@ Motion,Closed-loop driver NEMA 17,"MKS SERVO42D, CAN version (magnet on rear sha
 Motion,Closed-loop driver NEMA 23,"MKS SERVO57D, CAN version",1,40.00,estimate,Makerbase (AliExpress),https://www.aliexpress.com/item/1005005389508166.html
 Gripper,Gripper servo,"Feetech STS3215, 12 V, 30 kg·cm, magnetic encoder",1,29.00,checked 2026-10-27 (EUR 26.51),OpenELAB,https://openelab.io/collections/feetech-motor
 Gripper,Bus servo adapter,"Waveshare Bus Servo Adapter (A), USB to TTL bus",1,4.99,checked 2026-10-27,Waveshare,https://www.waveshare.com/bus-servo-adapter-a.htm
-Gripper,Linear rail,"MGN7 rail 100 mm + 2x MGN7H carriage (cut rail to 80 mm)",1,25.00,estimate,Amazon,https://www.amazon.com/3-94in%EF%BC%89-Miniature-Carriage-Printer-Machine/dp/B00WKOFX8I
-Gearbox,Output bearing J2,"6812-2RS, 60x78x10",1,15.00,estimate,Amazon,https://www.amazon.com/6812-2RS-Ball-Bearing-60x78x10-Sealed/dp/B0CS7WLM61
-Gearbox,Output bearing J1/J3,"6808-2RS, 40x52x7",2,19.99,checked 2026-10-27,VXB,https://vxb.com/products/6808-2rs-bearing-40x52x7-sealed
-Gearbox,Output bearing wrist,"6805-2RS, 25x37x7",3,7.77,checked 2026-10-27,VXB,https://vxb.com/products/6805-2rs-bearing-25x37x7-sealed-25mm-bore
-Gearbox,Eccentric bearing J2,"6802-2RS, 15x24x5",2,7.77,checked 2026-10-27,VXB,https://vxb.com/products/6802-2rs-sealed-bearing-15x24x5
-Gearbox,Eccentric bearing J1/J3/wrist,"6801-2RS, 12x21x5 (10-pack)",1,29.99,checked 2026-10-27,VXB,https://vxb.com/products/10-pack-premium-6801-2rs-12x21x5mm-sealed-bearing
+Gripper,Guide rods,Ø6 x 150 mm hardened linear shaft (2),1,8.00,estimate,Amazon,https://www.amazon.com/s?k=6mm+x+150mm+linear+shaft
+Gripper,Linear bearings,"LM6UU, Ø6 x 12 x 19 (4 used, pack of 10)",1,7.00,estimate,Amazon,https://www.amazon.com/s?k=lm6uu+linear+bearing+10+pack
+Gearbox,Output bearing J2,"6812-2RS, 60x78x10 (uxcell)",1,11.49,checked 2026-10-27,Walmart,https://www.walmart.com/ip/Uxcell-60x78x10mm-6812-2RS-Double-Sealed-Ball-Bearings-Chrome-Steel/867130943
+Gearbox,Output bearing J1/J3,"6808-2RS, 40x52x7",2,9.99,checked 2026-10-27,Walmart,https://www.walmart.com/ip/6808-2RS-Deep-Groove-Ball-Bearing-40x52x7mm-Double-Sealed-Chrome-Steel-Bearing/631340571
+Gearbox,Output bearing wrist,"6805-2RS, 25x37x7 (generic pack of 4-5; 3 used)",1,14.00,estimate (VXB singles $7.77 checked),Amazon,https://www.amazon.com/s?k=6805-2rs+bearing
+Gearbox,Eccentric bearing J2,"6802-2RS, 15x24x5 (generic 10-pack; 2 used)",1,9.00,estimate (VXB singles $7.77 checked),Amazon,https://www.amazon.com/s?k=6802-2rs+bearing+10+pack
+Gearbox,Eccentric bearing J1/J3/wrist,"6801-2RS, 12x21x5 (generic 10-pack; 10 used)",1,10.00,estimate (VXB 10-pack $29.99 checked),Amazon,https://www.amazon.com/s?k=6801-2rs+bearing+10+pack
 Gearbox,Ring pins J1/J2/J3,"Dowel pin Ø4 x 20 mm, steel (83 needed)",90,0.12,estimate,Amazon (uxcell packs),https://www.amazon.com/stainless-steel-dowel-pins/s?k=stainless+steel+dowel+pins+4mm+x+20mm
 Gearbox,Ring pins wrist,"Dowel pin Ø3 x 16 mm, steel (48 needed)",50,0.10,estimate,Amazon (uxcell packs),https://www.amazon.com/stainless-steel-dowel-pins/s?k=stainless+steel+dowel+pins+3mm+x+16mm
 Gearbox,Output pins J2,"Dowel pin Ø5 x 18 mm, steel",8,0.20,estimate,Amazon (uxcell packs),https://www.amazon.com/stainless-steel-dowel-pins/s?k=stainless+steel+dowel+pins+5mm+x+18mm
 Gearbox,Output pins J1/J3,"Dowel pin Ø4 x 16 mm, steel",12,0.12,estimate,Amazon (uxcell packs),https://www.amazon.com/stainless-steel-dowel-pins/s?k=stainless+steel+dowel+pins+4mm+x+16mm
 Gearbox,Output pins wrist,"Dowel pin Ø3 x 14 mm, steel",18,0.10,estimate,Amazon (uxcell packs),https://www.amazon.com/stainless-steel-dowel-pins/s?k=stainless+steel+dowel+pins+3mm+x+14mm
-Fasteners,Heat-set inserts,"M3 x 5.7 brass (pack of 100; 60 used), plus 3x M5",1,12.00,estimate,Amazon,https://www.amazon.com/s?k=m3+heat+set+inserts
+Fasteners,Heat-set inserts,"M3 x 5.7 brass (pack of 100; 64 used), plus 3x M5",1,12.00,estimate,Amazon,https://www.amazon.com/s?k=m3+heat+set+inserts
 Fasteners,Socket head screws,"M3x8 (24) for the link hubs, plus gearbox through-bolts M3x40 (6), M3x35 (12), M3x30 (18)",1,18.00,estimate,Amazon,https://www.amazon.com/s?k=m3+socket+head+screw+assortment
 Fasteners,Motor screws,"Low-head DIN 7984: M3x8 (20) for the NEMA 17s, M5x16 + M5 nyloc nut (4) for the NEMA 23",1,8.00,estimate,Amazon,https://www.amazon.com/s?k=din+7984+m3+low+head+socket+screw
-Fasteners,Base and gripper screws,"M5x20 (3) base to table; M2x8 (12) rail to palm and carriages to jaws; M3x16 + nyloc (4) fingers",1,7.00,estimate,Amazon,https://www.amazon.com/s?k=m2+socket+head+screw+assortment
-Electronics,USB to CAN adapter,"CANable 2.0 class (SocketCAN / candleLight)",1,25.00,estimate,Amazon,https://www.amazon.com/DSD-TECH-SH-C31A-Adapter-Support/dp/B0CDGD1FSH
-Electronics,Power supply,"24 V 10 A enclosed (Mean Well LRS-250-24 or similar)",1,35.00,estimate,Amazon,https://www.amazon.com/s?k=mean+well+lrs-250-24
-Electronics,Buck converter,"24 V to 12 V 5 A for the gripper servo",1,8.00,estimate,Amazon,https://www.amazon.com/s?k=24v+to+12v+5a+buck+converter
-Electronics,Emergency stop,"Latching mushroom e-stop, NC, cuts motor power",1,12.00,estimate,Amazon,https://www.amazon.com/s?k=emergency+stop+button+latching
-Electronics,Wiring,"20 AWG silicone wire, twisted pair for CAN, XT30 connectors, inline fuse",1,25.00,estimate,Amazon,https://www.amazon.com/s?k=20+awg+silicone+wire
+Fasteners,Base and gripper screws,M5x20 (3) base to table; M3x12 (4) gripper frame to palm; M3x10 + nyloc (4) fingers; M3x6 set screw (4) guide rods,1,7.00,estimate,Amazon,https://www.amazon.com/s?k=m2+socket+head+screw+assortment
+Electronics,USB to CAN adapter,"CANable 2.0 clone (candleLight firmware, SocketCAN)",1,15.00,estimate,AliExpress,https://www.aliexpress.com/w/wholesale-canable-2.0.html
+Electronics,Power supply,24 V 10 A enclosed switching supply (generic; Mean Well LRS-250-24 if you want the name brand),1,20.00,estimate,Amazon,https://www.amazon.com/s?k=24v+10a+switching+power+supply
+Electronics,Buck converter,24 V to 12 V 5 A for the gripper servo,1,6.00,estimate,Amazon,https://www.amazon.com/s?k=24v+to+12v+5a+buck+converter
+Electronics,Emergency stop,"Latching mushroom e-stop, NC, cuts motor power",1,7.00,estimate,Amazon,https://www.amazon.com/s?k=emergency+stop+button+latching
+Electronics,Wiring,"20 AWG silicone wire, twisted pair for CAN, XT30 connectors, inline fuse",1,15.00,estimate,Amazon,https://www.amazon.com/s?k=20+awg+silicone+wire

@@ -1,6 +1,6 @@
 # GRIP
 
-An open-source, fully printed 6-axis robot arm. The structure is SLS nylon with soft, organic shells. Every joint is a closed-loop stepper driving a printed cycloidal gearbox, and the fingers are TPU fin-ray. Parts cost is about $900. Its first target job is unloading a 3D printer: pulling the flex plate, popping parts off, and putting the plate back.
+An open-source, fully printed 6-axis robot arm with soft, organic shells. Every joint is a closed-loop stepper driving a printed cycloidal gearbox, and the fingers are TPU fin-ray. It comes in two editions from the same CAD: **FDM**, printed at home for about **$540** all in, and **SLS**, with nylon parts from a print bureau for about $1,400. Its first target job is unloading a 3D printer: pulling the flex plate, popping parts off, and putting the plate back.
 
 ![GRIP in its home pose and a reaching pose](docs/img/overview.png)
 
@@ -13,13 +13,14 @@ An open-source, fully printed 6-axis robot arm. The structure is SLS nylon with 
 | Axes | 6 + parallel gripper |
 | Reach | 500 mm (upper arm 187, forearm 185, wrist 128) |
 | Payload | 0.5 kg continuous, 1 kg peak |
-| J1 base, J3 elbow | NEMA 17 60 mm + 25:1 SLS cycloidal |
-| J2 shoulder | NEMA 23 56 mm + 30:1 SLS cycloidal |
-| J4–J6 wrist | NEMA 17 34 mm pancake + 15:1 SLS cycloidal |
-| Gripper | Feetech STS3215, rack and pinion on an MGN7 rail, 0–80 mm opening, TPU fin-ray fingers |
+| J1 base, J3 elbow | NEMA 17 60 mm + 25:1 printed cycloidal |
+| J2 shoulder | NEMA 23 56 mm + 30:1 printed cycloidal |
+| J4–J6 wrist | NEMA 17 34 mm pancake + 15:1 printed cycloidal |
+| Gripper | Feetech STS3215, rack and pinion, jaws on two Ø6 rods with LM6UU bearings, 0–80 mm opening, TPU fin-ray fingers |
 | Drivers | MKS SERVO42D / SERVO57D (CAN), one bus |
 | Power | 24 V |
-| Structure | SLS PA12, PA12-GF for loaded parts, TPU fingers |
+| Structure | FDM: PETG, PETG-CF for gearbox discs and jaws. SLS: PA12, PA12-GF for loaded parts. TPU fingers in both |
+| Cost | FDM about $540, SLS about $1,400 (bought parts $492 in both) |
 
 The full design rationale, the torque budget and the three alternative versions (all-servo ~$350, lite QDD ~$1,300, full QDD ~$2,200) are in the spec document.
 
@@ -31,9 +32,10 @@ cad/
   grip_cad/cycloidal.py   parametric two-disc cycloidal reducer
   grip_cad/shapes.py      organic primitives: revolved pods, lofted bones, soft seams
   grip_cad/arm.py         link shells and joint placement
-  grip_cad/gripper.py     gripper, involute pinion, racks, fin-ray fingers
+  grip_cad/gripper.py     gripper, involute pinion, racks, rod frame, fin-ray fingers
+  grip_cad/coupon.py      FDM fit-test coupon
   grip_cad/assembly.py    posable assembly (forward kinematics)
-  build.py                build everything -> exports/
+  build.py                build everything -> exports/ (--fdm -> exports/fdm/)
   preview.py              render PNG previews in any pose
   drawings.py             technical drawings (SVG) for the build guide
   exploded.py             exploded gearbox renders
@@ -44,10 +46,12 @@ exports/
   stl/kits/               the small parts stacked into compact snap-off towers, for print bureaus
   printed_parts.csv       part, quantity, material, volume, bounding box
   service_kits.csv        the same for the stacked kits
+  fdm/                    FDM edition: oriented STL/STEP, printed_parts.csv with grams and printer fit
 bom/
   bom.csv                 bought parts: spec, quantity, price, where to buy
   BOM.md                  the same as a readable table (python bom/make_bom.py)
 docs/BUILD.md             build guide
+docs/FDM.md               printing at home: fits, materials, settings, cost
 docs/drawings/            technical drawings (python drawings.py)
 docs/img/                 renders (python preview.py, python exploded.py)
 ```
@@ -58,7 +62,8 @@ docs/img/                 renders (python preview.py, python exploded.py)
 cd cad
 python -m venv .venv && . .venv/bin/activate
 pip install -r requirements.txt
-python build.py                      # writes ../exports
+python build.py                      # SLS edition, writes ../exports
+python build.py --fdm                # FDM edition, writes ../exports/fdm
 # previews need Node + Playwright with Chromium
 (cd render3d && npm install)
 python preview.py /tmp/grip --pose 30,50,55,0,60,0
@@ -68,16 +73,18 @@ Change a number in `params.py` and rebuild. Socket sizes, bolt patterns and pod 
 
 ## Printing
 
-All shells are hollow with 2 mm walls. Every link has at least two cable ports, which also serve as powder escape holes. `build.py` refuses to export any part that isn't a single closed, manifold body.
+**At home (FDM):** see [docs/FDM.md](docs/FDM.md). About 2.1 kg of PETG, PETG-CF and TPU. Every part fits a 220 mm printer except the upper arm, which needs a 256 mm bed. Print the fit coupon first.
 
-There are two ways to print:
+**SLS:** all shells are hollow with 2 mm walls. Every link has at least two cable ports, which also serve as powder escape holes. `build.py` refuses to export any part that isn't a single closed, manifold body.
+
+There are two ways to get the SLS parts:
 
 - **Your own SLS machine:** print the individual files in `exports/stl/`.
 - **A print bureau:** bureaus charge a minimum of about $11 per part, however small. Bureaus also price a part by its bounding box. So the 36 small gearbox and gripper parts are stacked into compact towers in `exports/stl/kits/`, with 2 mm air gaps and 1.6 mm pillars between neighbours. That makes the order 15 pieces instead of 50, and the stacked boxes are 40–60% smaller than flat sprue trees. Snip the pillars and file the nubs flush. They sit on flat faces near the outer edge, away from bores, lobes and bearing seats.
 
 | Order for a bureau | Qty | Material |
 | --- | --- | --- |
-| base, turret, upper_arm, forearm, wrist_yoke, wrist_link, gripper_palm | 1 each | SLS PA12 |
+| base, turret, upper_arm, forearm, wrist_yoke, wrist_link, gripper_palm, gripper_frame | 1 each | SLS PA12 |
 | kit_j2_drive | 1 | SLS PA12 |
 | kit_j1_j3_drive | 2 | SLS PA12 |
 | kit_wrist_drive | 3 | SLS PA12 |
@@ -103,9 +110,10 @@ Each joint is the same parametric module in three sizes. A stepper turns a two-l
 - [x] Concept CAD, all parts exporting
 - [x] Printability fixes (single manifold bodies, powder escape)
 - [x] Cost pass 1: thinner walls, lighter sockets, stacked kits (50 pieces down to 15, kit boxes 40–60% smaller)
-- [ ] Cost pass 2: bureau re-quote, cheaper bought parts
+- [x] Cost pass 2: bureau re-quote, cheaper bought parts ($603 down to $492)
+- [x] FDM edition: home-printable for about $540 all in ([docs/FDM.md](docs/FDM.md))
 - [x] Build guide with technical drawings: [docs/BUILD.md](docs/BUILD.md) (first draft; nobody has built one yet)
-- [ ] BOM with purchase links (draft in [bom/BOM.md](bom/BOM.md), bought parts about $590, some prices still estimates)
+- [ ] BOM with purchase links (draft in [bom/BOM.md](bom/BOM.md), bought parts about $490, some prices still estimates)
 - [ ] First print and gearbox bench test
 - [ ] URDF, ROS 2 / MoveIt 2 and LeRobot drivers
 
