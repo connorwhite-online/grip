@@ -1,0 +1,81 @@
+# GRIP
+
+An open-source, fully printed 6-axis robot arm. The structure is SLS nylon with soft, organic shells. Every joint is a closed-loop stepper driving a printed cycloidal gearbox, and the fingers are TPU fin-ray. Parts cost is about $900. Its first target job is unloading a 3D printer: pulling the flex plate, popping parts off, and putting the plate back.
+
+![GRIP in its home pose and a reaching pose](docs/img/overview.png)
+
+> **Status: v0.1 concept CAD.** The geometry builds, the gearboxes mesh without interference, and every printed part exports. Nothing has been printed or assembled yet. Vendor dimensions marked `VERIFY` in `cad/grip_cad/params.py` are catalogue values to check against the parts you buy.
+
+## Spec (version B)
+
+| | |
+| --- | --- |
+| Axes | 6 + parallel gripper |
+| Reach | 500 mm (upper arm 210, forearm 185, wrist 105) |
+| Payload | 0.5 kg continuous, 1 kg peak |
+| J1 base, J3 elbow | NEMA 17 60 mm + 25:1 SLS cycloidal |
+| J2 shoulder | NEMA 23 56 mm + 30:1 SLS cycloidal |
+| J4–J6 wrist | NEMA 17 34 mm pancake + 15:1 SLS cycloidal |
+| Gripper | Feetech STS3215, rack and pinion on an MGN7 rail, 0–80 mm opening, TPU fin-ray fingers |
+| Drivers | MKS SERVO42D / SERVO57D (CAN), one bus |
+| Power | 24 V |
+| Structure | SLS PA12, PA12-GF for loaded parts, TPU fingers |
+
+The full design rationale, the torque budget and the three alternative versions (all-servo ~$350, lite QDD ~$1,300, full QDD ~$2,200) are in the spec document.
+
+## Repository
+
+```
+cad/
+  grip_cad/params.py      every driving dimension: joints, gearboxes, vendor parts
+  grip_cad/cycloidal.py   parametric two-disc cycloidal reducer
+  grip_cad/shapes.py      organic primitives: revolved pods, lofted bones, soft seams
+  grip_cad/arm.py         link shells and joint placement
+  grip_cad/gripper.py     gripper, involute pinion, racks, fin-ray fingers
+  grip_cad/assembly.py    posable assembly (forward kinematics)
+  build.py                build everything -> exports/
+  preview.py              render PNG previews in any pose
+  render3d/               headless three.js renderer used by preview.py
+exports/
+  step/                   one STEP per printed part + grip_assembly.step
+  stl/                    one STL per printed part
+  printed_parts.csv       part, quantity, material, volume, bounding box
+docs/img/                 renders
+```
+
+## Building the CAD
+
+```bash
+cd cad
+python -m venv .venv && . .venv/bin/activate
+pip install -r requirements.txt
+python build.py                      # writes ../exports
+# previews need Node + Playwright with Chromium
+(cd render3d && npm install)
+python preview.py /tmp/grip --pose 30,50,55,0,60,0
+```
+
+Change a number in `params.py` and rebuild. Socket sizes, bolt patterns and pod shapes all follow from it.
+
+## How a joint works
+
+Each joint is the same parametric module in three sizes. A stepper turns a two-lobe eccentric, which drives two cycloidal discs, 180° out of phase, around a ring of steel dowel pins. Output pins carry the slow rotation to a flange that runs in a thin-section bearing. The housing drops into a socket in the parent link and is held by six M3 screws into heat-set inserts. The child link's hub bolts to the output flange.
+
+| Drive | Ring pins | Ratio | Housing OD | Output bearing |
+| --- | --- | --- | --- | --- |
+| J2 | 31 x Ø4 mm | 30:1 | 102 mm | 6812 |
+| J1, J3 | 26 x Ø4 mm | 25:1 | 86 mm | 6808 |
+| J4–J6 | 16 x Ø3 mm | 15:1 | 59 mm | 6805 |
+
+## Roadmap
+
+- [x] Concept CAD, all parts exporting
+- [ ] Cost optimization pass
+- [ ] Build guide with technical drawings
+- [ ] BOM with purchase links
+- [ ] First print and gearbox bench test
+- [ ] URDF, ROS 2 / MoveIt 2 and LeRobot drivers
+
+## License
+
+Hardware: [CERN-OHL-W-2.0](LICENSE).

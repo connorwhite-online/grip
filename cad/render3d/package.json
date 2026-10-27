@@ -1,0 +1,9 @@
+{
+  "name": "grip-render",
+  "private": true,
+  "type": "module",
+  "description": "Headless three.js renderer for GRIP preview images",
+  "dependencies": {
+    "three": "0.169.0"
+  }
+}

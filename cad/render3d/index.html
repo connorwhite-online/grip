@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:#f4f1ea}</style></head>
+<body>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { STLLoader } from 'three/addons/loaders/STLLoader.js';
+import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
+
+window.renderScene = async (cfg) => {
+  const W = cfg.width || 1200, H = cfg.height || 1400;
+  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+  renderer.setSize(W, H);
+  renderer.setPixelRatio(1);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.shadowMap.enabled = true;
+  document.body.appendChild(renderer.domElement);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(cfg.background || '#f4f1ea');
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8172, 1.6));
+  const key = new THREE.DirectionalLight(0xffffff, 2.2);
+  key.position.set(600, -900, 1400); key.castShadow = true;
+  key.shadow.mapSize.set(2048, 2048);
+  Object.assign(key.shadow.camera, { left: -800, right: 800, top: 800, bottom: -800, near: 10, far: 4000 });
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0xdfe8ff, 0.8); rim.position.set(-800, 900, 600); scene.add(rim);
+
+  const loader = new STLLoader();
+  const box = new THREE.Box3();
+  for (const p of cfg.parts) {
+    let geo = await loader.loadAsync(p.url);
+    geo.deleteAttribute('normal');
+    geo = toCreasedNormals(geo, Math.PI / 5);
+    const mat = new THREE.MeshStandardMaterial({ color: p.color || '#ece6da', roughness: p.roughness ?? 0.75,
+      metalness: p.metalness ?? 0.0, transparent: (p.opacity ?? 1) < 1, opacity: p.opacity ?? 1 });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.castShadow = true; mesh.receiveShadow = true;
+    scene.add(mesh);
+    geo.computeBoundingBox(); box.union(geo.boundingBox);
+  }
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(6000, 6000), new THREE.ShadowMaterial({ opacity: 0.18 }));
+  ground.position.z = box.min.z - 0.5; ground.receiveShadow = true; scene.add(ground);
+
+  const center = box.getCenter(new THREE.Vector3());
+  const size = box.getSize(new THREE.Vector3());
+  const radius = size.length() / 2;
+  const v = cfg.view || { azim: -55, elev: 18 };
+  const az = v.azim * Math.PI / 180, el = v.elev * Math.PI / 180;
+  const fov = 30;
+  const dist = radius / Math.sin(fov * Math.PI / 360) * (v.zoom || 1.0);
+  const cam = new THREE.PerspectiveCamera(fov, W / H, 1, dist * 4);
+  cam.up.set(0, 0, 1);
+  cam.position.set(center.x + dist * Math.cos(el) * Math.cos(az), center.y + dist * Math.cos(el) * Math.sin(az), center.z + dist * Math.sin(el));
+  cam.lookAt(center);
+  renderer.render(scene, cam);
+  return true;
+};
+window.ready = true;
+</script></body></html>

@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.venv/
+cad/render3d/node_modules
+cad/render3d/package-lock.json
