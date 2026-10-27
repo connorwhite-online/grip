@@ -62,7 +62,7 @@ def layout(c: Cyclo) -> CycloLayout:
     d1 = (plate_bot - 0.5 - c.disc_t, plate_bot - 0.5)
     d2 = (d1[0] - 0.5 - c.disc_t, d1[0] - 0.5)
     bore_bot = d2[0] - 1.0
-    housing_bot = bore_bot - 5.0
+    housing_bot = bore_bot - max(5.0, c.motor.head_h + 3.0)   # floor keeps 3 mm under the screw heads
     return CycloLayout(cap_top, cap_bot, plate_bot, d1, d2, bore_bot, housing_bot,
                        housing_bot - c.motor.length)
 
@@ -138,6 +138,8 @@ def housing(c: Cyclo) -> Part:
     s = m.bolt_spacing / 2
     for x, y in [(s, s), (-s, s), (s, -s), (-s, -s)]:
         body -= _cyl(m.bolt_d / 2, L.housing_bot, L.bore_bot, x, y)
+        # heads sit below the discs, which sweep down to 1 mm above the floor
+        body -= _cyl(m.head_d / 2 + 0.3, L.bore_bot - m.head_h - 0.2, L.bore_bot, x, y)
     for a in screw_angles(c):
         r = screw_circle_r(c)
         body -= _cyl(SCREW_D / 2, L.housing_bot, L.cap_bot, r * cos(a * pi / 180), r * sin(a * pi / 180))

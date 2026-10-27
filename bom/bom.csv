@@ -17,9 +17,10 @@ Gearbox,Ring pins wrist,"Dowel pin Ø3 x 16 mm, steel (48 needed)",50,0.10,estim
 Gearbox,Output pins J2,"Dowel pin Ø5 x 18 mm, steel",8,0.20,estimate,Amazon (uxcell packs),https://www.amazon.com/stainless-steel-dowel-pins/s?k=stainless+steel+dowel+pins+5mm+x+18mm
 Gearbox,Output pins J1/J3,"Dowel pin Ø4 x 16 mm, steel",12,0.12,estimate,Amazon (uxcell packs),https://www.amazon.com/stainless-steel-dowel-pins/s?k=stainless+steel+dowel+pins+4mm+x+16mm
 Gearbox,Output pins wrist,"Dowel pin Ø3 x 14 mm, steel",18,0.10,estimate,Amazon (uxcell packs),https://www.amazon.com/stainless-steel-dowel-pins/s?k=stainless+steel+dowel+pins+3mm+x+14mm
-Fasteners,Heat-set inserts,"M3 x 5.7 brass (pack of 100), plus 3x M5",1,12.00,estimate,Amazon,https://www.amazon.com/s?k=m3+heat+set+inserts
-Fasteners,Socket head screws,"M3 assortment 6-30 mm + M3x35/40 for gearbox through-bolts, M3 set screws",1,18.00,estimate,Amazon,https://www.amazon.com/s?k=m3+socket+head+screw+assortment
-Fasteners,Base bolts,"M5 x 20 (3), M2 x 6 for rail (4)",1,5.00,estimate,Amazon,https://www.amazon.com/s?k=m5+socket+head+screws
+Fasteners,Heat-set inserts,"M3 x 5.7 brass (pack of 100; 60 used), plus 3x M5",1,12.00,estimate,Amazon,https://www.amazon.com/s?k=m3+heat+set+inserts
+Fasteners,Socket head screws,"M3x8 (24) for the link hubs, plus gearbox through-bolts M3x40 (6), M3x35 (12), M3x30 (18)",1,18.00,estimate,Amazon,https://www.amazon.com/s?k=m3+socket+head+screw+assortment
+Fasteners,Motor screws,"Low-head DIN 7984: M3x8 (20) for the NEMA 17s, M5x16 + M5 nyloc nut (4) for the NEMA 23",1,8.00,estimate,Amazon,https://www.amazon.com/s?k=din+7984+m3+low+head+socket+screw
+Fasteners,Base and gripper screws,"M5x20 (3) base to table; M2x8 (12) rail to palm and carriages to jaws; M3x16 + nyloc (4) fingers",1,7.00,estimate,Amazon,https://www.amazon.com/s?k=m2+socket+head+screw+assortment
 Electronics,USB to CAN adapter,"CANable 2.0 class (SocketCAN / candleLight)",1,25.00,estimate,Amazon,https://www.amazon.com/DSD-TECH-SH-C31A-Adapter-Support/dp/B0CDGD1FSH
 Electronics,Power supply,"24 V 10 A enclosed (Mean Well LRS-250-24 or similar)",1,35.00,estimate,Amazon,https://www.amazon.com/s?k=mean+well+lrs-250-24
 Electronics,Buck converter,"24 V to 12 V 5 A for the gripper servo",1,8.00,estimate,Amazon,https://www.amazon.com/s?k=24v+to+12v+5a+buck+converter

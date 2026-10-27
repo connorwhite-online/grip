@@ -34,7 +34,7 @@ def main():
         out += ["## Printed parts", "",
                 f"{len(prows)} unique parts, {sum(int(r['qty']) for r in prows)} pieces, {vol:,.0f} cm³ in total. "
                 "Full list with materials in [exports/printed_parts.csv](../exports/printed_parts.csv); "
-                "bureau sprue kits in [exports/service_kits.csv](../exports/service_kits.csv).", ""]
+                "bureau stacked kits in [exports/service_kits.csv](../exports/service_kits.csv).", ""]
     (HERE / "BOM.md").write_text("\n".join(out) + "\n")
     print(f"bought parts ${grand:,.2f}")
 

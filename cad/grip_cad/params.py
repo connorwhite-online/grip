@@ -25,11 +25,14 @@ class Stepper:
     pilot_h: float
     shaft_d: float
     shaft_len: float
+    head_d: float = 5.5   # low-head (DIN 7984) mounting screw, sunk into the housing floor
+    head_h: float = 2.0
 
 
 NEMA17_60 = Stepper("NEMA17 60mm 0.65Nm (17HS24-2104D)", 42.3, 60.0, 31.0, 3.4, 22.0, 2.0, 5.0, 24.0)
 NEMA17_34 = Stepper("NEMA17 34mm 0.26Nm (17HS13-0404D)", 42.3, 34.0, 31.0, 3.4, 22.0, 2.0, 5.0, 20.0)
-NEMA23_56 = Stepper("NEMA23 56mm 1.26Nm (23HS22-2804D)", 56.4, 56.0, 47.14, 5.2, 38.1, 1.6, 8.0, 21.0)
+# NEMA 23 flange holes are plain through holes: M5 screw from inside the housing, nut behind the flange
+NEMA23_56 = Stepper("NEMA23 56mm 1.26Nm (23HS22-2804D)", 56.4, 56.0, 47.14, 5.2, 38.1, 1.6, 8.0, 21.0, 8.5, 3.5)
 
 B6801 = Bearing("6801-2RS", 12, 21, 5)
 B6802 = Bearing("6802-2RS", 15, 24, 5)
@@ -95,9 +98,9 @@ class ArmGeometry:
     """Kinematic dimensions in the upright home pose (all joint axes intersect x = 0)."""
     z_j1_out: float = 120.0     # J1 output face above the table
     z_j2: float = 200.0         # shoulder axis height
-    upper_arm: float = 210.0    # J2 -> J3
+    upper_arm: float = 187.0    # J2 -> J3
     forearm: float = 185.0      # J3 -> J5
-    wrist: float = 105.0        # J5 -> tool flange
+    wrist: float = 128.0        # J5 -> tool flange: J6 motor + driver must clear J5
     y_j2_out: float = -30.0     # J2 output face (faces -Y)
     y_upper: float = -48.0      # upper arm mid-plane
     y_forearm: float = -25.0    # forearm / wrist centre line

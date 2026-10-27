@@ -69,24 +69,63 @@ def socket(c: Cyclo, loc: Location):
     return loc * add, loc * cut
 
 
-def hub_bolts(c: Cyclo, loc: Location, thickness: float):
-    """Counterbored M3 through holes in a child hub matching the output flange inserts."""
+def hub_bolts(c: Cyclo, loc: Location, thickness: float, reach: float = 5.0):
+    """Counterbored M3 through holes in a child hub matching the output flange inserts.
+
+    On the side hubs the counterbores run on out through the link (`reach`), so a
+    driver goes straight in from outside; elsewhere see hub_access.
+    """
     ob = c.out_bearing
     br = (ob.id / 2 + c.motor.shaft_d / 2 + 2.0) / 2
     cut = None
     for i in range(4):
         a = 2 * pi * i / 4 + pi / 4
         h = _local_cyl(1.7, 0.5, 0.5 + thickness, br * cos(a), br * sin(a))
-        h += _local_cyl(3.0, 0.5 + 3.0, 0.5 + thickness + 5, br * cos(a), br * sin(a))
+        h += _local_cyl(3.0, 0.5 + 3.0, 0.5 + thickness + reach, br * cos(a), br * sin(a))
         cut = h if cut is None else cut + h
     return loc * cut
 
 
 # Pod profiles: (r, s) stations along each pod's axis, measured from its open face.
-# They wrap the drive housing (plus socket sleeve) first, then taper over the motor.
-POD_J2 = [(56, 0), (58.5, 22), (56, 50), (50, 80), (44, 95), (0, 104)]
-POD_J3 = [(47, 0), (49, 18), (45, 42), (37, 64), (35.5, 88), (31, 97), (0, 101)]
-POD_WRIST = [(34, 0), (36, 15), (35.5, 40), (33.5, 58), (28, 68), (0, 71)]
+# They wrap the drive housing (plus socket sleeve) first, then the motor and the
+# closed-loop driver board on its back (DRIVER_T), then close off.
+POD_J2 = [(56, 0), (58.5, 22), (56, 50), (51, 82), (47, 104), (42, 116), (0, 124)]
+POD_J3 = [(47, 0), (49, 18), (45, 42), (38, 64), (36, 92), (35, 106), (29, 115), (0, 119)]
+POD_WRIST = [(34, 0), (36, 15), (35.5, 40), (35, 62), (34.5, 78), (31, 84), (0, 86)]
+DRIVER_T = {42.3: 16.0, 56.4: 18.0}   # MKS SERVO42D / 57D on the motor's back, by motor frame
+
+
+HUB_HEAD_Z = 4.5      # a hub bolt head above its output face
+TOOL_TILT = 26.0      # most a ball-end hex driver can lean off the bolt axis
+
+
+def hub_access(c: Cyclo, loc: Location, c_next: Cyclo, loc_next: Location, r=3.5):
+    """Tool channels from each hub bolt head out through the link's next (still empty) socket.
+
+    The hub bolts are driven from inside the link, during assembly, before the next
+    gearbox goes in. Each channel runs straight from a bolt head to the point on that
+    socket's mouth that keeps the driver closest to the bolt axis.
+    """
+    from math import acos, degrees
+    from build123d import Plane, Vector
+    L = cy.layout(c_next)
+    ob = c.out_bearing
+    br = (ob.id / 2 + c.motor.shaft_d / 2 + 2.0) / 2
+    axis = (loc * Location((0, 0, 1))).position - loc.position
+    mouth = [loc_next * Location((rr * cos(t), rr * sin(t), L.cap_top + 2.0))
+             for rr in (0.0, 0.4 * c_next.housing_r, 0.75 * c_next.housing_r)
+             for t in [k * pi / 6 for k in range(12)]]
+    out = None
+    for i in range(4):
+        a = 2 * pi * i / 4 + pi / 4
+        head = (loc * Location((br * cos(a), br * sin(a), HUB_HEAD_Z))).position
+        best = min((m.position for m in mouth), key=lambda m: acos(max(-1, min(1, (m - head).normalized().dot(axis)))))
+        d = best - head
+        if degrees(acos(d.normalized().dot(axis))) > TOOL_TILT:
+            raise ValueError(f"{c.name}: no tool path to hub bolt {i}")
+        ch = Plane(origin=head, z_dir=d.normalized()).location * Cylinder(r, d.length, align=(Align.CENTER, Align.CENTER, Align.MIN))
+        out = ch if out is None else out + ch
+    return out
 
 
 def cable_port(start, direction=(-1, 0, 0), r=5.0, length=70.0):
@@ -100,10 +139,15 @@ def pod(base, axis, profile):
     return lambda g: revolve_profile(profile, axis, base, g, start_tangent=(0.35, 1.0), end_tangent=(-1.0, 0.0))
 
 
-def _shell(outer_fns, extra_add=(), cuts=(), seam=8.0):
-    """outer_fns: callables grow -> Part. Hollow with wall W, keep socket material, then cut."""
+def _shell(outer_fns, extra_add=(), cuts=(), seam=8.0, channels=()):
+    """outer_fns: callables grow -> Part. Hollow with wall W, keep socket material, then cut.
+
+    channels are cut only inside the hollow core, so they open up internal walls and
+    sleeves without ever piercing the outer skin.
+    """
     outer = soft_fuse([f(0.0) for f in outer_fns], seam)
     core = union(*[f(-W) for f in outer_fns])
+    core0 = core
     # keep socket material by carving it out of the core rather than fusing it back on;
     # fusing near-coincident skins is where OCC booleans go wrong
     for a in extra_add:
@@ -111,6 +155,8 @@ def _shell(outer_fns, extra_add=(), cuts=(), seam=8.0):
     body = solids_only(outer - core)
     for c in cuts:
         body = solids_only(body - c)
+    for ch in channels:
+        body = solids_only(body - (ch & core0))
     # booleans can leave slivers; anything under 1% of the main body is debris
     solids = sorted(body.solids(), key=lambda x: -x.volume)
     keep = [x for x in solids if x.volume > 0.01 * solids[0].volume]
@@ -152,7 +198,7 @@ def turret() -> Part:
     cuts = [cut, hub_bolts(c1, l1, hub_t),
             Pos(0, 36, z_hub + 28) * Rot(-60, 0, 0) * Cylinder(CABLE_R, 40),   # cable port, back
             cable_port((0, 45, G.z_j2))]
-    return _shell([shell, hub, neck], extra_add=[add], cuts=cuts)
+    return _shell([shell, hub, neck], extra_add=[add], cuts=cuts, channels=[hub_access(c1, l1, c2, l2)])
 
 
 def upper_arm() -> Part:
@@ -167,7 +213,7 @@ def upper_arm() -> Part:
                          ((0, -60, G.z_j2 + 130), (26, 17)),
                          ((0, -67, G.z_j3 - 40), (32, 19))], g)
     shell = pod((0, y_j3_out - 1.0, G.z_j3), "-Y", POD_J3)
-    cuts = [cut, hub_bolts(c2, l2, hub_t),
+    cuts = [cut, hub_bolts(c2, l2, hub_t, reach=45.0),
             cable_port((0, -52, G.z_j2 + 45)), cable_port((0, -110, G.z_j3))]
     return _shell([hub, arm, shell], extra_add=[add], cuts=cuts)
 
@@ -184,7 +230,7 @@ def forearm() -> Part:
                          ((0, G.y_forearm - 2, G.z_j3 + 55), (23, 15)),
                          ((0, G.y_forearm, z_out4 - 75), (27, 24))], g)
     shell = pod((0, G.y_forearm, z_out4 - 1.0), "-Z", POD_WRIST)
-    cuts = [cut, hub_bolts(c3, l3, hub_t),
+    cuts = [cut, hub_bolts(c3, l3, hub_t, reach=45.0),
             cable_port((0, G.y_forearm - 3, G.z_j3 + 30)), cable_port((0, G.y_forearm, G.z_j5 - 95))]
     return _shell([hub, arm, shell], extra_add=[add], cuts=cuts)
 
@@ -202,7 +248,8 @@ def wrist_yoke() -> Part:
     shell = pod((0, y_j5_out + 1.0, G.z_j5), "Y", POD_WRIST)
     cuts = [cut, hub_bolts(c4, l4, hub_t),
             cable_port((0, 12, G.z_j5), r=4.0), cable_port((0, G.y_forearm + 6, G.z_j5 - 22), r=4.0)]
-    return _shell([hub, neck, shell], extra_add=[add], cuts=cuts, seam=5.0)
+    return _shell([hub, neck, shell], extra_add=[add], cuts=cuts, seam=5.0,
+                  channels=[hub_access(c4, l4, c5, l5)])
 
 
 def wrist_link() -> Part:
@@ -213,12 +260,14 @@ def wrist_link() -> Part:
     hub_t = 8.5
     y_hub = y_j5_out - 0.5 - hub_t / 2
     hub = lambda g: puck((0, y_hub, G.z_j5), "Y", c5.housing_r - 2.0, hub_t, 3.0, g)
-    arm = lambda g: bone([((0, y_hub - 1, G.z_j5 + 12), (25, 9)),
-                         ((0, y_hub - 1, G.z_j5 + 30), (23, 10)),
+    # stay outboard of the yoke's J5 pod (radius ~36) before swinging in under the J6 pod
+    arm = lambda g: bone([((0, y_hub - 5, G.z_j5 + 12), (25, 9)),
+                         ((0, y_hub - 5, G.z_j5 + 30), (23, 9)),
+                         ((0, y_hub - 5, G.z_j5 + 44), (23, 9)),
                          ((0, G.y_forearm - 14, G.z_flange - 58), (26, 15))], g)
     shell = pod((0, G.y_forearm, G.z_flange - 1.0), "-Z", POD_WRIST)
     cuts = [cut, hub_bolts(c5, l5, hub_t),
-            cable_port((0, y_hub - 1, G.z_j5 + 25), r=4.0), cable_port((0, G.y_forearm, G.z_flange - 50), r=4.0)]
+            cable_port((0, y_hub - 5, G.z_j5 + 25), r=4.0), cable_port((0, G.y_forearm, G.z_flange - 50), r=4.0)]
     return _shell([hub, arm, shell], extra_add=[add], cuts=cuts, seam=5.0)
 
 

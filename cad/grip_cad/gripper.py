@@ -157,9 +157,18 @@ def gripper_local():
         x_c = side * (OPEN + 8)
         parts[f"carriage_{name}"] = (_box(x_c - 15.4, x_c + 15.4, RAIL_Y - 8.5, RAIL_Y + 8.5, Z_DECK + 3.0, Z_DECK + 13.0), "vendor")
         rk_part = parts.pop(f"rack_{name}")[0]
-        parts[f"jaw_{name}"] = (jaw(side) + rk_part, "drive")      # rack printed as part of the jaw
+        j = jaw(side) + rk_part                                       # rack printed as part of the jaw
         f = fin_ray()          # contact face on x = 0, toward the centre
         f = Pos(OPEN, 0, Z_DECK + 18) * f if side > 0 else Pos(-OPEN, 0, Z_DECK + 18) * Rot(0, 0, 180) * f
+        # MGN7H carriage: 4x M2 on 13 x 12 mm (VERIFY); screws from the top of the jaw plate
+        for dx in (-6.5, 6.5):
+            for dy in (-6.0, 6.0):
+                j = j - _cyl(1.2, Z_DECK + 12, Z_DECK + 19, x_c + dx, RAIL_Y + dy)
+        # finger: 2x M3 up through the jaw plate and the finger's bottom skin, nut in the first cell
+        for d in (6.0, 16.0):
+            hole = _cyl(1.65, Z_DECK + 12, Z_DECK + 22, side * (OPEN + d), 0.0)
+            j, f = j - hole, f - hole
+        parts[f"jaw_{name}"] = (j, "drive")
         parts[f"finger_{name}"] = (f, "tpu")
     return parts
 

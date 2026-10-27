@@ -4,14 +4,14 @@ An open-source, fully printed 6-axis robot arm. The structure is SLS nylon with 
 
 ![GRIP in its home pose and a reaching pose](docs/img/overview.png)
 
-> **Status: v0.1 concept CAD.** The geometry builds, the gearboxes mesh without interference, and every printed part exports. Nothing has been printed or assembled yet. Vendor dimensions marked `VERIFY` in `cad/grip_cad/params.py` are catalogue values to check against the parts you buy.
+> **Status: v0.2 CAD.** The geometry builds, the gearboxes mesh without interference, every printed part exports, and the CAD checks that each motor and its driver board fit inside their link, that the joints clear each other through their ranges, and that every hub bolt can be reached with a hex driver. Nothing has been printed or assembled yet. The [build guide](docs/BUILD.md) is a first draft. Vendor dimensions marked `VERIFY` in `cad/grip_cad/params.py` are catalogue values to check against the parts you buy.
 
 ## Spec (version B)
 
 | | |
 | --- | --- |
 | Axes | 6 + parallel gripper |
-| Reach | 500 mm (upper arm 210, forearm 185, wrist 105) |
+| Reach | 500 mm (upper arm 187, forearm 185, wrist 128) |
 | Payload | 0.5 kg continuous, 1 kg peak |
 | J1 base, J3 elbow | NEMA 17 60 mm + 25:1 SLS cycloidal |
 | J2 shoulder | NEMA 23 56 mm + 30:1 SLS cycloidal |
@@ -35,6 +35,8 @@ cad/
   grip_cad/assembly.py    posable assembly (forward kinematics)
   build.py                build everything -> exports/
   preview.py              render PNG previews in any pose
+  drawings.py             technical drawings (SVG) for the build guide
+  exploded.py             exploded gearbox renders
   render3d/               headless three.js renderer used by preview.py
 exports/
   step/                   one STEP per printed part + grip_assembly.step
@@ -45,7 +47,9 @@ exports/
 bom/
   bom.csv                 bought parts: spec, quantity, price, where to buy
   BOM.md                  the same as a readable table (python bom/make_bom.py)
-docs/img/                 renders
+docs/BUILD.md             build guide
+docs/drawings/            technical drawings (python drawings.py)
+docs/img/                 renders (python preview.py, python exploded.py)
 ```
 
 ## Building the CAD
@@ -100,7 +104,7 @@ Each joint is the same parametric module in three sizes. A stepper turns a two-l
 - [x] Printability fixes (single manifold bodies, powder escape)
 - [x] Cost pass 1: thinner walls, lighter sockets, stacked kits (50 pieces down to 15, kit boxes 40–60% smaller)
 - [ ] Cost pass 2: bureau re-quote, cheaper bought parts
-- [ ] Build guide with technical drawings
+- [x] Build guide with technical drawings: [docs/BUILD.md](docs/BUILD.md) (first draft; nobody has built one yet)
 - [ ] BOM with purchase links (draft in [bom/BOM.md](bom/BOM.md), bought parts about $590, some prices still estimates)
 - [ ] First print and gearbox bench test
 - [ ] URDF, ROS 2 / MoveIt 2 and LeRobot drivers

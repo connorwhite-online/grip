@@ -45,11 +45,12 @@ Subtotal: **$144.46**
 
 | Item | Spec | Qty | Unit (USD) | Line (USD) | Price | Buy |
 | --- | --- | ---: | ---: | ---: | --- | --- |
-| Heat-set inserts | M3 x 5.7 brass (pack of 100), plus 3x M5 | 1 | 12.00 | 12.00 | estimate | [Amazon](https://www.amazon.com/s?k=m3+heat+set+inserts) |
-| Socket head screws | M3 assortment 6-30 mm + M3x35/40 for gearbox through-bolts, M3 set screws | 1 | 18.00 | 18.00 | estimate | [Amazon](https://www.amazon.com/s?k=m3+socket+head+screw+assortment) |
-| Base bolts | M5 x 20 (3), M2 x 6 for rail (4) | 1 | 5.00 | 5.00 | estimate | [Amazon](https://www.amazon.com/s?k=m5+socket+head+screws) |
+| Heat-set inserts | M3 x 5.7 brass (pack of 100; 60 used), plus 3x M5 | 1 | 12.00 | 12.00 | estimate | [Amazon](https://www.amazon.com/s?k=m3+heat+set+inserts) |
+| Socket head screws | M3x8 (24) for the link hubs, plus gearbox through-bolts M3x40 (6), M3x35 (12), M3x30 (18) | 1 | 18.00 | 18.00 | estimate | [Amazon](https://www.amazon.com/s?k=m3+socket+head+screw+assortment) |
+| Motor screws | Low-head DIN 7984: M3x8 (20) for the NEMA 17s, M5x16 + M5 nyloc nut (4) for the NEMA 23 | 1 | 8.00 | 8.00 | estimate | [Amazon](https://www.amazon.com/s?k=din+7984+m3+low+head+socket+screw) |
+| Base and gripper screws | M5x20 (3) base to table; M2x8 (12) rail to palm and carriages to jaws; M3x16 + nyloc (4) fingers | 1 | 7.00 | 7.00 | estimate | [Amazon](https://www.amazon.com/s?k=m2+socket+head+screw+assortment) |
 
-Subtotal: **$35.00**
+Subtotal: **$45.00**
 
 ## Electronics
 
@@ -63,9 +64,9 @@ Subtotal: **$35.00**
 
 Subtotal: **$105.00**
 
-**Bought parts total: $593.48**
+**Bought parts total: $603.48**
 
 ## Printed parts
 
-28 unique parts, 48 pieces, 1,560 cm³ in total. Full list with materials in [exports/printed_parts.csv](../exports/printed_parts.csv); bureau sprue kits in [exports/service_kits.csv](../exports/service_kits.csv).
+28 unique parts, 48 pieces, 1,601 cm³ in total. Full list with materials in [exports/printed_parts.csv](../exports/printed_parts.csv); bureau stacked kits in [exports/service_kits.csv](../exports/service_kits.csv).
 
