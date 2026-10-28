@@ -22,7 +22,7 @@ All drawings are generated from the same CAD as the exports (`python cad/drawing
 
 ## 1. What you need
 
-**Printed parts.** Order them as listed in the [README](../README.md#printing): eight link, palm and gripper-frame shells, plus five stacked kits for a bureau, or print the individual files in `exports/stl/` yourself. Printing at home on a filament printer? See [FDM.md](FDM.md).
+**Printed parts.** Order them as listed in the [README](../README.md#printing): nine link, palm, gripper-frame and camera-cradle shells, plus five stacked kits for a bureau, or print the individual files in `exports/stl/` yourself. Printing at home on a filament printer? See [FDM.md](FDM.md).
 
 **Bought parts.** These are in [bom/BOM.md](../bom/BOM.md). They come to about $540, and most of that is the six steppers and their closed-loop drivers. The wrist camera and its light are $47 of it.
 
