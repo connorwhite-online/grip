@@ -101,11 +101,11 @@ horn hubs and the spring's pulley, anchor and pin.
 | Link | Shipped | v0.2 | v0.3 | v0.3 SF |
 | --- | --- | --- | --- | --- |
 | Turret | 248 g | 147 g | 236 g | 2.41 |
-| Upper arm | 214 g | 173 g | 180 g | 6.21 |
+| Upper arm | 214 g | 173 g | 179 g | 2.81 |
 | Forearm | 109 g | 99 g | 63 g | 2.39 |
 | Wrist yoke | 94 g | 55 g | 19 g | 2.70 |
 | Wrist link | 96 g | 99 g | 65 g | 3.55 |
-| **Total** | **761 g** | **572 g** | **563 g (-26%)** | |
+| **Total** | **761 g** | **572 g** | **562 g (-26%)** | |
 
 The turret gains mass because it now carries the spring's pulley and anchor, and because it is now checked on a finer grid (it read SF 2.26 at 60k cells and 1.65 at 120k before).
 On the parts that change, the BOM drops about $16 (≈ $209 → $193): one NEMA 23
