@@ -71,6 +71,7 @@ SPRING_MAX_N = SPRING_K * math.hypot(62.0, 80.0)
 # VERIFY against the STS3215/3250 drawing: the far-face pattern and the side
 # holes near the horn end are typical of the series, not measured.
 BOSS_R, BOSS_T, SCREW_R, DRIVER_R = 3.5, 4.0, 1.1, 2.6
+HEAD_R = 3.4                       # M2.5 socket head (4.5 mm) + a washer, plus clearance
 
 
 def _mount_points(s):
@@ -116,7 +117,9 @@ def servo_parent(joint):
         n = [-x for x in d] if face == "d" else [(1 if ow > 0 else -1) * x for x in w]
         bosses.append(cyl(q, n, -0.4, BOSS_T, BOSS_R))
         holes.append({"id": f"{joint}-screw-{i}", "shape": cyl(q, n, -6.0, BOSS_T + 0.5, SCREW_R)})
-        holes.append({"id": f"{joint}-driver-{i}", "shape": cyl(q, n, BOSS_T + 0.5, BOSS_T + 25.0, DRIVER_R)})
+        # the screw head and its driver: clear from the boss face outward, so
+        # nothing grows over the face the head seats on
+        holes.append({"id": f"{joint}-driver-{i}", "shape": cyl(q, n, BOSS_T, BOSS_T + 25.0, DRIVER_R)})
     preserve = [{"id": f"{joint}-mount", "shape": {"type": "union", "shapes": bosses}}]
     keep = [{"id": f"{joint}-servo", "shape": {"type": "box", "min": open_lo, "max": open_hi}},
             # the horn and the child's hub sweep a disc above the horn face
@@ -139,7 +142,9 @@ def servo_child(joint, yoke=False):
         a = math.pi / 4 + i * math.pi / 2
         q = [p[k] + s["horn_bolt_r"] * (math.cos(a) * u[k] + math.sin(a) * v[k]) for k in range(3)]
         keep.append({"id": f"{joint}-horn-bolt-{i}", "shape": cyl(q, d, 3.5, 9.0, 1.3)})
-        keep.append({"id": f"{joint}-horn-driver-{i}", "shape": cyl(q, d, 8.0, 40.0, 2.5)})
+        # head + washer seat on the hub face, then the driver (QA 10/28: the
+        # organic body grew over the hub's bolt faces at r = 2.5)
+        keep.append({"id": f"{joint}-horn-driver-{i}", "shape": cyl(q, d, 8.0, 40.0, HEAD_R)})
     # everything the parent carries stays clear: the servo body and its cradle
     pp, pk = servo_parent(joint)
     keep += [{"id": f"{joint}-parent-{r['id']}", "shape": r["shape"]} for r in pp]
@@ -247,7 +252,7 @@ def study(link, masses, eff, max_elements=60000):
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["studies", "run"])
+    ap.add_argument("cmd", choices=["studies", "run", "remesh"])
     ap.add_argument("--links", default=",".join(LINKS))
     ap.add_argument("--jobs", type=int, default=3)
     ap.add_argument("--out", default=os.path.join(HERE, "v3", "out"))
@@ -266,6 +271,29 @@ def main(argv=None):
         for l, s in studies.items():
             print(l, s["chain"])
         return 0
+    if args.cmd == "remesh":
+        # redraw parts from their saved density fields (after a change to
+        # loadpath's reconstruction), verify, and update the summary
+        import numpy as np
+        import trimesh  # noqa: F401
+        from loadpath.domain import build_domain
+        from loadpath.reconstruct import reconstruct
+        from loadpath.spec import study_from_dict
+        from loadpath.verify import verify_part
+        sfile = os.path.join(args.out, "summary.json")
+        summary = json.load(open(sfile)) if os.path.exists(sfile) else {}
+        for l in links:
+            f = np.load(os.path.join(args.out, f"{l}.field.npz"))
+            st = study_from_dict(studies[l])
+            d = build_domain(st, pitch=float(f["pitch"]))
+            mesh, _ = reconstruct(st, d, f["xphys"])
+            rep = verify_part(st, mesh, max_cells=150_000, min_pitch=0.3 * d.pitch, contact_band=d.pitch)
+            mesh.export(os.path.join(args.out, f"{l}.stl"))
+            summary[l] = {"g": rep["mass"], "sf": rep["safetyFactor"], "boundaryCutArea": rep["boundaryCutArea"],
+                          "defl": {c["name"]: c["deflection"] for c in rep["cases"]}}
+            print(json.dumps({l: summary[l]}), flush=True)
+        json.dump(summary, open(sfile, "w"), indent=1)
+        return 0
     import multiprocessing as mp
     from concurrent.futures import ProcessPoolExecutor
     os.makedirs(args.out, exist_ok=True)
@@ -281,6 +309,11 @@ def main(argv=None):
             continue
         o = r.outcomes[r.best]
         o.mesh.export(os.path.join(args.out, f"{l}.stl"))
+        if o.xphys is not None:
+            # the density field, so `remesh` can redraw the part without re-optimizing
+            import numpy as np
+            np.savez_compressed(os.path.join(args.out, f"{l}.field.npz"), xphys=o.xphys,
+                                pitch=r.domain["pitch"])
         summary[l] = {"g": o.report["mass"], "sf": o.report["safetyFactor"],
                       "defl": {c["name"]: c["deflection"] for c in o.report["cases"]}}
         print(json.dumps({l: summary[l]}), flush=True)

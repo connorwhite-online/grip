@@ -28,7 +28,7 @@ L = FINGER["root"] + sum(FINGER["segments"])      # 96 mm
 Y_PALM, Y_BACK = 6.5, -10.0                       # palm face, and the deepest the back may go
 SKIN = 1.6
 WRAP_BACK = -22.0
-CONTACTS = (22.0, 42.0, 62.0)     # where an object may press, mm up the finger
+CONTACTS = (20.0, 36.0, 52.0)     # where an object may press, mm up the finger
 TENDON_N = 30.0
 TPU = {"name": "tpu-95a", "E": 26.0, "nu": 0.45, "strength": 25.0, "density": 1.2}
 
