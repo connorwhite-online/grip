@@ -9,7 +9,7 @@ import trimesh
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from hand import FINGER, ROOTS, ROOT_Z  # noqa: E402
+from hand import FINGER, ROOTS, ROOT_Z, SERVO_BODY, SHAFT, SPOOL_R  # noqa: E402
 
 OUT = os.path.join(HERE, "hand")
 
@@ -48,6 +48,15 @@ def placed(mesh, x, y, cy):
 def scene(deg):
     finger = trimesh.load(os.path.join(OUT, "finger.stl"))
     parts = [(trimesh.load(os.path.join(OUT, "palm.stl")), (0.80, 0.80, 0.82))]
+    # the gripper servo and its spool, for scale
+    lo, hi = np.array(SERVO_BODY["min"]), np.array(SERVO_BODY["max"])
+    servo = trimesh.creation.box(extents=hi - lo)
+    servo.apply_translation(0.5 * (lo + hi))
+    parts.append((servo, (0.20, 0.35, 0.65)))
+    spool = trimesh.creation.cylinder(radius=SPOOL_R, height=10.0)
+    spool.apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0]))
+    spool.apply_translation([SHAFT[0] + 5.0, SHAFT[1], SHAFT[2]])
+    parts.append((spool, (0.20, 0.35, 0.65)))
     nail = trimesh.load(os.path.join(OUT, "nail.stl"))
     nail.apply_translation([0, FINGER["thick"] / 2 - 1.2 - FINGER["nail_t"] / 2, 0])
     for x, y, cy in ROOTS:

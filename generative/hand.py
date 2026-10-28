@@ -225,19 +225,24 @@ def palm_study(max_elements=90_000):
     keep.append({"id": "spool", "shape": _cyl((sx - 0.5, sy, sz), (sx + 12.0, sy, sz), SPOOL_R + 4.0)})
     keep.append({"id": "lead", "shape": _cyl((sx + 6.0, sy, sz), (sx + 6.0, 0.0, 50.0), 3.0)})
     keep.append({"id": "balance-plate", "shape": _box((-14.0, -16.0, 46.0), (14.0, 16.0, 56.0))})
-    # finger roots: a socket cup each (the finger's root block drops in and two
-    # M3 go through cup and block along y), the finger above, the tendon from the plate
+    # finger roots: only the interfaces. The root block drops between two
+    # pairs of bosses (two M3 through bosses and block, along y) and stands on
+    # a seat pad that takes the tendon's pull. The clevis between them is the
+    # optimizer's (a preserved cup came out as a box).
     fw, ft, fr = FINGER["width"], FINGER["thick"], FINGER["root"]
     for i, (x, y, cy) in enumerate(ROOTS):
-        pres.append({"id": f"root-{i}", "shape": _box((x - fw / 2 - 2.5, y - ft / 2 - 2.5, ROOT_Z - fr - 2.5),
-                                                      (x + fw / 2 + 2.5, y + ft / 2 + 2.5, ROOT_Z))})
+        zb = ROOT_Z - fr / 2
+        pieces = [_box((x - fw / 2, y - ft / 2, ROOT_Z - fr - 2.5), (x + fw / 2, y + ft / 2, ROOT_Z - fr + 0.01))]
+        for dx in (-5.0, 5.0):
+            for side in (-1, 1):
+                y0 = y + side * (ft / 2 + 0.2)
+                pieces.append(_cyl((x + dx, y0, zb), (x + dx, y0 + side * 3.5, zb), 3.6))
+            keep.append({"id": f"root-bolt-{i}{'ab'[dx > 0]}", "shape": _cyl((x + dx, y - 16, zb), (x + dx, y + 16, zb), 1.6)})
+        pres.append({"id": f"root-{i}", "shape": {"type": "union", "shapes": pieces}})
         keep.append({"id": f"socket-{i}", "shape": _box((x - fw / 2 - 0.2, y - ft / 2 - 0.2, ROOT_Z - fr),
                                                         (x + fw / 2 + 0.2, y + ft / 2 + 0.2, ROOT_Z + 1))})
         keep.append({"id": f"finger-{i}", "shape": _box((x - fw / 2 - 1, y - ft / 2 - 1, ROOT_Z), (x + fw / 2 + 1, y + ft / 2 + 1, ROOT_Z + 100))})
         keep.append({"id": f"tendon-{i}", "shape": _cyl((0.0, 0.0, 51.0), (x, y + cy * (ft / 2 - FINGER["channel_y"]), ROOT_Z - fr + 0.5), 2.0)})
-        for dx in (-5.0, 5.0):
-            zb = ROOT_Z - fr / 2
-            keep.append({"id": f"root-bolt-{i}{'ab'[dx > 0]}", "shape": _cyl((x + dx, y - 14, zb), (x + dx, y + 14, zb), 1.6)})
     # loads: grasp reaction, a 1 kg part pulled out along the tool axis or sideways (x1.5)
     w = 1.0 * 9.81 * 1.5
     grip = 20.0

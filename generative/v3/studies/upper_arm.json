@@ -429,7 +429,7 @@
   "x"
  ],
  "resolution": {
-  "maxElements": 60000
+  "maxElements": 120000
  },
  "chain": {
   "distalKg": 1.8374,

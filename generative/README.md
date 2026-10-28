@@ -174,3 +174,23 @@ finger, depending on where the part touches. The servo reports its load, so
 the arm can grip by force without a sensor. All of it is a first concept:
 VERIFY the flexure thickness on a printed coupon, the servo, and the tendon
 routing.
+
+### Can the optimizer design the finger? (`finger_mechanism.py`, experimental)
+
+A finger has to bend, so it is a compliant-mechanism problem, not a
+stiffness one; loadpath gained a mechanism optimizer for it
+(`loadpath.mechanism`, Sigmund's formulation with MMA). Two framings so far:
+
+- **Tendon curl** (maximize the pad's inward travel when the tendon pulls)
+  comes out as a single leaf spring: the honest optimum of that question, and
+  not a useful finger.
+- **Fin-ray wrap** (an object pressing the middle of the palm face should
+  swing the tip in toward it) needs a deep root to lever with. At 28 mm it
+  finds the fin ray's principle, a strut leaning from the back of the root
+  up to the palm skin, but only one rib of it.
+
+![Fin-ray wrap, first result](renders/finger-wrap.png)
+
+Next: contact anywhere along the finger (several input cases at once, which
+is what makes a real fin ray grow its ladder of ribs), and large-deflection
+checks. Until then the hinged finger in `hand.py` is the design.
