@@ -1,0 +1,122 @@
+[
+ {
+  "iteration": 0,
+  "links": {
+   "turret": {
+    "printedG": 149.3347894743819,
+    "shippedG": 248.16211316887313,
+    "safetyFactor": 2.276754189249426,
+    "deflection": 0.621471926156229,
+    "chain": {
+     "distalKg": 3.8178,
+     "leverMm": 392.2599455681283,
+     "staticTorqueNm": 14.691161898063902
+    }
+   },
+   "upper_arm": {
+    "printedG": 171.4507328560371,
+    "shippedG": 214.05120986805736,
+    "safetyFactor": 2.803824141348176,
+    "deflection": 1.1775201632477652,
+    "chain": {
+     "distalKg": 2.7624,
+     "leverMm": 292.73655357298003,
+     "staticTorqueNm": 7.9329100193379025
+    }
+   },
+   "forearm": {
+    "printedG": 99.48915030780266,
+    "shippedG": 108.70252003911459,
+    "safetyFactor": 3.476909953463093,
+    "deflection": 0.19945481454263206,
+    "chain": {
+     "distalKg": 2.2727,
+     "leverMm": 190.46390821489865,
+     "staticTorqueNm": 0.0
+    }
+   },
+   "wrist_yoke": {
+    "printedG": 54.765493341644536,
+    "shippedG": 94.18194780268334,
+    "safetyFactor": 4.26124165131848,
+    "deflection": 0.22389995833913243,
+    "chain": {
+     "distalKg": 1.8141,
+     "leverMm": 189.12019186373414,
+     "staticTorqueNm": 3.3656436419886013
+    }
+   },
+   "wrist_link": {
+    "printedG": 98.86422251940009,
+    "shippedG": 95.64178704701493,
+    "safetyFactor": 6.614053111590616,
+    "deflection": 0.15327864550108922,
+    "chain": {
+     "distalKg": 1.3532,
+     "leverMm": 96.80186000591198,
+     "staticTorqueNm": 0.0
+    }
+   }
+  }
+ },
+ {
+  "iteration": 1,
+  "links": {
+   "turret": {
+    "printedG": 146.56884938240825,
+    "shippedG": 248.16211316887313,
+    "safetyFactor": 2.2684396037004118,
+    "deflection": 0.654945683870537,
+    "chain": {
+     "distalKg": 3.7297921342680143,
+     "leverMm": 395.4441946426016,
+     "staticTorqueNm": 14.469010784322464
+    }
+   },
+   "upper_arm": {
+    "printedG": 172.99661926629722,
+    "shippedG": 214.05120986805736,
+    "safetyFactor": 6.39177740232065,
+    "deflection": 1.287240813306341,
+    "chain": {
+     "distalKg": 2.7169926112800344,
+     "leverMm": 294.97977866364545,
+     "staticTorqueNm": 7.862301794031279
+    }
+   },
+   "forearm": {
+    "printedG": 98.66231389986756,
+    "shippedG": 108.70252003911459,
+    "safetyFactor": 3.667790517781893,
+    "deflection": 0.19042825818685535,
+    "chain": {
+     "distalKg": 2.2365059810113466,
+     "leverMm": 193.06363711770155,
+     "staticTorqueNm": 0.0
+    }
+   },
+   "wrist_yoke": {
+    "printedG": 54.96136120746882,
+    "shippedG": 94.18194780268334,
+    "safetyFactor": 4.050129660531417,
+    "deflection": 0.21262032096325614,
+    "chain": {
+     "distalKg": 1.8173224354723851,
+     "leverMm": 188.93443166279144,
+     "staticTorqueNm": 3.368310406456288
+    }
+   },
+   "wrist_link": {
+    "printedG": 98.865720132323,
+    "shippedG": 95.64178704701493,
+    "safetyFactor": 6.614029382453645,
+    "deflection": 0.15327054270173887,
+    "chain": {
+     "distalKg": 1.3532,
+     "leverMm": 96.80186000591198,
+     "staticTorqueNm": 0.0
+    }
+   }
+  }
+ }
+]
