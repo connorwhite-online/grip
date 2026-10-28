@@ -102,10 +102,10 @@ horn hubs and the spring's pulley, anchor and pin.
 | --- | --- | --- | --- | --- |
 | Turret | 248 g | 147 g | 197 g | 2.26 |
 | Upper arm | 214 g | 173 g | 180 g | 6.21 |
-| Forearm | 109 g | 99 g | 73 g | 3.27 |
-| Wrist yoke | 94 g | 55 g | 41 g | 5.73 |
-| Wrist link | 96 g | 99 g | 67 g | 3.23 |
-| **Total** | **761 g** | **572 g** | **558 g (−27%)** | |
+| Forearm | 109 g | 99 g | 81 g | 4.13 |
+| Wrist yoke | 94 g | 55 g | 26 g | 3.08 |
+| Wrist link | 96 g | 99 g | 55 g | 2.24 |
+| **Total** | **761 g** | **572 g** | **539 g (−29%)** | |
 
 The turret gains mass because it now carries the spring's pulley and anchor.
 On the parts that change, the BOM drops about $16 (≈ $209 → $193): one NEMA 23
@@ -124,8 +124,28 @@ Open items before printing:
 - **J5 torque:** the STS3250 is rated about 1.6 N·m continuous; J5 needs about
   1.7 N·m at a 1 kg payload at full reach. It is fine for 0.5 kg; at 1 kg it is
   a peak, not a continuous, load.
-- **The servo cradles are preserved as full boxes** (3 mm walls round the servo),
-  so the wrist yoke reads as a box. Opening them up to clips or straps is the
-  next pass.
+- **Servo holders** are fixed only where the servo is held: a collar round the
+  body at the horn end (where its ears screw down) and a pad under the far end.
+  The walls between are generated. (A full 3 mm box was most of the wrist yoke.)
 - The spring rate and anchor geometry (k = 1 N/mm, a = 62 mm, b = 80 mm) are
   sized for the arm at rest. Check them against the assembled arm's real mass.
+
+### Simulations
+
+![Stress maps](renders/sims.png)
+
+`sims.py` re-checks each delivered part on a finer grid (120k cells) and
+colours it by the worst case's stress over the allowable at SF 2, on the shape
+deflected and exaggerated. Results are in `v3/out/sims.json`.
+
+| Link | SF (finer check) | Worst deflection |
+| --- | --- | --- |
+| Turret | 1.65 | 0.66 mm (reach) |
+| Upper arm | 5.56 | 1.56 mm (side push) |
+| Forearm | 2.92 | 0.42 mm (reach) |
+| Wrist yoke | 1.53 | 0.23 mm (reach) |
+| Wrist link | 2.08 | 1.52 mm (reach) |
+
+The finer check finds the turret and the wrist yoke under the goal of 2
+(above 1.5): their peaks sit at small fillets the optimization grid was too
+coarse to see. They are being re-run at a finer resolution.

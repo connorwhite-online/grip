@@ -66,6 +66,9 @@ SPRING_PATH_X = 58.0             # the spring runs down the turret's side, clear
 SPRING_MAX_N = SPRING_K * math.hypot(62.0, 80.0)
 
 
+COLLAR_H = 8.0  # mm of body the collar wraps, from the horn face down
+
+
 def servo_parent(joint):
     """Pocket and cradle for a servo body in the link that carries it."""
     s = SERVOS[WRIST[joint]]
@@ -94,7 +97,20 @@ def servo_parent(joint):
             open_hi[k] += 12.0
         elif d[k] < 0:
             open_lo[k] -= 12.0
-    preserve = [{"id": f"{joint}-cradle", "shape": cradle}]
+    # Only what holds the servo is fixed: a collar round the body at the horn
+    # end, where its mounting ears screw down, and a floor pad under the far
+    # end. The walls between are the optimizer's. (A full 3 mm box round the
+    # body was most of the wrist yoke's mass and none of its design.)
+    collar, floor = {**cradle, "min": list(cradle["min"]), "max": list(cradle["max"])}, \
+        {**cradle, "min": list(cradle["min"]), "max": list(cradle["max"])}
+    for k in range(3):
+        if d[k] > 0:
+            collar["min"][k] = round(p[k] - COLLAR_H, 2)
+            floor["max"][k] = round(p[k] - s["H"] + 0.4, 2)
+        elif d[k] < 0:
+            collar["max"][k] = round(p[k] + COLLAR_H, 2)
+            floor["min"][k] = round(p[k] + s["H"] - 0.4, 2)
+    preserve = [{"id": f"{joint}-cradle", "shape": collar}, {"id": f"{joint}-floor", "shape": floor}]
     keep = [{"id": f"{joint}-servo", "shape": {"type": "box", "min": open_lo, "max": open_hi}},
             # the horn and the child's hub sweep a disc above the horn face
             {"id": f"{joint}-horn-sweep", "shape": cyl(p, d, 0.0, 9.0, s["horn_r"] + 6.0)}]

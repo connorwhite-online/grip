@@ -1,0 +1,92 @@
+{
+ "turret": {
+  "g": 196.84726542111753,
+  "sf": 1.6454272932572338,
+  "cases": {
+   "reach": {
+    "peakMPa": 25.4,
+    "deflMm": 0.658
+   },
+   "j2-rated-torque": {
+    "peakMPa": 23.3,
+    "deflMm": 0.234
+   },
+   "lateral": {
+    "peakMPa": 1.4,
+    "deflMm": 0.057
+   }
+  }
+ },
+ "upper_arm": {
+  "g": 180.076586709264,
+  "sf": 5.5570771998265,
+  "cases": {
+   "reach": {
+    "peakMPa": 7.2,
+    "deflMm": 0.388
+   },
+   "j3-rated-torque": {
+    "peakMPa": 7.0,
+    "deflMm": 0.466
+   },
+   "lateral": {
+    "peakMPa": 7.5,
+    "deflMm": 1.555
+   }
+  }
+ },
+ "forearm": {
+  "g": 81.33407799596942,
+  "sf": 2.924935137987775,
+  "cases": {
+   "reach": {
+    "peakMPa": 13.9,
+    "deflMm": 0.423
+   },
+   "j4-rated-torque": {
+    "peakMPa": 14.3,
+    "deflMm": 0.011
+   },
+   "lateral": {
+    "peakMPa": 2.2,
+    "deflMm": 0.202
+   }
+  }
+ },
+ "wrist_yoke": {
+  "g": 25.547540401072673,
+  "sf": 1.5299393702577462,
+  "cases": {
+   "reach": {
+    "peakMPa": 27.3,
+    "deflMm": 0.23
+   },
+   "j5-rated-torque": {
+    "peakMPa": 25.1,
+    "deflMm": 0.21
+   },
+   "lateral": {
+    "peakMPa": 2.7,
+    "deflMm": 0.025
+   }
+  }
+ },
+ "wrist_link": {
+  "g": 55.200490943997515,
+  "sf": 2.0776070274433263,
+  "cases": {
+   "reach": {
+    "peakMPa": 19.6,
+    "deflMm": 1.523
+   },
+   "j6-rated-torque": {
+    "peakMPa": 20.1,
+    "deflMm": 1.308
+   },
+   "lateral": {
+    "peakMPa": 5.7,
+    "deflMm": 0.281
+   }
+  }
+ }
+}
