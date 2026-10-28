@@ -46,10 +46,10 @@ Subtotal: **$85.11**
 
 | Item | Spec | Qty | Unit (USD) | Line (USD) | Price | Buy |
 | --- | --- | ---: | ---: | ---: | --- | --- |
-| Heat-set inserts | M3 x 5.7 brass (pack of 100; 64 used), plus 3x M5 | 1 | 12.00 | 12.00 | estimate | [Amazon](https://www.amazon.com/s?k=m3+heat+set+inserts) |
+| Heat-set inserts | M3 x 5.7 brass (pack of 100; 66 used), plus 3x M5 | 1 | 12.00 | 12.00 | estimate | [Amazon](https://www.amazon.com/s?k=m3+heat+set+inserts) |
 | Socket head screws | M3x8 (24) for the link hubs, plus gearbox through-bolts M3x40 (6), M3x35 (12), M3x30 (18) | 1 | 18.00 | 18.00 | estimate | [Amazon](https://www.amazon.com/s?k=m3+socket+head+screw+assortment) |
 | Motor screws | Low-head DIN 7984: M3x8 (20) for the NEMA 17s, M5x16 + M5 nyloc nut (4) for the NEMA 23 | 1 | 8.00 | 8.00 | estimate | [Amazon](https://www.amazon.com/s?k=din+7984+m3+low+head+socket+screw) |
-| Base and gripper screws | M5x20 (3) base to table; M3x12 (4) gripper frame to palm; M3x10 + nyloc (4) fingers; M3x6 set screw (4) guide rods | 1 | 7.00 | 7.00 | estimate | [Amazon](https://www.amazon.com/s?k=m2+socket+head+screw+assortment) |
+| Base and gripper screws | M5x20 (3) base to table; M3x12 (4) gripper frame to palm; M3x10 + nyloc (4) fingers; M3x6 set screw (4) guide rods; M3x12 (2) camera cradle; M2x5 self-tapping (4) camera board | 1 | 7.00 | 7.00 | estimate | [Amazon](https://www.amazon.com/s?k=m2+socket+head+screw+assortment) |
 
 Subtotal: **$45.00**
 
@@ -61,15 +61,26 @@ Subtotal: **$45.00**
 | Power supply | 24 V 10 A enclosed switching supply (generic; Mean Well LRS-250-24 if you want the name brand) | 1 | 20.00 | 20.00 | estimate | [Amazon](https://www.amazon.com/s?k=24v+10a+switching+power+supply) |
 | Buck converter | 24 V to 12 V 5 A for the gripper servo | 1 | 6.00 | 6.00 | estimate | [Amazon](https://www.amazon.com/s?k=24v+to+12v+5a+buck+converter) |
 | Emergency stop | Latching mushroom e-stop, NC, cuts motor power | 1 | 7.00 | 7.00 | estimate | [Amazon](https://www.amazon.com/s?k=emergency+stop+button+latching) |
-| Wiring | 20 AWG silicone wire, twisted pair for CAN, XT30 connectors, inline fuse | 1 | 15.00 | 15.00 | estimate | [Amazon](https://www.amazon.com/s?k=20+awg+silicone+wire) |
+| Wiring | 20 AWG silicone wire (22 AWG from J4 up), twisted pair for CAN, XT30 connectors, inline fuse | 1 | 15.00 | 15.00 | estimate | [Amazon](https://www.amazon.com/s?k=20+awg+silicone+wire) |
 
 Subtotal: **$63.00**
 
-**Bought parts total: $492.13**
+## Vision
+
+| Item | Spec | Qty | Unit (USD) | Line (USD) | Price | Buy |
+| --- | --- | ---: | ---: | ---: | --- | --- |
+| Wrist camera | Arducam UB0234: OV2710 1080p USB 2.0 UVC board, 32 x 32 mm, M12 lens 105 deg horizontal | 1 | 34.99 | 34.99 | checked 2026-10-27 | [Arducam](https://www.arducam.com/arducam-2mp-wide-angle-usb2-0-camera-board-with-m12-lens-1-2-7-cmos-ov2710-uvc-usb-webcam-without-microphone-for-computer-laptop-android-device-and-raspberry-pi.html) |
+| Camera cable | Slim USB 2.0 cable, 2 m, 3 mm OD or less (spliced to the camera's lead, see docs/VISION.md) | 1 | 6.00 | 6.00 | estimate | [Amazon](https://www.amazon.com/s?k=slim+thin+usb+2.0+cable+2m) |
+| Camera light | 5 V white LED strip, 2835, 60 LED/m, 8 mm wide (two 2-LED pieces beside the lens) | 1 | 6.00 | 6.00 | estimate | [Amazon](https://www.amazon.com/s?k=5v+usb+led+strip+2835+white+8mm) |
+| Fiducial markers | AprilTag tag36h11 printed on matte sticker paper (id 0 on the bed; id 1 optional), plus a ChArUco board for camera calibration | 1 | 0.00 | 0.00 | print yourself | [AprilRobotics](https://github.com/AprilRobotics/apriltag-imgs) |
+
+Subtotal: **$46.99**
+
+**Bought parts total: $539.12**
 
 ## Printed parts
 
-29 unique parts, 49 pieces, 1,614 cm³ in total. Full list with materials in [exports/printed_parts.csv](../exports/printed_parts.csv); bureau stacked kits in [exports/service_kits.csv](../exports/service_kits.csv).
+30 unique parts, 50 pieces, 1,620 cm³ in total. Full list with materials in [exports/printed_parts.csv](../exports/printed_parts.csv); bureau stacked kits in [exports/service_kits.csv](../exports/service_kits.csv).
 
 ## Printed parts, FDM edition
 
@@ -77,7 +88,7 @@ Filament for one arm, before supports and failed prints (allow about 15% more). 
 
 | Material | Filament |
 | --- | ---: |
-| FDM PETG | 1.78 kg |
+| FDM PETG | 1.79 kg |
 | FDM PETG-CF (or PA-CF) | 0.31 kg |
 | FDM TPU 95A | 0.03 kg |
 

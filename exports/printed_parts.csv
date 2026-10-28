@@ -24,7 +24,8 @@ wrist_drive_disc_b,3,SLS PA12-GF (glass filled),5.7,45.7,45.9,5.0,stl/wrist_driv
 wrist_drive_eccentric,3,SLS PA12-GF (glass filled),1.0,13.4,12.0,11.5,stl/wrist_drive_eccentric.stl
 wrist_drive_output_flange,3,SLS PA12-GF (glass filled),7.6,37.0,37.0,13.5,stl/wrist_drive_output_flange.stl
 gripper_palm,1,SLS PA12,38.4,74.9,74.9,46.0,stl/gripper_palm.stl
-gripper_frame,1,SLS PA12,58.4,150.0,65.0,27.5,stl/gripper_frame.stl
+gripper_frame,1,SLS PA12,58.2,150.0,65.0,27.5,stl/gripper_frame.stl
+gripper_camera_mount,1,SLS PA12,6.4,38.0,42.4,20.4,stl/gripper_camera_mount.stl
 gripper_pinion,1,SLS PA12-GF (glass filled),2.2,21.8,21.8,8.0,stl/gripper_pinion.stl
 gripper_jaw,2,SLS PA12-GF (glass filled),15.3,68.5,65.0,26.0,stl/gripper_jaw.stl
 gripper_finger,2,SLS TPU 90A-95A,10.7,30.0,22.0,72.0,stl/gripper_finger.stl

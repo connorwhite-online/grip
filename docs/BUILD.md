@@ -16,6 +16,7 @@ All drawings are generated from the same CAD as the exports (`python cad/drawing
 6. [Wiring](#6-wiring)
 7. [Driver setup and first motion](#7-driver-setup-and-first-motion)
 8. [Joint limits](#8-joint-limits)
+9. [Wrist camera](#9-wrist-camera)
 
 ![GRIP side view with joint heights and link lengths](drawings/arm.svg)
 
@@ -23,7 +24,7 @@ All drawings are generated from the same CAD as the exports (`python cad/drawing
 
 **Printed parts.** Order them as listed in the [README](../README.md#printing): eight link, palm and gripper-frame shells, plus five stacked kits for a bureau, or print the individual files in `exports/stl/` yourself. Printing at home on a filament printer? See [FDM.md](FDM.md).
 
-**Bought parts.** These are in [bom/BOM.md](../bom/BOM.md). They come to about $490, and most of that is the six steppers and their closed-loop drivers.
+**Bought parts.** These are in [bom/BOM.md](../bom/BOM.md). They come to about $540, and most of that is the six steppers and their closed-loop drivers. The wrist camera and its light are $47 of it.
 
 **Tools:**
 
@@ -47,11 +48,13 @@ All drawings are generated from the same CAD as the exports (`python cad/drawing
 | Gearbox into its socket, J1 and J3 | M3x35 socket head | 12 |
 | Gearbox into its socket, J4 to J6 | M3x30 socket head | 18 |
 | Child hub to output flange (all six joints, including the palm on J6) | M3x8 socket head | 24 |
-| Heat-set inserts, sockets, output flanges, palm deck | M3 x 5.7 brass | 64 |
+| Heat-set inserts, sockets, output flanges, palm deck, camera cradle | M3 x 5.7 brass | 66 |
 | Base to table | M5 heat-set insert + M5x20 | 3 |
 | Gripper rod frame to palm | M3x12 socket head | 4 |
 | Guide rods in the frame | M3x6 set screw | 4 |
 | Fingers to jaws | M3x10 + M3 nyloc nut | 4 |
+| Camera cradle to rod frame | M3x12 socket head | 2 |
+| Camera board to cradle | M2x5 self-tapping | 4 |
 
 ## 2. Prepare the printed parts
 
@@ -128,7 +131,8 @@ Before each gearbox goes in, pass the CAN and power cable through the link's cab
 3. **Bearings into the jaws.** Press two LM6UU bearings into each jaw with the vise, flush with both faces.
 4. **Rods.** Set the jaws in the rod frame, racks facing each other, and push the two Ø6 x 150 rods in from one end post, through both jaws' bearings, into the other post. The rod ends sit flush with the posts. Lock each rod with an M3x6 set screw in the hole on top of each post (it cuts its own thread). The jaws should slide end to end under their own weight when you tilt the frame.
 5. **Frame onto the palm.** Bolt the frame to the deck (4x M3x12). Centre the jaws so they are mirror images, then fit the pinion so it meshes with both racks and screw it to the servo horn. *VERIFY: the pinion has only a centre bore. Drill it to match your horn's screw holes.*
-6. **Onto the arm.** Bolt the palm to the J6 output flange (4x M3x8).
+6. **Camera.** Fit the camera cradle and the camera to the -y rail of the rod frame, as described in [VISION.md](VISION.md#build). The lens needs focusing before it goes in.
+7. **Onto the arm.** Bolt the palm to the J6 output flange (4x M3x8).
 
 ## 6. Wiring
 
@@ -145,6 +149,7 @@ The whole arm runs on **one four-wire cable**, daisy-chained from driver to driv
 - The power supply is 24 V. Put an inline fuse in the +24 V, and wire the e-stop to cut **driver power** (not the USB adapter), so you can stop the motors and still read the bus.
 - Wire the USB-to-CAN adapter (CANable class) at the base end of the chain. Turn on the 120 Ω terminator at the adapter and at the last driver (J6), and nowhere else.
 - The gripper servo needs 12 V and its own 3-wire serial bus. Fit the 24→12 V buck converter in the base, and run a thin 3-core cable (12 V, 0 V, data) up the arm beside the CAN cable to the Waveshare bus adapter.
+- The wrist camera's slim USB cable runs up the arm the same way, to the controlling computer. It is spliced to the camera's own lead at the gripper ([VISION.md](VISION.md#the-camera-cable)). From J4 up, use 22 AWG for the power pair so that four cables fit the wrist's 8 mm ports.
 - Keep every joint's service loop, and tie the cable to the link near each cable port so the loop stays where you put it.
 
 > **When power is cut, the arm can sag.** Cycloidal gearboxes at these ratios can be back-driven, and an unpowered stepper holds nothing. Support the arm, or park it folded, before you hit the e-stop or switch off.
@@ -182,3 +187,7 @@ These ranges are checked in the CAD for collisions between links, motors and dri
 | J6 | ±170° | roll joint, clear in CAD at 90°; set by the cable loop |
 
 Set these as soft limits in your software before running anything automatic.
+
+## 9. Wrist camera
+
+The camera lets the arm find parts on the plate and check the plate is clear before the next job. Its build, wiring, focusing and calibration are in [VISION.md](VISION.md), along with how a pick works. In short: calibrate the lens with a ChArUco board, run a hand-eye calibration, and stick an AprilTag on the front of the printer bed.

@@ -1,6 +1,6 @@
 # Printing GRIP at home (FDM edition)
 
-GRIP was drawn for SLS nylon, but it prints fine on an ordinary filament printer. The FDM edition uses the same design and the same bought parts. Only the fits change, and the links are printed solid with infill instead of as hollow shells. One arm takes about 2.1 kg of filament (about $45), so **the whole arm costs about $540** instead of about $1,400 with bureau SLS parts.
+GRIP was drawn for SLS nylon, but it prints fine on an ordinary filament printer. The FDM edition uses the same design and the same bought parts. Only the fits change, and the links are printed solid with infill instead of as hollow shells. One arm takes about 2.1 kg of filament (about $45), so **the whole arm costs about $585** with its wrist camera, instead of about $1,450 with bureau SLS parts.
 
 ```bash
 cd cad
@@ -14,7 +14,7 @@ Every STL in `exports/fdm/stl/` is already turned to its print orientation and s
 | | SLS edition | FDM edition |
 | --- | --- | --- |
 | Printed parts | about $890 from a bureau | about $45 of filament |
-| Whole arm (with $492 of bought parts) | about $1,400 | about $540 |
+| Whole arm (with $539 of bought parts) | about $1,450 | about $585 |
 | Links | hollow shells, 2 mm walls | solid, 4 walls + 15% gyroid, cable tunnels and driver bays cut inside |
 | Moving mass (upper arm to wrist link) | 466 g | 642 g |
 | Extra load on the shoulder at full reach | | +0.49 N·m, about 0.1 kg of payload |

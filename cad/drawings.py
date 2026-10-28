@@ -218,7 +218,8 @@ def gripper_sheet(path):
     sh.text("Gripper: front view, scale 1:1, mm", bb.min.X - 10, bb.min.Y - 14, 4.0)
     sh.text("STS3215 servo turns a 20-tooth module 1 pinion between two racks; jaws ride two Ø6 rods on LM6UU bearings.",
             bb.min.X - 10, bb.min.Y - 20, 2.6)
-    sh.text("TPU fin-ray fingers wrap around the object instead of pinching it.", bb.min.X - 10, bb.min.Y - 25, 2.6)
+    sh.text("TPU fin-ray fingers wrap around the object instead of pinching it. In front: the wrist camera in its cradle,", bb.min.X - 10, bb.min.Y - 25, 2.6)
+    sh.text(f"bolted to the -y rail and tilted {gr.CAM_TILT:g} deg in toward the tool axis.", bb.min.X - 10, bb.min.Y - 30, 2.6)
     sh.write(path, 1.0)
 
 

@@ -30,6 +30,7 @@ BEARING_FILL = 0.65          # a ball bearing weighs about this much of a solid 
 # catalogue masses (VERIFY), each with its closed-loop driver board (~40 g)
 MOTOR_KG = {NEMA17_60.name: 0.50 + 0.04, NEMA17_34.name: 0.22 + 0.04, NEMA23_56.name: 0.70 + 0.05}
 SERVO_KG = 0.055             # STS3215
+CAMERA_KG = 0.015            # Arducam UB0234 board, lens and cable stub
 GF_LINKS = {"turret", "upper_arm"}
 GF_DRIVE = {"housing", "disc_a", "disc_b", "eccentric", "output_flange"}
 
@@ -75,6 +76,8 @@ def bodies():
             "jaw_b" if k.endswith("_b") and not k.startswith("rod") else "tool"
         if k == "servo":
             dens = ("kg", SERVO_KG)
+        elif k == "camera":
+            dens = ("kg", CAMERA_KG)
         elif k.startswith("rod"):
             dens = STEEL
         elif k.startswith("bearings"):
@@ -160,6 +163,13 @@ def write(out):
         if mimic:
             xml.append(f'    <mimic joint="{escape(mimic)}" multiplier="1" offset="0"/>')
         xml.append('  </joint>')
+    # wrist camera: a massless frame on the board front, +Z along the optical axis (the
+    # ROS optical convention). Hand-eye calibration refines it; see docs/VISION.md.
+    xml += ['  <link name="wrist_camera_optical"/>',
+            '  <joint name="wrist_camera" type="fixed">',
+            '    <parent link="tool"/><child link="wrist_camera_optical"/>',
+            f'    <origin xyz="0 {gr.CAM_Y / 1000:.6g} {gr.CAM_Z / 1000:.6g}" rpy="{radians(-gr.CAM_TILT):.5f} 0 0"/>',
+            '  </joint>']
     xml.append('</robot>')
     (out / "grip.urdf").write_text("\n".join(xml) + "\n")
 

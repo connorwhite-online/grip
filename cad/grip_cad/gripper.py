@@ -40,6 +40,16 @@ POST_X0 = 69.0         # frame end posts x = 69..75; a fully open jaw stops 4.5 
 FRAME_Y0 = 17.0        # frame rails |y| >= 17, clear of the racks
 FRAME_BOLTS = [(x, y) for x in (-12.0, 12.0) for y in (-22.0, 22.0)]
 
+# wrist camera: Arducam UB0234 (OV2710, 1080p UVC, 105 deg M12 lens). VERIFY the holder
+# and lens sizes against the board you buy; the board and hole pitch are from Arducam.
+CAM = dict(board=32.0, t=1.6, pitch=28.0, holder=15.0, holder_h=9.0, lens_d=14.0, lens_h=12.0)
+CAM_TILT = 15.0        # optical axis leans this far toward the tool axis
+CAM_Y, CAM_Z = -55.0, 54.0   # board front centre, beside the -y rail, below the jaw tops
+CAM_LOC = Pos(0, CAM_Y, CAM_Z) * Rot(-CAM_TILT, 0, 0)    # camera frame: +Z is the optical axis
+CAM_POD = 19.0         # pod half-width
+CAM_TAB_X = 6.0        # two M3 into heat-set inserts in the rail's outer face, x = +-6
+CAM_TAB_Z = Z_DECK + 5.25
+
 
 def _cyl(r, z0, z1, x=0.0, y=0.0):
     return Pos(x, y, z0) * Cylinder(r, z1 - z0, align=(Align.CENTER, Align.CENTER, Align.MIN))
@@ -170,6 +180,9 @@ def frame():
             body = body - _cyl(1.25, ROD_Z, Z_DECK + JAW_TOP + 1, x, y)      # M3 set screw, self-tapping
     for x, y in FRAME_BOLTS:
         body = body - _cyl(1.7, zb - 1, Z_DECK + 10, x, y) - _cyl(3.0, Z_DECK + 6.5, Z_DECK + 10, x, y)
+    for x in (-CAM_TAB_X, CAM_TAB_X):        # M3 heat-set inserts for the camera cradle
+        body = body - Pos(x, -JAW_Y - 0.5, CAM_TAB_Z) * Rot(-90, 0, 0) * Cylinder(
+            2.0, 6.2, align=(Align.CENTER, Align.CENTER, Align.MIN))
     return body
 
 
@@ -190,6 +203,54 @@ def jaw(side):
     return body
 
 
+def _cam_pod():
+    """Camera cradle body in the camera frame (+Z = optical axis, board front at z = 0)."""
+    w = CAM_POD
+    pod = Pos(0, 0, -8.0) * Box(2 * w, 2 * w, 12.0, align=(Align.CENTER, Align.CENTER, Align.MIN))
+    pod = _soften(pod, 4.0, 2.5, -7.9)
+    return pod.fillet(2.0, pod.edges().filter_by(lambda e: e.center().Z < -7.9))
+
+
+def _cam_cavity(body):
+    """Open back for the board, a window for the lens holder in the 2 mm front wall, and
+    four standoffs the board screws onto from behind (M2 self-tapping)."""
+    b = CAM["board"] / 2 + 0.4
+    body = body - CAM_LOC * (Pos(0, 0, -30.0) * Box(2 * b, 2 * b, 32.0, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    win = CAM["holder"] / 2 + 0.75
+    body = body - CAM_LOC * Box(2 * win, 2 * win, 20.0)
+    h = CAM["pitch"] / 2
+    for x in (-h, h):
+        for y in (-h, h):
+            body = body + CAM_LOC * _cyl(2.7, 0.0, 2.2, x, y)      # merges into the side walls
+            body = body - CAM_LOC * _cyl(0.85, -1.0, 3.6, x, y)
+    return body
+
+
+def camera_mount():
+    """Cradle on the -y rail of the rod frame, in the gripper frame."""
+    y0 = -JAW_Y - 0.1
+    tab = _box(-12.0, 12.0, y0 - 3.0, y0, Z_DECK + 0.5, Z_DECK + 9.5)
+    bridge = _box(-12.0, 12.0, -40.0, y0 - 1.0, Z_DECK + 0.5, Z_DECK + 9.5)
+    body = soft_fuse([CAM_LOC * _cam_pod(), bridge, tab], 2.0)
+    body = _cam_cavity(body)
+    for x in (-CAM_TAB_X, CAM_TAB_X):
+        bolt = Pos(x, y0 + 1, CAM_TAB_Z) * Rot(90, 0, 0) * Cylinder(1.7, 40.0, align=(Align.CENTER, Align.CENTER, Align.MIN))
+        # M3x12 put in through the open back before the board goes in; the head seats on a
+        # flat counterbored into the pod's inner wall
+        head = Pos(x, y0 - 4.5, CAM_TAB_Z) * Rot(90, 0, 0) * Cylinder(3.0, 40.0, align=(Align.CENTER, Align.CENTER, Align.MIN))
+        body = body - bolt - head
+    return solids_only(body)
+
+
+def camera_local():
+    """Board, lens holder and lens, for the assembly and the URDF (camera frame)."""
+    c = CAM
+    board = Pos(0, 0, -c["t"]) * Box(c["board"], c["board"], c["t"], align=(Align.CENTER, Align.CENTER, Align.MIN))
+    holder = Box(c["holder"], c["holder"], c["holder_h"], align=(Align.CENTER, Align.CENTER, Align.MIN))
+    lens = _cyl(c["lens_d"] / 2, c["holder_h"], c["holder_h"] + c["lens_h"])
+    return union(board, holder, lens)
+
+
 def gripper_local(opening=None):
     """Parts in the gripper frame; `opening` is the half-opening (0..STROKE), default OPEN."""
     global OPEN
@@ -205,6 +266,8 @@ def _gripper_local():
     parts = {}
     parts["palm"] = (palm(), "shell")
     parts["frame"] = (frame(), "shell")
+    parts["camera_mount"] = (camera_mount(), "shell")
+    parts["camera"] = (CAM_LOC * camera_local(), "vendor")
     parts["servo"] = (_box(-s["l"] / 2 - s["horn_dx"], s["l"] / 2 - s["horn_dx"], -s["w"] / 2, s["w"] / 2,
                            Z_DECK - s["h"] - 5, Z_DECK - 5) + _cyl(3, Z_DECK - 5, Z_DECK + 2), "motor")
     # the pinion turns with the jaws: the racks are phased to it at OPEN = 30

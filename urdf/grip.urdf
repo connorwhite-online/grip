@@ -38,8 +38,8 @@
     <collision><origin xyz="-0 0.043 -0.572"/><geometry><mesh filename="meshes/wrist_link.stl" scale="0.001 0.001 0.001"/></geometry></collision>
   </link>
   <link name="tool">
-    <inertial><origin xyz="-0.00228725 1.25704e-08 0.041369"/><mass value="0.2359"/>
-      <inertia ixx="0.000228196" ixy="-8.67281e-09" ixz="-1.01905e-05" iyy="0.000461392" iyz="3.0552e-10" izz="0.000418056"/></inertial>
+    <inertial><origin xyz="-0.00209797 -0.00440401 0.0427588"/><mass value="0.2572"/>
+      <inertia ixx="0.000291774" ixy="2.36799e-06" ixz="-1.09405e-05" iyy="0.000469669" iyz="1.76822e-05" izz="0.000476755"/></inertial>
     <visual><origin xyz="-0 0.025 -0.7"/><geometry><mesh filename="meshes/tool.stl" scale="0.001 0.001 0.001"/></geometry></visual>
     <collision><origin xyz="-0 0.025 -0.7"/><geometry><mesh filename="meshes/tool.stl" scale="0.001 0.001 0.001"/></geometry></collision>
   </link>
@@ -95,5 +95,10 @@
     <origin xyz="0 0 0"/><axis xyz="-1 0 0"/>
     <limit lower="0" upper="0.04" effort="30.0" velocity="0.05"/>
     <mimic joint="jaw_a" multiplier="1" offset="0"/>
+  </joint>
+  <link name="wrist_camera_optical"/>
+  <joint name="wrist_camera" type="fixed">
+    <parent link="tool"/><child link="wrist_camera_optical"/>
+    <origin xyz="0 -0.055 0.054" rpy="-0.26180 0 0"/>
   </joint>
 </robot>

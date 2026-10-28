@@ -1,6 +1,6 @@
 # GRIP
 
-An open-source, fully printed 6-axis robot arm with soft, organic shells. Every joint is a closed-loop stepper driving a printed cycloidal gearbox, and the fingers are TPU fin-ray. It comes in two editions from the same CAD: **FDM**, printed at home for about **$540** all in, and **SLS**, with nylon parts from a print bureau for about $1,400. Its first target job is unloading a 3D printer: pulling the flex plate, popping parts off, and putting the plate back.
+An open-source, fully printed 6-axis robot arm with soft, organic shells. Every joint is a closed-loop stepper driving a printed cycloidal gearbox, and the fingers are TPU fin-ray. It comes in two editions from the same CAD: **FDM**, printed at home for about **$585** all in, and **SLS**, with nylon parts from a print bureau for about $1,450. A wrist camera lets it find parts and check the plate is clear. Its first target job is unloading a 3D printer: pulling the flex plate, popping parts off, and putting the plate back.
 
 ![GRIP in its home pose and a reaching pose](docs/img/overview.png)
 
@@ -17,10 +17,11 @@ An open-source, fully printed 6-axis robot arm with soft, organic shells. Every 
 | J2 shoulder | NEMA 23 56 mm + 30:1 printed cycloidal |
 | J4–J6 wrist | NEMA 17 34 mm pancake + 15:1 printed cycloidal |
 | Gripper | Feetech STS3215, rack and pinion, jaws on two Ø6 rods with LM6UU bearings, 0–80 mm opening, TPU fin-ray fingers |
+| Vision | Arducam UB0234 wrist camera (1080p USB, 105° lens) with its own LED light; an AprilTag on the printer bed |
 | Drivers | MKS SERVO42D / SERVO57D (CAN), one bus |
 | Power | 24 V |
 | Structure | FDM: PETG, PETG-CF for gearbox discs and jaws. SLS: PA12, PA12-GF for loaded parts. TPU fingers in both |
-| Cost | FDM about $540, SLS about $1,400 (bought parts $492 in both) |
+| Cost | FDM about $585, SLS about $1,450 (bought parts $539 in both, $47 of it the wrist camera) |
 
 The full design rationale, the torque budget and the three alternative versions (all-servo ~$350, lite QDD ~$1,300, full QDD ~$2,200) are in the spec document.
 
@@ -32,7 +33,7 @@ cad/
   grip_cad/cycloidal.py   parametric two-disc cycloidal reducer
   grip_cad/shapes.py      organic primitives: revolved pods, lofted bones, soft seams
   grip_cad/arm.py         link shells and joint placement
-  grip_cad/gripper.py     gripper, involute pinion, racks, rod frame, fin-ray fingers
+  grip_cad/gripper.py     gripper, involute pinion, racks, rod frame, fin-ray fingers, camera cradle
   grip_cad/coupon.py      FDM fit-test coupon
   grip_cad/assembly.py    posable assembly (forward kinematics)
   build.py                build everything -> exports/ (--fdm -> exports/fdm/)
@@ -53,6 +54,7 @@ bom/
   BOM.md                  the same as a readable table (python bom/make_bom.py)
 docs/BUILD.md             build guide
 docs/FDM.md               printing at home: fits, materials, settings, cost
+docs/VISION.md            wrist camera: mount, wiring, calibration, how a pick works
 docs/drawings/            technical drawings (python drawings.py)
 docs/img/                 renders (python preview.py, python exploded.py)
 urdf/                     grip.urdf + meshes, for ROS, MoveIt, MuJoCo, Isaac Sim (python urdf.py)
@@ -106,6 +108,8 @@ import mujoco
 m = mujoco.MjModel.from_xml_path("urdf/grip.urdf")
 ```
 
+The fixed frame `wrist_camera_optical` marks the wrist camera (+Z along the optical axis), for hand-eye calibration and `apriltag_ros`.
+
 Holding the arm straight out takes about 7.9 N·m at the shoulder, against about 30 N·m available.
 
 ## How a joint works
@@ -124,11 +128,13 @@ Each joint is the same parametric module in three sizes. A stepper turns a two-l
 - [x] Printability fixes (single manifold bodies, powder escape)
 - [x] Cost pass 1: thinner walls, lighter sockets, stacked kits (50 pieces down to 15, kit boxes 40–60% smaller)
 - [x] Cost pass 2: bureau re-quote, cheaper bought parts ($603 down to $492)
-- [x] FDM edition: home-printable for about $540 all in ([docs/FDM.md](docs/FDM.md))
+- [x] FDM edition: home-printable for about $540 all in ([docs/FDM.md](docs/FDM.md)); $585 with the camera
 - [x] Build guide with technical drawings: [docs/BUILD.md](docs/BUILD.md) (first draft; nobody has built one yet)
-- [ ] BOM with purchase links (draft in [bom/BOM.md](bom/BOM.md), bought parts about $490, some prices still estimates)
+- [ ] BOM with purchase links (draft in [bom/BOM.md](bom/BOM.md), bought parts about $540, some prices still estimates)
 - [ ] First print and gearbox bench test
 - [x] URDF generated from the CAD ([urdf/](urdf/))
+- [x] Wrist camera: hardware, mount and wiring ([docs/VISION.md](docs/VISION.md))
+- [ ] Vision software: calibration, part finding and the unload loop
 - [ ] ROS 2 / MoveIt 2 and LeRobot drivers
 
 ## License

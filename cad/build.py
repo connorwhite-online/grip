@@ -28,7 +28,7 @@ from build123d import Compound, export_step, export_stl
 
 from grip_cad import arm, cycloidal as cy
 from grip_cad.assembly import assembly_parts
-from grip_cad.gripper import gripper_local
+from grip_cad.gripper import CAM_LOC, gripper_local
 from grip_cad.kits import make_stack
 from grip_cad.params import J13_DRIVE, J2_DRIVE, WRIST_DRIVE
 
@@ -55,6 +55,7 @@ def printed_parts():
     g = gripper_local()
     rows.append(("gripper_palm", g["palm"][0], 1, PA12))
     rows.append(("gripper_frame", g["frame"][0], 1, PA12))
+    rows.append(("gripper_camera_mount", g["camera_mount"][0], 1, PA12))
     rows.append(("gripper_pinion", g["pinion"][0], 1, PA12GF))
     rows.append(("gripper_jaw", g["jaw_a"][0], 2, PA12GF))
     rows.append(("gripper_finger", g["finger_a"][0], 2, TPU))
@@ -128,7 +129,9 @@ FDM_DRIVE_MATERIAL = {"housing": PETG, "cap": PETG, "disc_a": PETG_CF, "disc_b":
 # their socket mouth up, so the bore that takes the gearbox is round and needs no support.
 FDM_DOWN = {"base": (0, 0, -1), "turret": (0, 1, 0), "upper_arm": (0, -1, 0), "forearm": (0, 0, -1),
             "wrist_yoke": (0, 1, 0), "wrist_link": (0, 0, -1),
-            "gripper_jaw": (1, 0, 0), "gripper_finger": (0, -1, 0)}
+            "gripper_jaw": (1, 0, 0), "gripper_finger": (0, -1, 0), "gripper_camera_mount": (0, 0, 1)}
+# parts modelled at an angle: undo it first, so the down vector above is in the part's own frame
+FDM_FRAME = {"gripper_camera_mount": CAM_LOC.inverse()}   # camera cradle stands on its flat front face
 FLAT = 0.6           # shaved off a domed underside so it has a footprint on the bed
 WALLS, INFILL = 1.6, 0.15    # 4 perimeters / top-bottom shell, 15% gyroid
 BEDS = [("Bambu A1 mini 180x180x180", 180, 180, 180), ("Ender-3 class 220x220x250", 220, 220, 250),
@@ -139,7 +142,9 @@ BEDS = [("Bambu A1 mini 180x180x180", 180, 180, 180), ("Ender-3 class 220x220x25
 def fdm_orient(name, shape):
     from build123d import Align, Box, Pos, Rot
     down = FDM_DOWN.get(name, (0, 0, -1))
-    rot = {(0, 0, -1): Rot(0, 0, 0), (0, 1, 0): Rot(-90, 0, 0), (0, -1, 0): Rot(90, 0, 0),
+    if name in FDM_FRAME:
+        shape = FDM_FRAME[name] * shape
+    rot = {(0, 0, -1): Rot(0, 0, 0), (0, 0, 1): Rot(180, 0, 0), (0, 1, 0): Rot(-90, 0, 0), (0, -1, 0): Rot(90, 0, 0),
            (1, 0, 0): Rot(0, 90, 0), (-1, 0, 0): Rot(0, -90, 0)}[down]
     s = rot * shape
     bb = s.bounding_box()
