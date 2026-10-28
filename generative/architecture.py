@@ -61,15 +61,24 @@ def main():
         moved.append((BELT_STAGE_KG, h))
         moved.append((WRIST_MOTOR_KG, (z3 - z2) + 0.045))
     options["C. B + wrist motors at the elbow, belt wrist"] = moved
+    # E: bus servos at the wrist joints themselves (Feetech STS3215 on the
+    # rolls J4/J6, STS3250 on the pitch J5) instead of stepper + driver +
+    # printed cycloidal: the same bus the gripper servo already uses.
+    servo = {"j4": 0.055, "j5": 0.075, "j6": 0.055}
+    servos = list(gen)
+    for j, h in wrist_z.items():
+        servos.append((-(WRIST_MOTOR_KG + WRIST_GEARBOX_KG), h))
+        servos.append((servo[j], h))
+    options["E. B + bus servos at the wrist"] = servos
     rows = []
     for name, it in options.items():
         t2, t3 = torques(it)
         rows.append((name, t2, t3, sum(m for m, _ in it)))
-    t2c, t3c = rows[-1][1], rows[-1][2]
     payload_t2 = PAYLOAD[0] * G * PAYLOAD[1]
-    # D: a spring at J2 carrying 85% of the arm's own weight torque (not the payload's)
-    t2d = payload_t2 + 0.15 * (t2c - payload_t2)
-    rows.append(("D. C + spring counterbalance at J2", t2d, t3c, rows[-1][3]))
+    # spring at J2 carrying 85% of the arm's own weight torque (not the payload's)
+    for base, label in ((2, "D. C + spring counterbalance at J2"), (3, "F. E + spring counterbalance at J2")):
+        _, t2c, t3c, m = rows[base]
+        rows.append((label, payload_t2 + 0.15 * (t2c - payload_t2), t3c, m))
     print(f"{'option':48s} {'J2 static':>9s} {'J2 x1.5':>8s} {'J3 static':>9s} {'J3 x1.5':>8s}  J2 drive that fits")
     for name, t2, t3, _ in rows:
         fits = [d for d, r in sorted(RATING.items(), key=lambda kv: kv[1]) if DYN * t2 <= r]
