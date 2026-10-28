@@ -77,3 +77,55 @@ breaking at their joint's rated torque (SF ≈ 0.5) to safety factors of 3.4–4
 
 Generated with loadpath's eval harness; the studies in `studies/` are plain JSON
 and can be re-run or edited by hand or by an agent.
+
+## v0.3: a cheaper arm, not just lighter links (`v3.py`)
+
+The v0.2 links showed the structure was no longer the problem: J2 carries
+about 2.1 kg of motors and gearboxes, so lighter plastic barely moved its torque.
+`architecture.py` compares six layouts against that. v0.3 is option F:
+
+- **J1–J3 stay steppers on printed cycloidal drives, all the same NEMA 17 drive.**
+  The NEMA 23 at J2 goes.
+- **A spring counterbalances J2.** A zero-free-length spring (cable over a
+  pulley on the turret to a pin on the upper arm) cancels most of gravity's
+  moment at every angle. J2 then needs 8.4 N·m against the drive's 13 N·m.
+- **The wrist and gripper are serial bus servos** (Feetech STS3215/STS3250)
+  instead of steppers, gearboxes and driver boards. That takes about 0.9 kg off
+  the end of the arm, which is what made the J2 change possible.
+
+Every link was then regenerated around the new hardware: servo cradles,
+horn hubs and the spring's pulley, anchor and pin.
+
+![v0.3 links](renders/v3.png)
+
+| Link | Shipped | v0.2 | v0.3 | v0.3 SF |
+| --- | --- | --- | --- | --- |
+| Turret | 248 g | 147 g | 197 g | 2.26 |
+| Upper arm | 214 g | 173 g | 180 g | 6.21 |
+| Forearm | 109 g | 99 g | 73 g | 3.27 |
+| Wrist yoke | 94 g | 55 g | 41 g | 5.73 |
+| Wrist link | 96 g | 99 g | 67 g | 3.23 |
+| **Total** | **761 g** | **572 g** | **558 g (−27%)** | |
+
+The turret gains mass because it now carries the spring's pulley and anchor.
+On the parts that change, the BOM drops about $16 (≈ $209 → $193): one NEMA 23
+and its driver, and three stepper/gearbox/driver sets at the wrist, against
+three bus servos, a servo driver board, a spring and a pulley.
+
+```bash
+python generative/v3.py studies     # write v3/studies/*.json
+python generative/v3.py run --jobs 3
+```
+
+Open items before printing:
+
+- **Servo dimensions and shaft offsets are marked VERIFY in `v3.py`**; they are
+  from datasheets, not calipers.
+- **J5 torque:** the STS3250 is rated about 1.6 N·m continuous; J5 needs about
+  1.7 N·m at a 1 kg payload at full reach. It is fine for 0.5 kg; at 1 kg it is
+  a peak, not a continuous, load.
+- **The servo cradles are preserved as full boxes** (3 mm walls round the servo),
+  so the wrist yoke reads as a box. Opening them up to clips or straps is the
+  next pass.
+- The spring rate and anchor geometry (k = 1 N/mm, a = 62 mm, b = 80 mm) are
+  sized for the arm at rest. Check them against the assembled arm's real mass.

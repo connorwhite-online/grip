@@ -227,6 +227,9 @@ def design_space(preserve, keep, margin=14.0):
     pts = []
     for r in preserve:
         s = r["shape"]
+        if s["type"] == "box":
+            pts += [list(s["min"]), list(s["max"])]
+            continue
         rr = s["r"]
         along = [abs(s["p1"][i] - s["p0"][i]) > 1e-9 for i in range(3)]
         for e in (s["p0"], s["p1"]):
