@@ -100,14 +100,14 @@ horn hubs and the spring's pulley, anchor and pin.
 
 | Link | Shipped | v0.2 | v0.3 | v0.3 SF |
 | --- | --- | --- | --- | --- |
-| Turret | 248 g | 147 g | 197 g | 2.26 |
+| Turret | 248 g | 147 g | 236 g | 2.41 |
 | Upper arm | 214 g | 173 g | 180 g | 6.21 |
-| Forearm | 109 g | 99 g | 81 g | 4.13 |
-| Wrist yoke | 94 g | 55 g | 26 g | 3.08 |
-| Wrist link | 96 g | 99 g | 55 g | 2.24 |
-| **Total** | **761 g** | **572 g** | **539 g (−29%)** | |
+| Forearm | 109 g | 99 g | 63 g | 2.39 |
+| Wrist yoke | 94 g | 55 g | 19 g | 2.70 |
+| Wrist link | 96 g | 99 g | 65 g | 3.55 |
+| **Total** | **761 g** | **572 g** | **563 g (-26%)** | |
 
-The turret gains mass because it now carries the spring's pulley and anchor.
+The turret gains mass because it now carries the spring's pulley and anchor, and because it is now checked on a finer grid (it read SF 2.26 at 60k cells and 1.65 at 120k before).
 On the parts that change, the BOM drops about $16 (≈ $209 → $193): one NEMA 23
 and its driver, and three stepper/gearbox/driver sets at the wrist, against
 three bus servos, a servo driver board, a spring and a pulley.
@@ -140,12 +140,37 @@ deflected and exaggerated. Results are in `v3/out/sims.json`.
 
 | Link | SF (finer check) | Worst deflection |
 | --- | --- | --- |
-| Turret | 1.65 | 0.66 mm (reach) |
-| Upper arm | 5.56 | 1.56 mm (side push) |
-| Forearm | 2.92 | 0.42 mm (reach) |
-| Wrist yoke | 1.53 | 0.23 mm (reach) |
-| Wrist link | 2.08 | 1.52 mm (reach) |
+| Turret | 1.92 | 0.54 mm (reach) |
+| Upper arm | 5.56 | 1.55 mm (lateral) |
+| Forearm | 2.42 | 0.45 mm (reach) |
+| Wrist yoke | 2.04 | 0.14 mm (reach) |
+| Wrist link | 3.32 | 0.20 mm (reach) |
 
-The finer check finds the turret and the wrist yoke under the goal of 2
-(above 1.5): their peaks sit at small fillets the optimization grid was too
-coarse to see. They are being re-run at a finer resolution.
+Every search now re-checks its pick on a 150k-cell grid before delivering it
+(loadpath's confirm stage), and material carrying no load is pruned. The
+checks on different grids still differ by about ±20% at small fillets: the
+turret reads 2.41 at 150k cells and 1.92 here.
+## The hand (`hand.py`)
+
+![Three-finger hand, open and closed](renders/hand.png)
+
+Three soft fingers on one servo replace the parallel-jaw gripper and its
+two Ø6 rods, four LM6UU bearings, rack, pinion and set screws.
+
+- **Fingers:** one TPU print each (20 g): three phalanges on flexure hinges,
+  a tendon channel, ridged pads, tapered and rounded. About 17 N of tendon
+  closes them; the rest is grip.
+- **One servo, one tendon, a balance plate:** the STS3215 winds a spool; a
+  floating three-way plate splits the pull so each finger stops when it
+  touches and the others keep closing.
+- **Optional fingernails** for flat parts on a print bed: a PA12 blade with a
+  15 mm tongue down the last phalanx, seated on a shoulder (scraping pushes
+  it in) and held by an M2 screw through the finger (prying and pull-out).
+- **Palm:** generated, 56 g, SF 3.2 under the grasp, a 1 kg pull-out, a side
+  load, and the tendon at half the servo's stall torque.
+
+Grip force at 60 N of tendon (1.4 N·m on the servo) is about 4 to 28 N per
+finger, depending on where the part touches. The servo reports its load, so
+the arm can grip by force without a sensor. All of it is a first concept:
+VERIFY the flexure thickness on a printed coupon, the servo, and the tendon
+routing.

@@ -225,8 +225,11 @@ def urdf_efforts():
 def design_space(preserve, keep, margin=14.0):
     """Box hull of the hub and the socket, plus a margin, as the space to grow in."""
     pts = []
+    shapes = []
     for r in preserve:
         s = r["shape"]
+        shapes += s["shapes"] if s["type"] == "union" else [s]
+    for s in shapes:
         if s["type"] == "box":
             pts += [list(s["min"]), list(s["max"])]
             continue

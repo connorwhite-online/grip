@@ -66,30 +66,43 @@ SPRING_PATH_X = 58.0             # the spring runs down the turret's side, clear
 SPRING_MAX_N = SPRING_K * math.hypot(62.0, 80.0)
 
 
-COLLAR_H = 8.0  # mm of body the collar wraps, from the horn face down
+# Where the servo case takes screws, as (along e from the body centre, along
+# w, along d from the horn face) for the far face and the two side faces.
+# VERIFY against the STS3215/3250 drawing: the far-face pattern and the side
+# holes near the horn end are typical of the series, not measured.
+BOSS_R, BOSS_T, SCREW_R, DRIVER_R = 3.5, 4.0, 1.1, 2.6
+
+
+def _mount_points(s):
+    pts = []
+    for se in (-1, 1):
+        for sw in (-1, 1):
+            pts.append(((se * (s["L"] / 2 - 5.0), sw * (s["W"] / 2 - 4.0), -s["H"]), "d"))
+        for sw in (-1, 1):
+            pts.append(((se * (s["L"] / 2 - 6.0), sw * s["W"] / 2, -6.0), "w"))
+    return pts
 
 
 def servo_parent(joint):
-    """Pocket and cradle for a servo body in the link that carries it."""
+    """Pocket for a servo body in the link that carries it, and the screw
+    bosses it is held by. Only the bosses are preserved: the structure that
+    joins them is the optimizer's."""
     s = SERVOS[WRIST[joint]]
     _, p, d = J[joint]
     e = BODY_DIR[joint]
     assert sum(a * b for a, b in zip(d, e)) == 0, f"{joint}: servo body must lie across its shaft"
     w = [d[1] * e[2] - d[2] * e[1], d[2] * e[0] - d[0] * e[2], d[0] * e[1] - d[1] * e[0]]
-    # body: from shaft-end face (shaft - L... ) along e; H along -d below the horn face
+    ce = s["L"] / 2 - s["shaft"]          # body centre, along e from the shaft
     lo, hi = [], []
     for k in range(3):
         a = p[k] - e[k] * s["shaft"] - d[k] * s["H"] - abs(w[k]) * s["W"] / 2
         b = p[k] + e[k] * (s["L"] - s["shaft"]) + abs(w[k]) * s["W"] / 2
         lo.append(min(a, b, p[k] - abs(w[k]) * s["W"] / 2))
         hi.append(max(a, b, p[k] + abs(w[k]) * s["W"] / 2))
-    # the body sits below the horn face: along d it spans [-H, 0]
     for k in range(3):
         if d[k]:
             lo[k], hi[k] = (p[k] - s["H"], p[k]) if d[k] > 0 else (p[k], p[k] + s["H"])
     body = {"type": "box", "min": [round(v - 0.4, 2) for v in lo], "max": [round(v + 0.4, 2) for v in hi]}
-    wall = 3.0
-    cradle = {"type": "box", "min": [round(v - 0.4 - wall, 2) for v in lo], "max": [round(v + 0.4 + wall, 2) for v in hi]}
     # open the horn side: the keep-out runs on past the horn face
     open_lo, open_hi = list(body["min"]), list(body["max"])
     for k in range(3):
@@ -97,23 +110,17 @@ def servo_parent(joint):
             open_hi[k] += 12.0
         elif d[k] < 0:
             open_lo[k] -= 12.0
-    # Only what holds the servo is fixed: a collar round the body at the horn
-    # end, where its mounting ears screw down, and a floor pad under the far
-    # end. The walls between are the optimizer's. (A full 3 mm box round the
-    # body was most of the wrist yoke's mass and none of its design.)
-    collar, floor = {**cradle, "min": list(cradle["min"]), "max": list(cradle["max"])}, \
-        {**cradle, "min": list(cradle["min"]), "max": list(cradle["max"])}
-    for k in range(3):
-        if d[k] > 0:
-            collar["min"][k] = round(p[k] - COLLAR_H, 2)
-            floor["max"][k] = round(p[k] - s["H"] + 0.4, 2)
-        elif d[k] < 0:
-            collar["max"][k] = round(p[k] + COLLAR_H, 2)
-            floor["min"][k] = round(p[k] + s["H"] - 0.4, 2)
-    preserve = [{"id": f"{joint}-cradle", "shape": collar}, {"id": f"{joint}-floor", "shape": floor}]
+    bosses, holes = [], []
+    for i, ((oe, ow, od), face) in enumerate(_mount_points(s)):
+        q = [p[k] + (ce + oe) * e[k] + ow * w[k] + od * d[k] for k in range(3)]
+        n = [-x for x in d] if face == "d" else [(1 if ow > 0 else -1) * x for x in w]
+        bosses.append(cyl(q, n, -0.4, BOSS_T, BOSS_R))
+        holes.append({"id": f"{joint}-screw-{i}", "shape": cyl(q, n, -6.0, BOSS_T + 0.5, SCREW_R)})
+        holes.append({"id": f"{joint}-driver-{i}", "shape": cyl(q, n, BOSS_T + 0.5, BOSS_T + 25.0, DRIVER_R)})
+    preserve = [{"id": f"{joint}-mount", "shape": {"type": "union", "shapes": bosses}}]
     keep = [{"id": f"{joint}-servo", "shape": {"type": "box", "min": open_lo, "max": open_hi}},
             # the horn and the child's hub sweep a disc above the horn face
-            {"id": f"{joint}-horn-sweep", "shape": cyl(p, d, 0.0, 9.0, s["horn_r"] + 6.0)}]
+            {"id": f"{joint}-horn-sweep", "shape": cyl(p, d, 0.0, 9.0, s["horn_r"] + 6.0)}] + holes
     return preserve, keep
 
 
@@ -201,7 +208,7 @@ def study(link, masses, eff, max_elements=60000):
         pres, keep, supports = hub(below, HUB_T[link])
     if above in WRIST:
         p2, k2 = servo_parent(above)
-        region = f"{above}-cradle"
+        region = f"{above}-mount"
     else:
         p2, k2 = socket(above)
         region = f"{above}-sleeve"
@@ -244,12 +251,14 @@ def main(argv=None):
     ap.add_argument("--links", default=",".join(LINKS))
     ap.add_argument("--jobs", type=int, default=3)
     ap.add_argument("--out", default=os.path.join(HERE, "v3", "out"))
+    ap.add_argument("--max-elements", type=int, default=60000,
+                    help="optimization cells; finer resolves the small fillets where peaks sit")
     args = ap.parse_args(argv)
     links = args.links.split(",")
     masses, eff = v3_masses(), efforts()
     sdir = os.path.join(HERE, "v3", "studies")
     os.makedirs(sdir, exist_ok=True)
-    studies = {l: study(l, masses, eff) for l in links}
+    studies = {l: study(l, masses, eff, args.max_elements) for l in links}
     for l, s in studies.items():
         with open(os.path.join(sdir, f"{l}.json"), "w") as fh:
             json.dump(s, fh, indent=1)
