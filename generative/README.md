@@ -1,8 +1,10 @@
 # GRIP, redesigned generatively
 
 Every structural link of the arm, grown from its joint layout by
-loadpath, an open-source topology optimization engine for printed parts
-(being split out of the Materialize repo; it will install with `pip install loadpath`) and sized together as one chain.
+[loadpath](https://github.com/connorwhite-online/loadpath), an open-source
+topology optimization engine for printed parts, and sized together as one
+chain. GRIP is loadpath's reference project: its CONTEXT.md describes how the
+two are developed together.
 
 ![Shipped links (left) and generated links (right)](renders/compare.png)
 
