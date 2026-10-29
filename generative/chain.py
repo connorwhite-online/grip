@@ -56,7 +56,7 @@ JOINTS = {
     "j1": (J13_DRIVE, (0.0, 0.0, G.z_j1_out), (0, 0, 1)),
     "j2": (J2_DRIVE, (0.0, G.y_j2_out, G.z_j2), (0, -1, 0)),
     "j3": (J13_DRIVE, (0.0, y_j3_out, G.z_j3), (0, 1, 0)),
-    "j4": (WRIST_DRIVE, (0.0, G.y_forearm, G.z_j5 - 40.0), (0, 0, 1)),
+    "j4": (WRIST_DRIVE, (0.0, G.y_forearm, G.z_j5 - 43.0), (0, 0, 1)),   # horn face 43 below J5: horn (4) + hub (4) clear the J5 servo, which hangs to 34 below its shaft
     "j5": (WRIST_DRIVE, (0.0, y_j5_out, G.z_j5), (0, -1, 0)),
     "j6": (WRIST_DRIVE, (0.0, G.y_forearm, G.z_flange), (0, 0, 1)),
 }
