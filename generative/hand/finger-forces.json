@@ -1,0 +1,35 @@
+{
+ "30N": {
+  "tendonN": 30.0,
+  "servoTorqueNm": 0.72,
+  "hingeStiffnessNmmPerRad": 118.9,
+  "tendonArmMm": 8.7,
+  "tendonToCloseN": 16.7,
+  "padForceN": [
+   1.3,
+   8.8
+  ]
+ },
+ "60N": {
+  "tendonN": 60.0,
+  "servoTorqueNm": 1.44,
+  "hingeStiffnessNmmPerRad": 118.9,
+  "tendonArmMm": 8.7,
+  "tendonToCloseN": 16.7,
+  "padForceN": [
+   4.4,
+   28.5
+  ]
+ },
+ "100N": {
+  "tendonN": 100.0,
+  "servoTorqueNm": 2.4,
+  "hingeStiffnessNmmPerRad": 118.9,
+  "tendonArmMm": 8.7,
+  "tendonToCloseN": 16.7,
+  "padForceN": [
+   8.4,
+   54.9
+  ]
+ }
+}
