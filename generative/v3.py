@@ -52,6 +52,7 @@ SERVOS = {
                 "horn_r": 11.0, "horn_bolt_r": 7.0, "usd": 74.0},
 }
 WRIST = {"j4": "STS3215", "j5": "STS3250", "j6": "STS3215"}
+ROLL_JOINTS = ("j4", "j6")       # the child turns all the way round; J5 (pitch) swings part of a turn
 # For each servo joint: the direction from the shaft along the servo's long
 # side. It must be perpendicular to the shaft: the rolls (J4, J6, shaft along
 # the arm) lie across the arm; the pitch (J5, shaft across) hangs down it.
@@ -148,6 +149,26 @@ def servo_child(joint, yoke=False):
     # everything the parent carries stays clear: the servo body and its cradle
     pp, pk = servo_parent(joint)
     keep += [{"id": f"{joint}-parent-{r['id']}", "shape": r["shape"]} for r in pp]
+    # the horn itself, between the servo's horn face and the hub (QA 10/29:
+    # without this every yoke grew solid across the horn disc). Not a bore:
+    # the hub closes its far end by design.
+    keep.append({"id": f"{joint}-horn", "bore": False, "shape": cyl(p, d, -0.5, 4.0, s["horn_r"] + 1.0)})
+    if joint in ROLL_JOINTS:
+        # a roll turns the child all the way round the servo body: keep the
+        # whole circle it sweeps clear, below the horn face
+        rs = math.hypot(max(s["shaft"], s["L"] - s["shaft"]), s["W"] / 2) + 1.0
+        keep.append({"id": f"{joint}-servo-sweep", "bore": False, "shape": cyl(p, d, -s["H"] - 1.0, 0.0, rs)})
+    else:
+        # a pitch only swings through part of a turn (range VERIFY): keep the
+        # body clear where it sits at home, below the horn face
+        body = pk[0]["shape"]
+        lo, hi = list(body["min"]), list(body["max"])
+        for k in range(3):
+            if d[k] > 0:
+                hi[k] = p[k]
+            elif d[k] < 0:
+                lo[k] = p[k]
+        keep.append({"id": f"{joint}-servo-body", "shape": {"type": "box", "min": lo, "max": hi}})
     if yoke:
         # the rear shaft runs in a 6801 bearing on the far side of the body
         far = at(p, d, -s["H"] - 4.0)
