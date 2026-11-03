@@ -1,0 +1,35 @@
+{
+ "upper_arm/sls": {
+  "sweep-turret": {
+   "joints": [
+    "j2"
+   ],
+   "from": "part",
+   "mm3": 0.0
+  },
+  "sweep-forearm": {
+   "joints": [
+    "j3"
+   ],
+   "from": "part",
+   "mm3": 0.0
+  }
+ },
+ "wrist_link/sls": {
+  "sweep-wrist_yoke": {
+   "joints": [
+    "j5"
+   ],
+   "from": "part",
+   "mm3": 0.0
+  },
+  "sweep-tool": {
+   "joints": [
+    "j6"
+   ],
+   "from": "part",
+   "mm3": 0.0
+  }
+ },
+ "note": "mm3 of each hollow part inside its neighbours' swept volume over the joint's URDF range (1 mm clearance, 1 mm voxels); GRIP urdf at generative-redesign 07aa65f; neighbours are the v0.3 parts (palm with its J6 horn face at (0,-25,700))."
+}

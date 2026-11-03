@@ -1,0 +1,1295 @@
+{
+ "ok": true,
+ "name": "grip-sls-wrist_link",
+ "output": "drained",
+ "pitch": 0.35,
+ "faces": 500478,
+ "watertight": true,
+ "volume": 43235.07526256534,
+ "area": 24185.551949756824,
+ "bounds": [
+  [
+   -30.144592648958245,
+   -64.86131161634611,
+   556.1849792770055
+  ],
+  [
+   30.14455744151667,
+   16.9970695904516,
+   698.5688173071956
+  ]
+ ],
+ "bodies": 6,
+ "enclosedVoids": 1,
+ "enclosedVoidVolume": 0.8136255991714724,
+ "process": "sls",
+ "drains": {
+  "process": "sls",
+  "diameter": 6.0,
+  "minimumHole": 4.0,
+  "holesPerVoid": 2,
+  "boss": 1.2,
+  "pitch": 0.4112,
+  "stressNode": "stress",
+  "sealedBefore": 93,
+  "sealedVolumeBefore": 7048.1,
+  "specks": 18,
+  "rounds": 1,
+  "sealedAfter": 0,
+  "sealedVolumeAfter": 0.0,
+  "filledVolume": 7051.2,
+  "voids": [
+   {
+    "volume": 455.5,
+    "center": [
+     -22.81,
+     -58.92,
+     592.61
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 71.1,
+    "center": [
+     -26.5,
+     -61.14,
+     598.77
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 148.9,
+    "center": [
+     -26.81,
+     -56.75,
+     618.7
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 34.4,
+    "center": [
+     -27.43,
+     -56.81,
+     621.73
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 541.4,
+    "center": [
+     -18.87,
+     -44.37,
+     660.81
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 70.0,
+    "center": [
+     -25.08,
+     -50.14,
+     641.84
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 308.7,
+    "center": [
+     -19.8,
+     -57.65,
+     586.86
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 9.4,
+    "center": [
+     -22.29,
+     -54.49,
+     615.48
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 345.8,
+    "center": [
+     -18.36,
+     -41.92,
+     664.91
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 33.8,
+    "center": [
+     -22.91,
+     -27.89,
+     674.81
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 2.3,
+    "center": [
+     -23.71,
+     -24.03,
+     678.0
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 70.7,
+    "center": [
+     -19.02,
+     -13.12,
+     688.22
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 11.6,
+    "center": [
+     -21.57,
+     13.49,
+     656.97
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 115.4,
+    "center": [
+     -18.25,
+     11.17,
+     666.58
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 110.4,
+    "center": [
+     -18.15,
+     9.42,
+     671.63
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 7.9,
+    "center": [
+     -22.05,
+     14.61,
+     651.82
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 1.5,
+    "center": [
+     -22.42,
+     -28.47,
+     674.89
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 4.9,
+    "center": [
+     -22.03,
+     -19.62,
+     681.43
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 1.5,
+    "center": [
+     -21.47,
+     14.15,
+     648.39
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 7.6,
+    "center": [
+     -20.94,
+     14.83,
+     645.04
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 77.1,
+    "center": [
+     -16.71,
+     -12.29,
+     692.85
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 6.0,
+    "center": [
+     -19.79,
+     14.77,
+     640.98
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 1.7,
+    "center": [
+     -19.01,
+     14.44,
+     636.9
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 10.8,
+    "center": [
+     -17.39,
+     14.94,
+     631.68
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 10.6,
+    "center": [
+     -16.15,
+     -18.36,
+     691.6
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 21.8,
+    "center": [
+     -16.11,
+     5.89,
+     682.47
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 5.9,
+    "center": [
+     -16.11,
+     11.41,
+     661.54
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 6.5,
+    "center": [
+     -15.72,
+     14.91,
+     626.64
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 76.3,
+    "center": [
+     -8.53,
+     -41.8,
+     680.98
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 1.3,
+    "center": [
+     -15.12,
+     14.43,
+     623.43
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 4.5,
+    "center": [
+     -13.05,
+     -51.75,
+     609.48
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 6.2,
+    "center": [
+     -13.85,
+     14.93,
+     620.23
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 7.2,
+    "center": [
+     -12.08,
+     -51.03,
+     589.98
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 3.3,
+    "center": [
+     -12.33,
+     14.41,
+     616.77
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 16.7,
+    "center": [
+     -9.73,
+     13.53,
+     611.44
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 161.3,
+    "center": [
+     0.33,
+     -41.81,
+     686.18
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 480.4,
+    "center": [
+     -0.8,
+     9.38,
+     599.22
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 117.4,
+    "center": [
+     -1.07,
+     -49.09,
+     598.49
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 2.5,
+    "center": [
+     -8.24,
+     -50.42,
+     606.24
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 456.3,
+    "center": [
+     10.54,
+     -42.38,
+     672.6
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 10.2,
+    "center": [
+     -6.03,
+     -49.59,
+     603.71
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 120.5,
+    "center": [
+     0.88,
+     -49.05,
+     598.1
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 492.1,
+    "center": [
+     0.76,
+     9.35,
+     598.68
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 116.4,
+    "center": [
+     -0.9,
+     7.8,
+     642.63
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 25.3,
+    "center": [
+     -0.48,
+     9.31,
+     620.93
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 27.3,
+    "center": [
+     0.07,
+     9.75,
+     616.82
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 106.0,
+    "center": [
+     0.83,
+     7.95,
+     645.07
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 23.0,
+    "center": [
+     0.56,
+     8.85,
+     625.31
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 2.2,
+    "center": [
+     0.31,
+     10.99,
+     660.61
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 23.4,
+    "center": [
+     5.74,
+     -49.27,
+     593.14
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 375.8,
+    "center": [
+     16.19,
+     -41.54,
+     669.89
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 15.6,
+    "center": [
+     8.48,
+     13.17,
+     607.3
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 16.0,
+    "center": [
+     9.78,
+     -50.97,
+     607.33
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 24.4,
+    "center": [
+     9.98,
+     -39.62,
+     687.73
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 412.1,
+    "center": [
+     20.74,
+     -58.16,
+     588.25
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 6.3,
+    "center": [
+     12.6,
+     14.42,
+     616.93
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 437.2,
+    "center": [
+     22.62,
+     -58.82,
+     592.13
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 4.8,
+    "center": [
+     14.59,
+     -52.19,
+     610.31
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 6.3,
+    "center": [
+     14.84,
+     -37.24,
+     682.15
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 5.5,
+    "center": [
+     14.86,
+     14.83,
+     623.22
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 9.9,
+    "center": [
+     16.03,
+     -18.18,
+     691.66
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 81.8,
+    "center": [
+     16.86,
+     -12.55,
+     692.46
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 20.4,
+    "center": [
+     15.97,
+     6.06,
+     682.31
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 25.9,
+    "center": [
+     15.98,
+     7.37,
+     678.27
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 27.6,
+    "center": [
+     17.1,
+     -9.28,
+     691.31
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 49.8,
+    "center": [
+     17.28,
+     8.74,
+     673.24
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 76.6,
+    "center": [
+     18.07,
+     11.44,
+     665.55
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 40.1,
+    "center": [
+     20.02,
+     12.15,
+     662.14
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 5.1,
+    "center": [
+     16.16,
+     14.76,
+     627.03
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 7.2,
+    "center": [
+     17.61,
+     -53.22,
+     612.32
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 2.2,
+    "center": [
+     16.77,
+     14.56,
+     630.88
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 9.9,
+    "center": [
+     18.57,
+     14.96,
+     636.29
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 16.0,
+    "center": [
+     20.21,
+     -13.71,
+     686.82
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 162.7,
+    "center": [
+     26.5,
+     -56.1,
+     620.65
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 5.4,
+    "center": [
+     20.14,
+     14.83,
+     641.29
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 81.0,
+    "center": [
+     22.72,
+     -47.76,
+     649.6
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 1.9,
+    "center": [
+     20.61,
+     14.58,
+     644.8
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 20.2,
+    "center": [
+     22.27,
+     -36.53,
+     667.68
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 21.9,
+    "center": [
+     22.48,
+     -19.86,
+     681.74
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 7.8,
+    "center": [
+     21.98,
+     14.35,
+     656.02
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 6.5,
+    "center": [
+     21.76,
+     -15.59,
+     684.47
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 6.6,
+    "center": [
+     21.63,
+     14.94,
+     648.41
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 12.2,
+    "center": [
+     22.55,
+     -32.86,
+     671.2
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 1.3,
+    "center": [
+     21.87,
+     14.13,
+     652.26
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 7.4,
+    "center": [
+     23.48,
+     -55.1,
+     613.96
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 36.7,
+    "center": [
+     24.35,
+     -49.81,
+     643.02
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 22.6,
+    "center": [
+     23.89,
+     -46.79,
+     649.29
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 22.4,
+    "center": [
+     23.11,
+     -28.13,
+     674.38
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 10.6,
+    "center": [
+     23.1,
+     -24.04,
+     678.02
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 104.9,
+    "center": [
+     26.28,
+     -52.91,
+     633.85
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 37.3,
+    "center": [
+     27.25,
+     -58.04,
+     617.36
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 1.9,
+    "center": [
+     26.33,
+     -50.26,
+     636.56
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   },
+   {
+    "volume": 27.3,
+    "center": [
+     27.72,
+     -59.94,
+     605.91
+    ],
+    "holes": 0,
+    "filled": true,
+    "farthestFromOpening": null,
+    "unreachedVolume": 0.0
+   }
+  ],
+  "unreachedVolume": 0.0,
+  "escape": {
+   "enclosedCount": 0,
+   "enclosedVolumeMm3": 0.0,
+   "narrowExitCount": 0,
+   "narrowExitVolumeMm3": 0.0
+  },
+  "holes": [],
+  "ok": false,
+  "output": "drained",
+  "meshEscape": {
+   "enclosedCount": 0,
+   "enclosedVolumeMm3": 0.0,
+   "narrowExitCount": 0,
+   "narrowExitVolumeMm3": 0.0
+  }
+ },
+ "mass": 43.66742601519099,
+ "material": "pa12",
+ "analyses": {
+  "stress": {
+   "part": "v3.stl",
+   "safetyFactor": 2.520425467593162,
+   "deflection": 1.0263619003740174,
+   "cells": 120170
+  }
+ },
+ "sharpEdges": {
+  "points": 47840,
+  "mean": 0.0113,
+  "p99": 0.473,
+  "max": 0.4749,
+  "exactFraction": 0.9641,
+  "edges": {
+   "points": 7088,
+   "mean": 0.0008,
+   "p99": 0.002,
+   "max": 0.3975,
+   "exactFraction": 0.9924
+  },
+  "tol": 0.01,
+  "byRole": {
+   "cut": {
+    "points": 47840,
+    "mean": 0.0113,
+    "p99": 0.473,
+    "max": 0.4749,
+    "exactFraction": 0.9641
+   }
+  }
+ },
+ "printability": {
+  "pitch": 0.2667,
+  "source": "mesh",
+  "minWallTargetMm": 0.8,
+  "overhangLimitDeg": 45.0,
+  "wallMethod": "voxel",
+  "watertight": true,
+  "triangles": 500478,
+  "volumeMm3": 43235.075,
+  "gridCells": [
+   231,
+   311,
+   538
+  ],
+  "minWallMm": 0.4,
+  "wallP1Mm": 2.533,
+  "wallToleranceMm": 0.2667,
+  "wallCapMm": 6.4,
+  "thinAreaMm2": 30.862,
+  "thinAreaFraction": 0.0015,
+  "thinSpots": [
+   {
+    "at": [
+     -23.47,
+     -55.4,
+     584.84
+    ],
+    "mm": 0.4
+   },
+   {
+    "at": [
+     -12.0,
+     -46.33,
+     569.91
+    ],
+    "mm": 0.4
+   },
+   {
+    "at": [
+     -8.27,
+     12.87,
+     660.84
+    ],
+    "mm": 0.4
+   },
+   {
+    "at": [
+     -0.27,
+     -46.33,
+     559.78
+    ],
+    "mm": 0.4
+   },
+   {
+    "at": [
+     1.33,
+     -52.2,
+     567.24
+    ],
+    "mm": 0.4
+   }
+  ],
+  "minWallOk": true,
+  "overhangAreaMm2": 1787.859,
+  "overhangFraction": 0.0739,
+  "trappedVoids": [
+   {
+    "volumeMm3": 0.853,
+    "center": [
+     23.41,
+     -56.88,
+     589.8
+    ],
+    "voxels": 45
+   }
+  ],
+  "trappedVoidCount": 1,
+  "trappedVolumeMm3": 0.853,
+  "drainsOk": false,
+  "probesRan": true,
+  "ok": false
+ },
+ "seconds": 1834.0,
+ "stl": "wrist_link/final/grip-sls-wrist_link.stl",
+ "render": "wrist_link/final/grip-sls-wrist_link.png"
+}

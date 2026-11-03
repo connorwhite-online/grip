@@ -1,0 +1,626 @@
+{
+ "name": "grip-sls-upper_arm",
+ "description": "GRIP upper_arm, SLS edition: the v0.3 load path swollen into a smooth envelope, stress-graded skin over a gyroid core, solid at every interface, drained",
+ "nodes": {
+  "v3": {
+   "op": "mesh",
+   "path": "v3.stl",
+   "band": 10.0,
+   "description": "the v0.3 part: its load path"
+  },
+  "space": {
+   "op": "shape",
+   "shape": {
+    "type": "box",
+    "min": [
+     -62.3,
+     -94.5,
+     167.75
+    ],
+    "max": [
+     62.3,
+     -16.5,
+     449.3
+    ]
+   }
+  },
+  "keepout": {
+   "op": "shape",
+   "shape": {
+    "type": "union",
+    "shapes": [
+     {
+      "type": "cylinder",
+      "p0": [
+       8.662,
+       -29.5,
+       208.662
+      ],
+      "p1": [
+       8.662,
+       -40.5,
+       208.662
+      ],
+      "r": 1.7
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       8.662,
+       -33.5,
+       208.662
+      ],
+      "p1": [
+       8.662,
+       -84.5,
+       208.662
+      ],
+      "r": 3.0
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       -8.662,
+       -29.5,
+       208.662
+      ],
+      "p1": [
+       -8.662,
+       -40.5,
+       208.662
+      ],
+      "r": 1.7
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       -8.662,
+       -33.5,
+       208.662
+      ],
+      "p1": [
+       -8.662,
+       -84.5,
+       208.662
+      ],
+      "r": 3.0
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       -8.662,
+       -29.5,
+       191.338
+      ],
+      "p1": [
+       -8.662,
+       -40.5,
+       191.338
+      ],
+      "r": 1.7
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       -8.662,
+       -33.5,
+       191.338
+      ],
+      "p1": [
+       -8.662,
+       -84.5,
+       191.338
+      ],
+      "r": 3.0
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       8.662,
+       -29.5,
+       191.338
+      ],
+      "p1": [
+       8.662,
+       -40.5,
+       191.338
+      ],
+      "r": 1.7
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       8.662,
+       -33.5,
+       191.338
+      ],
+      "p1": [
+       8.662,
+       -84.5,
+       191.338
+      ],
+      "r": 3.0
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       0.0,
+       40.0,
+       200.0
+      ],
+      "p1": [
+       0.0,
+       -30.0,
+       200.0
+      ],
+      "r": 55.0
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       0.0,
+       -74.5,
+       387.0
+      ],
+      "p1": [
+       0.0,
+       -29.0,
+       387.0
+      ],
+      "r": 43.3
+     },
+     {
+      "type": "box",
+      "min": [
+       -21.75,
+       -135.5,
+       365.25
+      ],
+      "max": [
+       21.75,
+       -74.5,
+       408.75
+      ]
+     },
+     {
+      "type": "box",
+      "min": [
+       -21.75,
+       -152.5,
+       365.25
+      ],
+      "max": [
+       21.75,
+       -135.5,
+       408.75
+      ]
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       0.0,
+       -42.0,
+       387.0
+      ],
+      "p1": [
+       0.0,
+       -12.0,
+       387.0
+      ],
+      "r": 55.0
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       -11.0,
+       -46.0,
+       280.0
+      ],
+      "p1": [
+       11.0,
+       -46.0,
+       280.0
+      ],
+      "r": 2.6
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       0.0,
+       -46.0,
+       280.0
+      ],
+      "p1": [
+       0.0,
+       -39.0,
+       256.0
+      ],
+      "r": 4.0
+     }
+    ]
+   }
+  },
+  "preserve": {
+   "op": "shape",
+   "shape": {
+    "type": "union",
+    "shapes": [
+     {
+      "type": "cylinder",
+      "p0": [
+       0.0,
+       -30.5,
+       200.0
+      ],
+      "p1": [
+       0.0,
+       -35.5,
+       200.0
+      ],
+      "r": 18.25,
+      "rInner": 6.25
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       0.0,
+       -74.5,
+       387.0
+      ],
+      "p1": [
+       0.0,
+       -51.5,
+       387.0
+      ],
+      "r": 48.3,
+      "rInner": 43.3
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       0.0,
+       -80.5,
+       387.0
+      ],
+      "p1": [
+       0.0,
+       -74.5,
+       387.0
+      ],
+      "r": 48.3,
+      "rInner": 31.759
+     },
+     {
+      "type": "cylinder",
+      "p0": [
+       -8.0,
+       -46.0,
+       280.0
+      ],
+      "p1": [
+       8.0,
+       -46.0,
+       280.0
+      ],
+      "r": 7.0
+     }
+    ]
+   }
+  },
+  "stress": {
+   "op": "result",
+   "study": "study.json",
+   "part": "v3.stl",
+   "pitch": 1.0,
+   "scale": "peak",
+   "description": "von Mises of the v0.3 part over its peak"
+  },
+  "grown": {
+   "op": "offset",
+   "input": "v3",
+   "distance": 0.812,
+   "description": "tuned: how far the members swell"
+  },
+  "hubZone": {
+   "op": "offset",
+   "input": "preserve",
+   "distance": 6.0
+  },
+  "inSpace": {
+   "op": "intersect",
+   "inputs": [
+    "grown",
+    "space"
+   ],
+   "blend": 1.0
+  },
+  "members": {
+   "op": "subtract",
+   "inputs": [
+    "inSpace",
+    "hubZone",
+    "keepout"
+   ]
+  },
+  "hubs": {
+   "op": "intersect",
+   "inputs": [
+    "v3",
+    "hubZone"
+   ],
+   "description": "the v0.3 part, unchanged, round every interface"
+  },
+  "envelope": {
+   "op": "union",
+   "inputs": [
+    "members",
+    "hubs",
+    "preserve"
+   ],
+   "blend": 2.0
+  },
+  "skinWall": {
+   "op": "remap",
+   "input": "stress",
+   "from": [
+    0.05,
+    0.7
+   ],
+   "to": [
+    1.29,
+    2.3
+   ],
+   "curve": "smoothstep"
+  },
+  "skin": {
+   "op": "shell",
+   "input": "envelope",
+   "thickness": "skinWall"
+  },
+  "coreWall": {
+   "op": "remap",
+   "input": "stress",
+   "from": [
+    0.05,
+    0.6
+   ],
+   "to": [
+    0.8,
+    1.84
+   ],
+   "curve": "sqrt"
+  },
+  "core": {
+   "op": "lattice",
+   "type": "gyroid",
+   "cell": 10.0,
+   "thickness": "coreWall"
+  },
+  "fill": {
+   "op": "intersect",
+   "inputs": [
+    "core",
+    "envelope"
+   ]
+  },
+  "solid": {
+   "op": "union",
+   "inputs": [
+    "hubs",
+    "preserve"
+   ]
+  },
+  "joined": {
+   "op": "union",
+   "inputs": [
+    "skin",
+    "fill",
+    "solid",
+    "collars"
+   ],
+   "blend": 1.2
+  },
+  "clipped": {
+   "op": "intersect",
+   "inputs": [
+    "joined",
+    "envelope"
+   ]
+  },
+  "collars": {
+   "op": "intersect",
+   "inputs": [
+    {
+     "op": "shell",
+     "input": {
+      "op": "shape",
+      "shape": {
+       "type": "union",
+       "shapes": [
+        {
+         "type": "cylinder",
+         "p0": [
+          8.662,
+          -29.5,
+          208.662
+         ],
+         "p1": [
+          8.662,
+          -40.5,
+          208.662
+         ],
+         "r": 1.7
+        },
+        {
+         "type": "cylinder",
+         "p0": [
+          8.662,
+          -33.5,
+          208.662
+         ],
+         "p1": [
+          8.662,
+          -84.5,
+          208.662
+         ],
+         "r": 3.0
+        },
+        {
+         "type": "cylinder",
+         "p0": [
+          -8.662,
+          -29.5,
+          208.662
+         ],
+         "p1": [
+          -8.662,
+          -40.5,
+          208.662
+         ],
+         "r": 1.7
+        },
+        {
+         "type": "cylinder",
+         "p0": [
+          -8.662,
+          -33.5,
+          208.662
+         ],
+         "p1": [
+          -8.662,
+          -84.5,
+          208.662
+         ],
+         "r": 3.0
+        },
+        {
+         "type": "cylinder",
+         "p0": [
+          -8.662,
+          -29.5,
+          191.338
+         ],
+         "p1": [
+          -8.662,
+          -40.5,
+          191.338
+         ],
+         "r": 1.7
+        },
+        {
+         "type": "cylinder",
+         "p0": [
+          -8.662,
+          -33.5,
+          191.338
+         ],
+         "p1": [
+          -8.662,
+          -84.5,
+          191.338
+         ],
+         "r": 3.0
+        },
+        {
+         "type": "cylinder",
+         "p0": [
+          8.662,
+          -29.5,
+          191.338
+         ],
+         "p1": [
+          8.662,
+          -40.5,
+          191.338
+         ],
+         "r": 1.7
+        },
+        {
+         "type": "cylinder",
+         "p0": [
+          8.662,
+          -33.5,
+          191.338
+         ],
+         "p1": [
+          8.662,
+          -84.5,
+          191.338
+         ],
+         "r": 3.0
+        },
+        {
+         "type": "cylinder",
+         "p0": [
+          -11.0,
+          -46.0,
+          280.0
+         ],
+         "p1": [
+          11.0,
+          -46.0,
+          280.0
+         ],
+         "r": 2.6
+        }
+       ]
+      }
+     },
+     "side": "outside",
+     "thickness": 2.0
+    },
+    "envelope"
+   ],
+   "description": "a solid 2 mm wall round every bolt bore"
+  },
+  "part": {
+   "op": "subtract",
+   "inputs": [
+    "clipped",
+    "keepout"
+   ]
+  }
+ },
+ "output": "part",
+ "mesh": {
+  "pitch": 0.4
+ },
+ "material": "pa12",
+ "process": "sls",
+ "minWall": 0.8,
+ "drains": {
+  "keepClear": [
+   "keepout",
+   "preserve"
+  ],
+  "fillBelow": 600
+ },
+ "tune": {
+  "study": "study.json",
+  "params": [
+   {
+    "path": "nodes/grown/distance",
+    "min": 0.5,
+    "max": 4.0
+   },
+   {
+    "path": "nodes/skinWall/to/0",
+    "min": 1.0,
+    "max": 2.5
+   },
+   {
+    "path": "nodes/skinWall/to/1",
+    "min": 1.5,
+    "max": 6.0
+   },
+   {
+    "path": "nodes/coreWall/to/1",
+    "min": 0.8,
+    "max": 3.0
+   }
+  ],
+  "analysis": "homogenized",
+  "evaluations": 16,
+  "cells": 150000
+ }
+}
