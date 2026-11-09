@@ -6,7 +6,8 @@
    "op": "mesh",
    "path": "v3.stl",
    "band": 10.0,
-   "description": "the v0.3 part: its load path"
+   "description": "the v0.3 part: its load path",
+   "smooth": true
   },
   "space": {
    "op": "shape",
@@ -345,7 +346,7 @@
   "hubs": {
    "op": "intersect",
    "inputs": [
-    "v3",
+    "v3exact",
     "hubZone"
    ],
    "description": "the v0.3 part, unchanged, round every interface"
@@ -579,6 +580,12 @@
     "clipped",
     "keepout"
    ]
+  },
+  "v3exact": {
+   "op": "mesh",
+   "path": "v3.stl",
+   "band": 10.0,
+   "description": "the v0.3 part as built, for the hubs"
   }
  },
  "output": "part",

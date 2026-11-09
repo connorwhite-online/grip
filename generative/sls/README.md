@@ -6,7 +6,7 @@ needs support and the powder drains through holes placed where the stress is low
 does not pay, the link is the same as the generative v0.3 part. Every interface (hubs, sockets, bolt
 holes, servo pockets) is unchanged, so each SLS link swaps in for its v0.3 counterpart one for one.
 
-Built with [loadpath](https://github.com/connorwhite-online/loadpath) `examples/grip/sls.py`.
+Built with [loadpath](https://github.com/connorwhite-online/loadpath) `examples/robot-arm/sls.py`.
 
 | Upper arm | Wrist link |
 | --- | --- |
@@ -18,8 +18,8 @@ Each image shows, left to right, the solid part the link is built from, the holl
 
 | File | Qty | Process / material | Mass (PA12) | Notes |
 | --- | --- | --- | --- | --- |
-| upper_arm.3mf | 1 | SLS PA12 | 189.2 g | hollow, gyroid core, 6 mm drain holes |
-| wrist_link.3mf | 1 | SLS PA12 | 43.7 g | hollow, gyroid core, 6 mm drain holes |
+| upper_arm.3mf | 1 | SLS PA12 | 188.3 g | hollow, gyroid core, 6 mm drain holes |
+| wrist_link.3mf | 1 | SLS PA12 | 43.5 g | hollow, gyroid core, 6 mm drain holes |
 | base.3mf | 1 | SLS PA12 or PA12-GF | | v0.3 |
 | turret.3mf | 1 | SLS PA12-GF | | v0.3 |
 | forearm.3mf | 1 | SLS PA12-GF | | v0.3 (a hollow forearm was heavier and weaker) |
@@ -38,16 +38,22 @@ rinsed out through them. Ask the print service to depowder the internal cavities
 
 | Link | Mass | Voxel SF | Tet SF | v0.3 on the same checks |
 | --- | --- | --- | --- | --- |
-| Upper arm, hollow | 189.2 g | 3.30 | 2.88 | 184.5 g, 1.81 / 1.66 |
-| Wrist link, hollow | 43.7 g | 1.87 | 4.59 | 43.3 g, 3.39 / 1.63 |
+| Upper arm, hollow | 188.3 g | 3.13 | 2.97 | 184.5 g, 1.81 / 1.66 |
+| Wrist link, hollow | 43.5 g | 3.02 | 4.16 | 43.3 g, 3.39 / 1.63 |
 
-"Tet SF" is loadpath's tetrahedral cross-check, and "voxel SF" is the study's 150k-cell check. On the
-wrist link, the voxel check flags the corner of the J6 servo pocket. The solid part it was built from
-reads the same spot (2.16), and the tet check does not. The tet elements are coarser than the thinnest
-inner walls, so the tet check reads the hub peaks well and the gyroid core only roughly.
+"Tet SF" is loadpath's tetrahedral cross-check, and "voxel SF" is the study's 150k-cell check. The tet
+elements are coarser than the thinnest inner walls, so the tet check reads the hub peaks well and the
+gyroid core only roughly.
+
+Smooth skin (2026-11-09): the first hollow links had a fine hammered grain on the outside. The skin is
+an offset of the solid part's mesh, and it traced every facet of that mesh. The links are now built with
+the graph's `"smooth": true` on the solid part's mesh node, which takes the facets off before the offset,
+while the hubs and sockets still come from the exact mesh. On the same tet cross-check, the earlier
+links read 3.04 (upper arm) and 3.06 (wrist link); a few faint long streaks from the v0.3 part remain.
 
 Assembly clearance (`build/assembly_clearance.json`): each hollow link was swept against its neighbours
-over their joints' URDF ranges with 1 mm clearance, and the overlap is 0 mm³.
+over their joints' URDF ranges with 1 mm clearance, and the overlap is 0 mm³. The smooth-skin links were not swept again: their
+surfaces sit within 0.5 mm of the swept ones.
 
 ## Rebuilding
 
